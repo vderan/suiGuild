@@ -1,0 +1,11 @@
+import { createSvgIcon } from '@mui/material';
+
+export default createSvgIcon(
+	<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+		<path
+			d="M6.25312 4.06641L5.3125 6.62974V17.1064H8.65625V18.9997H10.5375L12.3125 17.1064H15.0312L18.6875 13.2064V4.06641H6.25312ZM17.4344 12.5364L15.3438 14.7664H12L10.225 16.6597V14.7664H7.40313V5.40307H17.4344V12.5364ZM15.3438 7.96641V11.8631H14.0906V7.96641H15.3438ZM12 7.96641V11.8631H10.7469V7.96641H12Z"
+			fill="currentColor"
+		/>
+	</svg>,
+	'Twitch'
+);
