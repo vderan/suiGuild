@@ -20,6 +20,8 @@ export const MenuButton = ({
 		<MenuButtonContainer
 			isFocused={isFocused}
 			onClick={onClick}
+			disableRipple
+			disableElevation
 			startIcon={
 				startIcon ? (
 					<StartIcon fontSize="small" />
@@ -52,12 +54,13 @@ const MenuButtonContainer = styled(Button, {
 	minWidth: 'initial',
 	boxSizing: 'border-box',
 	width: '100%',
+	transition: 'none',
 	'& .MuiSvgIcon-root': {
-		color: theme.palette.text.primary
+		color: isFocused ? theme.palette.buttonText.white : theme.palette.text.primary
 	},
 	'& .MuiButton-startIcon': {
 		margin: 0,
-		opacity: isFocused ? 1 : 0.5
+		opacity: isFocused ? 0.7 : 0.5
 	},
 	borderRadius: theme.spacing(1),
 	background: isFocused ? theme.palette.gradient.secondary : null,
@@ -67,8 +70,24 @@ const MenuButtonContainer = styled(Button, {
 	fontSize: theme.spacing(1.75),
 	textTransform: 'none',
 	whiteSpace: 'nowrap',
-	color: theme.palette.text.primary,
-	'&:acive': {
+	color: isFocused ? theme.palette.buttonText.white : theme.palette.text.primary,
+	'&:after': {
+		transition: 'opacity 0.4s ease',
+		opacity: 0,
+		content: '""',
+		position: 'absolute',
+		inset: 0,
+		padding: theme.spacing(0.125),
+		borderRadius: theme.spacing(1),
+		WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+		WebkitMaskComposite: 'xor',
+		maskComposite: 'exclude',
 		background: theme.palette.gradient.secondary
+	},
+	'&:hover': {
+		backgroundColor: 'transparent',
+		'&::after': {
+			opacity: 1
+		}
 	}
 }));

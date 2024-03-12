@@ -1,13 +1,51 @@
-import { Button } from '@mui/material';
-import { icons } from 'src/components/icons';
+import { Box, Button } from '@mui/material';
+import { Icons, icons } from 'src/components/icons';
 import { CircularProgress } from 'src/components/Progress';
 import { Tooltip } from 'src/components/Tooltip';
 import { ICustomButtonProps } from './Button.types';
 import { styled } from '@mui/material/styles';
 import { BUTTON_ICON_SIZE } from 'src/constants/theme.constants';
 import { NavLink } from 'react-router-dom';
+import { ColorModeContext } from 'src/contexts';
+import { useContext } from 'react';
 
 type ButtonProps = ICustomButtonProps & { component?: React.ElementType; loaderSize?: number };
+
+const Icon = ({ iconName, size }: { iconName: Icons; size: 'inherit' | 'large' | 'medium' | 'small' }) => {
+	const Icon = icons[iconName];
+	const { theme } = useContext(ColorModeContext);
+
+	return (
+		<Icon
+			fontSize={size}
+			sx={{
+				...(theme.palette.mode === 'light' && {
+					'path[fill]': {
+						fill: 'url(#svgGradient1)'
+					},
+					'path[stroke]': {
+						stroke: 'url(#svgGradientStroke)'
+					},
+					'circle[fill]': {
+						fill: 'url(#svgGradient1)'
+					},
+					'circle[stroke]': {
+						stroke: 'url(#svgGradientStroke)'
+					},
+					'rect[fill]': {
+						fill: 'url(#svgGradient1)'
+					},
+					'rect[stroke]': {
+						stroke: 'url(#svgGradientStroke)'
+					}
+				}),
+				...(theme.palette.mode === 'dark' && {
+					color: theme => theme.palette.system.default
+				})
+			}}
+		/>
+	);
+};
 
 export const SecondaryButton = ({
 	disabled = false,
@@ -25,9 +63,8 @@ export const SecondaryButton = ({
 	loaderSize,
 	...props
 }: ButtonProps) => {
-	const StartIcon = icons[startIcon as keyof typeof icons];
-	const EndIcon = icons[endIcon as keyof typeof icons];
 	const isOnlyIcon = Boolean(startIcon || endIcon || startImage || endImage) && !children;
+	const { isDarkMode } = useContext(ColorModeContext);
 
 	const button = (
 		<SecondaryButtonContainer
@@ -42,7 +79,7 @@ export const SecondaryButton = ({
 			startIcon={
 				!loading ? (
 					startIcon ? (
-						<StartIcon fontSize={iconSize || size} sx={{ color: theme => theme.palette.system.icon }} />
+						<Icon iconName={startIcon} size={iconSize || size} />
 					) : startImage ? (
 						<img src={startImage} alt="startImg" width={BUTTON_ICON_SIZE} height={BUTTON_ICON_SIZE} />
 					) : undefined
@@ -51,7 +88,7 @@ export const SecondaryButton = ({
 			endIcon={
 				!loading ? (
 					endIcon ? (
-						<EndIcon fontSize={iconSize || size} sx={{ color: theme => theme.palette.system.icon }} />
+						<Icon iconName={endIcon} size={iconSize || size} />
 					) : endImage ? (
 						<img src={endImage} alt="endImg" width={BUTTON_ICON_SIZE} height={BUTTON_ICON_SIZE} />
 					) : undefined
@@ -60,7 +97,21 @@ export const SecondaryButton = ({
 			{...props}
 		>
 			{loading ? <CircularProgress size={loaderSize} /> : null}
-			{children}
+			{isDarkMode
+				? children
+				: children && (
+						<Box
+							sx={{
+								background: theme => theme.palette.gradient.main,
+								WebkitBackgroundClip: 'text',
+								backgroundClip: 'text',
+								WebkitTextFillColor: 'transparent',
+								WebkitBoxDecorationBreak: 'clone'
+							}}
+						>
+							{children}
+						</Box>
+				  )}
 		</SecondaryButtonContainer>
 	);
 
@@ -102,7 +153,7 @@ const SecondaryButtonContainer = styled(Button, {
 		lineHeight: isSmall ? theme.spacing(2.5) : theme.spacing(3),
 		textTransform: 'none',
 		whiteSpace: 'nowrap',
-		color: theme.palette.text.secondary,
+		color: theme.palette.system.default,
 		position: 'relative',
 		'&::after': {
 			content: '""',
@@ -121,15 +172,17 @@ const SecondaryButtonContainer = styled(Button, {
 			}
 		},
 		'&:hover': {
-			backgroundColor: 'transparent',
+			backgroundColor: theme.palette.surface.buttonBg,
 			boxShadow: `${theme.spacing(0, 1, 2, 0)} ${theme.palette.shadow.main}`,
 			'&::after': {
 				padding: theme.spacing(0.125),
-				background: theme.palette.blue[300]
+				background: theme.palette.system.default
 			}
 		},
 		'&:active': {
-			background: theme.palette.border.subtle,
+			...(theme.palette.mode === 'dark' && {
+				background: theme.palette.border.subtle
+			}),
 			'&::after': {
 				padding: theme.spacing(0.125),
 				background: theme.palette.gradient.main
@@ -142,7 +195,7 @@ const SecondaryButtonContainer = styled(Button, {
 			margin: 0
 		},
 		'&.Mui-disabled': {
-			color: theme.palette.text.secondary
+			color: theme.palette.system.default
 		}
 	};
 });

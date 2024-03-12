@@ -18,7 +18,6 @@ import logoLightImg from 'src/assets/icons/logo-light.svg';
 import { ipfsUrl } from 'src/helpers/ipfs.helpers';
 import { avatarUrl } from 'src/constants/images.constants';
 import { LoginModal } from './LoginModal';
-import { Icon } from 'src/components/Icon';
 import { GroupChats } from 'src/views/Forum/components/Chat/GroupChats';
 import { ChatCard } from 'src/views/Forum/components/Chat/ChatCard/ChatCard';
 import { GroupInfoCard } from 'src/views/Forum/components/Chat/GroupInfoCard/GroupInfoCard';
@@ -57,9 +56,7 @@ export const Header = ({ isSidebarAlwaysClosed = false }: { isSidebarAlwaysClose
 	const { warningSnackbar } = useSnackbar();
 
 	const menuData: IMenuProps = {
-		label: iMid ? (
-			<Icon icon="menu" sx={{ cursor: 'pointer' }} />
-		) : (
+		label: (
 			<Box
 				sx={theme => ({
 					display: 'flex',
@@ -73,7 +70,11 @@ export const Header = ({ isSidebarAlwaysClosed = false }: { isSidebarAlwaysClose
 			>
 				<HeaderAvatar image={ipfsUrl(profile?.avatar ?? avatarUrl)} />
 				<Label> {formatAddress(account?.address || '')}</Label>
-				<IconButton icon="chevronDown" size="large" />
+				<IconButton
+					icon="chevronDown"
+					size="large"
+					sx={{ color: theme => theme.palette.text.primary, opacity: 0.5, '&:hover': { opacity: 1 } }}
+				/>
 			</Box>
 		),
 		id: 'appMenu',
@@ -144,7 +145,7 @@ export const Header = ({ isSidebarAlwaysClosed = false }: { isSidebarAlwaysClose
 						top: 0,
 						width: '100%',
 						maxHeight: theme.spacing(9),
-						background: 'transparent',
+						background: theme.palette.surface.buttonBg,
 						boxShadow: 'none',
 						borderBottom: `${theme.spacing(0.125)} solid ${theme.palette.border.subtle}`,
 						backdropFilter: `blur(${theme.spacing(0.5)})`,
@@ -160,7 +161,12 @@ export const Header = ({ isSidebarAlwaysClosed = false }: { isSidebarAlwaysClose
 									(isSidebarAlwaysClosed || !isSidebarFullShown ? (
 										<SidebarDrawer />
 									) : (
-										<IconButton size="large" icon="menu" onClick={() => setIsSideMenuOpenedState(prev => !prev)} />
+										<IconButton
+											size="large"
+											icon="menu"
+											sx={{ color: theme => theme.palette.text.primary, opacity: 0.5, '&:hover': { opacity: 1 } }}
+											onClick={() => setIsSideMenuOpenedState(prev => !prev)}
+										/>
 									))}
 
 								<Link component={NavLink} sx={{ display: 'flex', alignItems: 'center' }} to="/home">

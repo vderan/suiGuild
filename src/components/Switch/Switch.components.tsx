@@ -17,11 +17,11 @@ export const SwitchField = ({ ...props }: SwitchProps) => {
 						position: 'absolute',
 						top: theme.spacing(0.125),
 						borderRadius: '50%',
-						backgroundColor: props.disabled ? theme.palette.border.default : theme.palette.success.main,
+						backgroundColor: props.disabled ? theme.palette.border.subtle : theme.palette.error.main,
 						right: theme.spacing(-0.375)
 					})}
 				>
-					<CheckIcon fontSize="extraSmall" />
+					<CheckIcon fontSize="extraSmall" sx={{ color: theme => theme.palette.text.primary }} />
 				</Box>
 			}
 		/>
@@ -33,9 +33,9 @@ const SwitchContanier = styled(Switch)(({ theme, checked, disabled }) => ({
 	width: theme.spacing(5.5),
 	height: theme.spacing(3),
 	borderRadius: theme.spacing(3),
-	border: `${theme.spacing(0.125)} solid ${theme.palette.border.default}`,
+	border: `${theme.spacing(0.125)} solid ${theme.palette.border.subtle}`,
 	'&:hover': {
-		borderColor: disabled ? theme.palette.border.default : theme.palette.light[300]
+		borderColor: disabled ? theme.palette.border.subtle : theme.palette.text.primary
 	},
 	'.MuiSwitch-switchBase': {
 		height: '100%',
@@ -47,7 +47,7 @@ const SwitchContanier = styled(Switch)(({ theme, checked, disabled }) => ({
 		width: '400%'
 	},
 	'& .MuiSwitch-thumb': {
-		color: disabled ? theme.palette.border.default : theme.palette.error.main,
+		color: disabled ? theme.palette.border.subtle : theme.palette.success.main,
 		width: theme.spacing(2.5),
 		height: theme.spacing(2.5),
 		position: 'absolute',

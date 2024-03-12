@@ -90,7 +90,7 @@ export const Menu = ({
 								color: theme => theme.palette.text.primary,
 								...(menu.isNeedDivider && {
 									'&:last-child': {
-										borderTop: theme => `${theme.spacing(0.125)} solid ${theme.palette.border.default}`
+										borderTop: theme => `${theme.spacing(0.125)} solid ${theme.palette.border.subtle}`
 									}
 								})
 							}}
@@ -103,7 +103,14 @@ export const Menu = ({
 									gap: theme => theme.spacing(8.75)
 								}}
 							>
-								<PreTitle fontWeight={400}>{menu.label}</PreTitle>
+								<PreTitle
+									fontWeight={400}
+									sx={{
+										color: 'inherit'
+									}}
+								>
+									{menu.label}
+								</PreTitle>
 								{menu.icon ? (
 									<ListItemIcon>
 										<IconComponent fontSize="small" />

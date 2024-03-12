@@ -39,7 +39,11 @@ export const BottomNavigationBar = () => {
 			>
 				<Avatar image={ipfsUrl(profile?.avatar || avatarUrl)} />
 				{isProfileSelected && (
-					<ButtonMediumText sx={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>Profile</ButtonMediumText>
+					<ButtonMediumText
+						sx={{ overflow: 'hidden', textOverflow: 'ellipsis', color: theme => theme.palette.buttonText.white }}
+					>
+						Profile
+					</ButtonMediumText>
 				)}
 			</ButtonBase>
 		),
@@ -96,9 +100,8 @@ export const BottomNavigationBar = () => {
 				right: 0,
 				zIndex: 1400,
 				borderRadius: 0,
-				background:
-					'linear-gradient(89.6deg, rgba(21, 20, 20, 0.16) 0%, rgba(31, 31, 31, 0.16) 14.26%, rgba(21, 20, 20, 0.16) 28.83%)',
-				borderTop: `${theme.spacing(0.125)} solid ${theme.palette.border.default}`,
+				background: theme.palette.surface.background,
+				borderTop: `${theme.spacing(0.125)} solid ${theme.palette.border.subtle}`,
 				backdropFilter: `blur(${theme.spacing(1)})`
 			})}
 		>
@@ -119,10 +122,21 @@ export const BottomNavigationBar = () => {
 								background: isActive ? theme.palette.gradient.secondary : 'transparent'
 							})}
 						>
-							<Icon icon={item.icon} fontSize="small" sx={{ opacity: isActive ? 1 : 0.5 }} />
+							<Icon
+								icon={item.icon}
+								fontSize="small"
+								sx={{
+									opacity: isActive ? 1 : 0.5,
+									color: isActive ? theme => theme.palette.system.default : theme => theme.palette.text.secondary
+								}}
+							/>
 
 							{isActive && (
-								<ButtonMediumText sx={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.title}</ButtonMediumText>
+								<ButtonMediumText
+									sx={{ overflow: 'hidden', textOverflow: 'ellipsis', color: theme => theme.palette.buttonText.white }}
+								>
+									{item.title}
+								</ButtonMediumText>
 							)}
 						</Link>
 					);

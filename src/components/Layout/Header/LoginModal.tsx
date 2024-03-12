@@ -4,15 +4,20 @@ import { useWallets, useConnectWallet } from '@mysten/dapp-kit';
 import { ButtonSmallText, H1Title, H2Title, Paragraph3, PreTitle } from 'src/components/Typography';
 import homeImg from 'src/assets/images/home.png';
 import homeMobileImg from 'src/assets/images/home-mobile.png';
+import homeLightImg from 'src/assets/images/home-light.png';
+import homeMobileLightImg from 'src/assets/images/home-mobile-light.png';
 import { SecondaryButton } from 'src/components/Button';
 import { ILoginButtonProps } from './LoginModal.types';
 import { IWalletProps, suiWallets } from 'src/constants/wallets.constants';
 import { useDevice } from 'src/hooks/useDevice';
+import { ColorModeContext } from 'src/contexts';
+import { useContext } from 'react';
 
 export const LoginModal = ({ open, onClose }: ILoginButtonProps) => {
 	const wallets = useWallets();
 	const { mutate: connect } = useConnectWallet();
 	const { iMd } = useDevice();
+	const { isDarkMode } = useContext(ColorModeContext);
 
 	const handleConnect = (_wallet: IWalletProps) => {
 		const wallet = wallets.find(w => w.name === _wallet.name);
@@ -25,6 +30,10 @@ export const LoginModal = ({ open, onClose }: ILoginButtonProps) => {
 	};
 
 	const Title = iMd ? H2Title : H1Title;
+
+	const images = isDarkMode
+		? { mobile: homeMobileImg, desktop: homeImg }
+		: { mobile: homeMobileLightImg, desktop: homeLightImg };
 
 	return (
 		<Modal
@@ -50,8 +59,8 @@ export const LoginModal = ({ open, onClose }: ILoginButtonProps) => {
 					maxHeight: '580px',
 					height: 'calc(100% - 32px)',
 					boxSizing: 'border-box',
-					background: theme.palette.dark[700],
-					border: `${theme.spacing(0.125)} solid ${theme.palette.border.subtle}`,
+					background: theme.palette.surface.container,
+					border: isDarkMode ? `${theme.spacing(0.125)} solid ${theme.palette.border.subtle}` : 'none',
 					borderRadius: 1.5,
 					[theme.breakpoints.down('md')]: {
 						flexDirection: 'column',
@@ -78,8 +87,10 @@ export const LoginModal = ({ open, onClose }: ILoginButtonProps) => {
 					})}
 				>
 					<Box sx={theme => ({ padding: { xs: 3, md: theme.spacing(4, 7, 0, 4) } })}>
-						<PreTitle textTransform="uppercase">Enter the Guild Hall!</PreTitle>
-						<Title>Login with your account</Title>
+						<PreTitle sx={{ color: theme => theme.palette.buttonText.white, opacity: 0.8 }} textTransform="uppercase">
+							Enter the Guild Hall!
+						</PreTitle>
+						<Title sx={{ color: theme => theme.palette.buttonText.white }}>Login with your account</Title>
 					</Box>
 					<Box
 						sx={theme => ({
@@ -109,7 +120,7 @@ export const LoginModal = ({ open, onClose }: ILoginButtonProps) => {
 									width: '100%'
 								}
 							})}
-							src={iMd ? homeMobileImg : homeImg}
+							src={iMd ? images.mobile : images.desktop}
 							alt="homeImage"
 						/>
 					</Box>

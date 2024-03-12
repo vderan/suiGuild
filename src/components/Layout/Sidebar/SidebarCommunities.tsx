@@ -36,7 +36,7 @@ export const SidebarCommunities = ({ isFullSize = true }: { isFullSize?: boolean
 
 	return (
 		<>
-			{!isFullSize && <Divider sx={{ borderColor: theme => theme.palette.border.subtle }} />}
+			{!isFullSize && <Divider />}
 			<Stack gap={2.5}>
 				{isFullSize && (
 					<Stack
@@ -51,7 +51,11 @@ export const SidebarCommunities = ({ isFullSize = true }: { isFullSize?: boolean
 						onClick={handleChange}
 					>
 						<H3Title noWrap>{isLoggedIn ? 'My communities' : 'Trendy communities'}</H3Title>
-						<Icon icon={isShowExpandableSection ? 'chevronUp' : 'chevronDown'} fontSize="large" />
+						<Icon
+							icon={isShowExpandableSection ? 'chevronUp' : 'chevronDown'}
+							sx={{ color: theme => theme.palette.border.highlight, opacity: 0.5 }}
+							fontSize="large"
+						/>
 					</Stack>
 				)}
 				<Collapse in={!isFullSize || isShowExpandableSection} timeout={0}>
@@ -103,9 +107,7 @@ export const SidebarCommunities = ({ isFullSize = true }: { isFullSize?: boolean
 													</QuaternaryButton>
 												))}
 										</Stack>
-										{index < topForums.length - 1 && isFullSize && (
-											<Divider sx={{ borderColor: theme => theme.palette.border.subtle }} />
-										)}
+										{index < topForums.length - 1 && isFullSize && <Divider />}
 									</React.Fragment>
 								))}
 								{isFullSize && (
@@ -116,7 +118,7 @@ export const SidebarCommunities = ({ isFullSize = true }: { isFullSize?: boolean
 											width: 'max-content'
 										}}
 									>
-										<ButtonSmallText fontWeight={700} color="text.secondary">
+										<ButtonSmallText fontWeight={700} sx={{ opacity: 0.3 }}>
 											See more
 										</ButtonSmallText>
 									</Link>

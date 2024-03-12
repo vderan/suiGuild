@@ -417,8 +417,8 @@ const SHARED: Readonly<Partial<CustomThemeOptions>> = {
 				paper: ({ theme }) => ({
 					color: theme.palette.text.primary,
 					marginTop: theme.spacing(0.375),
-					border: `1px solid ${theme.palette.border.highlight}`,
-					backgroundColor: theme.palette.dark[500]
+					border: `1px solid ${theme.palette.border.subtle}`,
+					backgroundColor: theme.palette.surface.container
 				})
 			}
 		},
@@ -431,10 +431,12 @@ const SHARED: Readonly<Partial<CustomThemeOptions>> = {
 					fontSize: 14,
 					padding: theme.spacing(1, 1.5),
 					'&:hover': {
-						background: theme.palette.gradient.main
+						background: theme.palette.gradient.main,
+						color: theme.palette.buttonText.white
 					},
 					'&.Mui-selected': {
-						background: theme.palette.gradient.main
+						background: theme.palette.gradient.main,
+						color: theme.palette.buttonText.white
 					}
 				})
 			}
@@ -513,9 +515,9 @@ const SHARED: Readonly<Partial<CustomThemeOptions>> = {
 		},
 		MuiDivider: {
 			styleOverrides: {
-				root: {
-					borderColor: '#FFFFFF33'
-				}
+				root: ({ theme }) => ({
+					borderColor: theme.palette.border.subtle
+				})
 			}
 		},
 		MuiSvgIcon: {
@@ -600,6 +602,9 @@ const FRONT_COLORS_LIGHT: Readonly<PaletteOptions> = {
 		default: '#6060604D',
 		highlight: '#60606080'
 	},
+	background: {
+		default: '#F1F1F1'
+	},
 	dark: {
 		900: '#131313',
 		700: '#1F1F1F',
@@ -655,6 +660,9 @@ const FRONT_COLORS_DARK: Readonly<PaletteOptions> = {
 	text: {
 		primary: '#FFFFFF',
 		secondary: '#E5D9FF'
+	},
+	background: {
+		default: '#131313'
 	},
 	buttonText: {
 		white: '#FFFFFF'
