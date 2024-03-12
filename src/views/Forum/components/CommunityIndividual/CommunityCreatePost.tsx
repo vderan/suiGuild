@@ -1,6 +1,5 @@
 import { Box, Button, Skeleton, Stack, styled } from '@mui/material';
 import { useContext, useState } from 'react';
-import { toast } from 'react-toastify';
 import { CustomAvatar } from 'src/components/Avatar';
 import { Dialog } from 'src/components/Dialog';
 import { Icon } from 'src/components/Icon';
@@ -10,6 +9,8 @@ import { Paragraph2 } from 'src/components/Typography';
 import { avatarUrl } from 'src/constants/images.constants';
 import { AuthContext, IForum } from 'src/contexts';
 import { ipfsUrl } from 'src/helpers/ipfs.helpers';
+import { useSnackbar } from 'src/hooks';
+
 import { useDevice } from 'src/hooks/useDevice';
 
 const Wrapper = styled(Stack)(({ theme }) => ({
@@ -27,11 +28,12 @@ export const CommunityCreatePost = ({ forum, isLoading = false }: { forum?: IFor
 	const { profile, isLoggedIn } = useContext(AuthContext);
 	const { iMid } = useDevice();
 	const [isCreatePostModalShown, setIsCreatePostModalShown] = useState(false);
+	const { warningSnackbar } = useSnackbar();
 
 	const openCreatePostModal = () => {
 		const isFollowing = forum?.followers.some(follower => `0x${follower}` === profile?.id);
 		if (!isFollowing) {
-			toast.warning('You can not post about communities you do not follow!', { theme: 'colored' });
+			warningSnackbar('You can not post about communities you do not follow!');
 			return;
 		}
 		setIsCreatePostModalShown(true);

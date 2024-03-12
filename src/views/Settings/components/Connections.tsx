@@ -9,8 +9,7 @@ import { IEditUserProps } from 'src/hooks/types';
 import { AuthContext } from 'src/contexts';
 import { useGilder } from 'src/hooks/useGilder';
 import { socials } from 'src/constants/socials.constants';
-import { toast } from 'react-toastify';
-import { ErrorHandler } from 'src/helpers';
+import { useErrorHandler, useSnackbar } from 'src/hooks';
 
 interface ConnectionForm {
 	twitter: string;
@@ -28,6 +27,8 @@ export const Connections = () => {
 	const { profile, loadUserInfo } = useContext(AuthContext);
 	const { editPersonalInfo } = useGilder();
 	const [isSubmitting, setIsSubmitting] = useState(false);
+	const { successSnackbar } = useSnackbar();
+	const { errorProcess } = useErrorHandler();
 
 	const profileSocials = useMemo(() => {
 		if (!profile || !profile?.socialLinks) return {};
@@ -51,10 +52,11 @@ export const Connections = () => {
 		};
 		try {
 			await editPersonalInfo(editUserInfo);
+			successSnackbar('Updated socials successfully!');
+
 			await loadUserInfo();
-			toast.success('Updated socials successfully!', { theme: 'colored' });
 		} catch (err) {
-			ErrorHandler.process(err);
+			errorProcess(err);
 		}
 		setIsSubmitting(false);
 	};

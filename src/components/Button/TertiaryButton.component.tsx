@@ -23,6 +23,12 @@ const Icon = ({ iconName, size }: { iconName: Icons; size: 'inherit' | 'large' |
 				},
 				'circle[stroke]': {
 					stroke: 'url(#svgGradientStroke)'
+				},
+				'rect[fill]': {
+					fill: 'url(#svgGradient1)'
+				},
+				'rect[stroke]': {
+					stroke: 'url(#svgGradientStroke)'
 				}
 			}}
 		/>
@@ -76,7 +82,7 @@ export const TertiaryButton = ({
 			{loading ? <CircularProgress /> : null}
 			<Box
 				sx={{
-					background: theme => theme.palette.gradient1.main,
+					background: theme => theme.palette.gradient.main,
 					WebkitBackgroundClip: 'text',
 					backgroundClip: 'text',
 					WebkitTextFillColor: 'transparent',
@@ -117,7 +123,7 @@ const TertiaryButtonContainer = styled(Button, {
 		padding: paddings(),
 		borderRadius: theme.spacing(1),
 		opacity: disabled ? 0.5 : 1,
-		background: theme.palette.tertiary.main,
+		background: theme.palette.light[300],
 		fontFamily: 'Clash Display',
 		fontStyle: 'normal',
 		fontWeight: 600,
@@ -139,16 +145,16 @@ const TertiaryButtonContainer = styled(Button, {
 		},
 		'&:focus': {
 			'&::after': {
-				background: theme.palette.gradient1.main,
+				background: theme.palette.gradient.main,
 				padding: theme.spacing(0.25)
 			}
 		},
 		'&:hover': {
-			background: theme.palette.tertiary.main,
+			background: theme.palette.light[300],
 			boxShadow: `${theme.spacing(0, 1, 2, 0)} ${theme.palette.shadow.main}`,
 			'&::after': {
 				padding: theme.spacing(0.125),
-				background: theme.palette.gradient1.main
+				background: theme.palette.gradient.main
 			}
 		},
 		'&:active': {

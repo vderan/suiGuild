@@ -1,6 +1,5 @@
 import { useContext, useRef, useState } from 'react';
 import { Box, ButtonBase, Collapse } from '@mui/material';
-import { toast } from 'react-toastify';
 import { Paragraph2, CTitle, Paragraph3 } from 'src/components/Typography';
 import { IComment, AuthContext } from 'src/contexts';
 import { Reply } from './Reply';
@@ -17,8 +16,8 @@ import { ReadMore } from 'src/components/ReadMore';
 import pluralize from 'pluralize';
 import { useCustomSWR } from 'src/hooks/useCustomSWR';
 import { useProfile } from 'src/hooks/useProfile';
-import { ErrorHandler } from 'src/helpers';
 import { useDevice } from 'src/hooks/useDevice';
+import { useErrorHandler, useSnackbar } from 'src/hooks';
 
 interface ICommentProps {
 	comment: IComment;
@@ -30,7 +29,8 @@ export const Comment = ({ comment, communityIdx }: ICommentProps) => {
 	const replyFormRef = useRef<null | HTMLFormElement>(null);
 	const [isShowExpandableSection, setIsShowExpandableSection] = useState(false);
 	const [isReplySubmitting, setIsReplySubmitting] = useState(false);
-
+	const { warningSnackbar } = useSnackbar();
+	const { errorProcess } = useErrorHandler();
 	const { getUserInfo } = useProfile();
 	const { iMd } = useDevice();
 
@@ -46,7 +46,7 @@ export const Comment = ({ comment, communityIdx }: ICommentProps) => {
 
 	const addReplyToComment = async (content: string) => {
 		if (!profile?.displayName) {
-			toast.warning('You should have your own display name!', { theme: 'colored' });
+			warningSnackbar('You should have your own display name!');
 			return;
 		}
 		setIsReplySubmitting(true);
@@ -60,7 +60,7 @@ export const Comment = ({ comment, communityIdx }: ICommentProps) => {
 			);
 			replyFormRef.current?.reset();
 		} catch (err) {
-			ErrorHandler.process(err);
+			errorProcess(err);
 		}
 		setIsReplySubmitting(false);
 	};

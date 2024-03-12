@@ -4,12 +4,12 @@ import { Form } from 'src/components/Form';
 import { InputField } from 'src/components/InputField';
 import { EditCommunityForm } from 'src/components/Layout/Header/Community.types';
 import { IForum } from 'src/contexts';
-import { ErrorHandler } from 'src/helpers';
 import { ipfsUrl } from 'src/helpers/ipfs.helpers';
 import { uploadAttachment } from 'src/helpers/upload.helpers';
 import { useGilder } from 'src/hooks/useGilder';
 import { editCommunitySchema } from 'src/schemas/create-community.schema';
 import { FileField } from 'src/components/FileField';
+import { useErrorHandler } from 'src/hooks';
 
 export const EditCommunityModal = ({
 	isOpen,
@@ -23,6 +23,7 @@ export const EditCommunityModal = ({
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const editForumFormRef = useRef<null | HTMLFormElement>(null);
 	const { editCommunity } = useGilder();
+	const { errorProcess } = useErrorHandler();
 
 	const handleOnFormSubmit = async (data: EditCommunityForm) => {
 		setIsSubmitting(true);
@@ -46,7 +47,7 @@ export const EditCommunityModal = ({
 			});
 			onClose?.();
 		} catch (err) {
-			ErrorHandler.process(err);
+			errorProcess(err);
 		}
 		setIsSubmitting(false);
 	};

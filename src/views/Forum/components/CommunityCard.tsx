@@ -8,10 +8,9 @@ import pluralize from 'pluralize';
 import { ipfsUrl } from 'src/helpers/ipfs.helpers';
 import { useContext, useState } from 'react';
 import { QuaternaryButton } from 'src/components/Button';
-import { toast } from 'react-toastify';
 import { useGilder } from 'src/hooks/useGilder';
 import { useDevice } from 'src/hooks/useDevice';
-import { ErrorHandler } from 'src/helpers';
+import { useErrorHandler, useSnackbar } from 'src/hooks';
 
 export const CommunityCard = ({ forum }: { forum: IForum }) => {
 	const { follow, unfollow } = useGilder();
@@ -19,11 +18,13 @@ export const CommunityCard = ({ forum }: { forum: IForum }) => {
 	const isFollowing = forum.followers.some(follower => `0x${follower}` === profile?.id);
 	const { iSm } = useDevice();
 	const [isSubmitting, setIsSubmitting] = useState(false);
+	const { warningSnackbar } = useSnackbar();
+	const { errorProcess } = useErrorHandler();
 
 	const handleFollow = async (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
 		if (profile?.id === `0x${forum.creatorInfo}` && isFollowing) {
-			toast.warning("You can't leave your own community!", { theme: 'colored' });
+			warningSnackbar("You can't leave your own community!");
 			return;
 		}
 		setIsSubmitting(true);
@@ -32,7 +33,7 @@ export const CommunityCard = ({ forum }: { forum: IForum }) => {
 			isFollowing ? await unfollow(idx) : await follow(idx);
 			await loadUserInfo();
 		} catch (e) {
-			ErrorHandler.process(e);
+			errorProcess(e);
 		}
 		setIsSubmitting(false);
 	};

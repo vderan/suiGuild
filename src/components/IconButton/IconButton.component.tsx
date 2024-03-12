@@ -44,6 +44,12 @@ export const IconButton = ({
 							},
 							'circle[stroke]': {
 								stroke: 'url(#svgGradientStroke)'
+							},
+							'rect[fill]': {
+								fill: 'url(#svgGradient1)'
+							},
+							'rect[stroke]': {
+								stroke: 'url(#svgGradientStroke)'
 							}
 						},
 						...iconSx
@@ -55,7 +61,7 @@ export const IconButton = ({
 					color="text.secondary"
 					sx={{
 						'.MuiIconButton-root:hover &': {
-							background: theme => theme.palette.gradient1.main,
+							background: theme => theme.palette.gradient.main,
 							WebkitBackgroundClip: 'text',
 							backgroundClip: 'text',
 							WebkitTextFillColor: 'transparent',

@@ -120,13 +120,13 @@ export const ShareBox = ({ size = 'small', label, ...props }: IShareBoxProps) =>
 											},
 											'&:hover': {
 												'&::after': {
-													background: theme => theme.palette.gradient2.main
+													background: theme => theme.palette.gradient.secondary
 												}
 											}
 										}}
 										onClick={() => copy(i.href)}
 									>
-										<ShareIcon sx={{ width: '32px', height: '32px', color: theme => theme.palette.tertiary.main }} />
+										<ShareIcon sx={{ width: '32px', height: '32px', color: theme => theme.palette.system.icon }} />
 										<H3Title>{i.title}</H3Title>
 									</Box>
 								);
@@ -172,7 +172,7 @@ export const ShareBox = ({ size = 'small', label, ...props }: IShareBoxProps) =>
 										backgroundColor: 'transparent',
 										border: 'none',
 										'&:hover': {
-											color: theme => theme.palette.primary[700]
+											color: theme => theme.palette.blue[700]
 										}
 									}}
 									onClick={() => copy(i.href)}

@@ -15,7 +15,7 @@ export const Icon = ({ spacingLeft, spacingRight, icon, label, ...props }: IIcon
 				sx={{
 					ml: spacingLeft ? 2 : 0,
 					mr: spacingRight ? 2 : 0,
-					color: theme.palette.tertiary.main,
+					color: theme.palette.system.icon,
 					...props.sx
 				}}
 			/>

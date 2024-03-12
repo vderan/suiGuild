@@ -10,7 +10,7 @@ import { NotFound } from 'src/components/NotFound';
 import { ListSkeleton } from 'src/components/Skeleton';
 import { H4Title } from 'src/components/Typography';
 import { AuthContext } from 'src/contexts';
-import { ErrorHandler } from 'src/helpers';
+import { useErrorHandler } from 'src/hooks';
 import { useDebounce } from 'src/hooks/useDebounce';
 import { useDevice } from 'src/hooks/useDevice';
 import { useGilder } from 'src/hooks/useGilder';
@@ -29,6 +29,7 @@ export const ProfileGamesForm = ({ isOpen, onClose }: { isOpen: boolean; onClose
 	const debouncedSearchValue = useDebounce(searchValue, 500);
 	const { addGameSummary } = useGilder();
 	const { iMid } = useDevice();
+	const { errorProcess } = useErrorHandler();
 
 	const {
 		data: games,
@@ -48,7 +49,7 @@ export const ProfileGamesForm = ({ isOpen, onClose }: { isOpen: boolean; onClose
 			await loadUserInfo();
 			onClose();
 		} catch (err) {
-			ErrorHandler.process(err);
+			errorProcess(err);
 		}
 		setIsSubmitting(false);
 	};
@@ -148,7 +149,7 @@ export const ProfileGamesForm = ({ isOpen, onClose }: { isOpen: boolean; onClose
 																			inset: 0,
 																			padding: theme.spacing(0.125),
 																			borderRadius: theme.spacing(1),
-																			background: theme.palette.gradient2.main,
+																			background: theme.palette.gradient.secondary,
 																			WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
 																			WebkitMaskComposite: 'xor',
 																			maskComposite: 'exclude'

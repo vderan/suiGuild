@@ -10,9 +10,9 @@ import { getGameDetails } from 'src/api/games';
 import { useGilder } from 'src/hooks/useGilder';
 import { useDevice } from 'src/hooks/useDevice';
 import { useCustomSWR } from 'src/hooks/useCustomSWR';
-import { ErrorHandler } from 'src/helpers';
 import { ErrorMessage } from 'src/components/ErrorMessage';
 import { ListSkeleton } from 'src/components/Skeleton';
+import { useErrorHandler } from 'src/hooks';
 
 export const ProfileGames = () => {
 	const { gameSummaries, loadUserInfo } = useContext(AuthContext);
@@ -21,6 +21,7 @@ export const ProfileGames = () => {
 	const [selectedIndex, setSelectedIndex] = useState(0);
 	const { removeGameSummary } = useGilder();
 	const { iMd, iMid } = useDevice();
+	const { errorProcess } = useErrorHandler();
 
 	const {
 		data: games,
@@ -46,7 +47,7 @@ export const ProfileGames = () => {
 			await removeGameSummary(index);
 			await loadUserInfo();
 		} catch (e) {
-			ErrorHandler.process(e);
+			errorProcess(e);
 		}
 		setIsDeleting(false);
 	};

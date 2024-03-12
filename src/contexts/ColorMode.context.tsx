@@ -40,24 +40,40 @@ declare module '@mui/material/styles' {
 			900: string;
 			700: string;
 			500: string;
+			400: string;
 		};
 		light: {
+			300: string;
+			200: string;
+			100: string;
+		};
+		blue: {
 			900: string;
 			700: string;
 			500: string;
+			300: string;
 		};
-		gradient1: {
+		purple: {
+			900: string;
+			700: string;
+			500: string;
+			300: string;
+		};
+		surface: { background: string; buttonBg: string; iconBtn: string; container: string };
+		system: { default: string; icon: string };
+		link: {
 			main: string;
 		};
-		gradient2: {
+		buttonText: {
+			white: string;
+		};
+		gradient: {
 			main: string;
+			secondary: string;
 		};
 		shadow: {
 			main: string;
 			secondary: string;
-		};
-		tertiary: {
-			main: string;
 		};
 		border: {
 			subtle: string;
@@ -65,42 +81,46 @@ declare module '@mui/material/styles' {
 			highlight: string;
 		};
 	}
-	interface PaletteColor {
-		900: string;
-		700: string;
-		500: string;
-		300: string;
-	}
-	interface SimplePaletteColorOptions {
-		900?: string;
-		700?: string;
-		500?: string;
-		300?: string;
-	}
 
 	interface PaletteOptions {
 		dark: {
-			900?: string;
-			700?: string;
-			500?: string;
+			900: string;
+			700: string;
+			500: string;
+			400: string;
 		};
 		light: {
-			900?: string;
-			700?: string;
-			500?: string;
+			300: string;
+			200: string;
+			100: string;
 		};
-		gradient1: {
+		blue: {
+			900: string;
+			700: string;
+			500: string;
+			300: string;
+		};
+		purple: {
+			900: string;
+			700: string;
+			500: string;
+			300: string;
+		};
+		surface: { background: string; buttonBg: string; iconBtn: string; container: string };
+		system: { default: string; icon: string };
+		link: {
 			main: string;
 		};
-		gradient2: {
+		buttonText: {
+			white: string;
+		};
+		gradient: {
 			main: string;
+			secondary: string;
 		};
 		shadow: {
 			main: string;
 			secondary: string;
-		};
-		tertiary: {
-			main: string;
 		};
 		border: {
 			subtle: string;
@@ -132,10 +152,14 @@ interface CustomTheme extends Theme {
 	status: {
 		dark: string;
 		light: string;
-		gradient1: string;
-		gradient2: string;
+		blue: string;
+		purple: string;
+		buttonText: string;
+		link: string;
+		surface: string;
+		system: string;
+		gradient: string;
 		shadow: string;
-		tertiary: string;
 		border: string;
 	};
 }
@@ -149,6 +173,15 @@ declare module '@mui/material/SvgIcon' {
 declare module '@mui/material/IconButton' {
 	interface IconButtonPropsSizeOverrides {
 		extraSmall: true;
+	}
+}
+
+declare module 'notistack' {
+	interface VariantOverrides {
+		toast: {
+			type?: 'error' | 'success' | 'info' | 'warning';
+			headerMsg?: string;
+		};
 	}
 }
 
@@ -173,10 +206,14 @@ declare module '@mui/material/styles' {
 		status?: {
 			dark: string;
 			light: string;
-			gradient1: string;
-			gradient2: string;
+			blue: string;
+			buttonText: string;
+			purple: string;
+			link: string;
+			surface: string;
+			system: string;
+			gradient: string;
 			shadow: string;
-			tertiary: string;
 			border: string;
 		};
 	}
@@ -280,16 +317,15 @@ const SHARED: Readonly<Partial<CustomThemeOptions>> = {
 				'&::-webkit-scrollbar': {
 					width: '8px'
 				},
-				'&::-webkit-scrollbar-track': {
-					boxShadow: theme.palette.secondary[900],
-					webkitBoxShadow: theme.palette.secondary[900]
-				},
 				'&::-webkit-scrollbar-thumb': {
 					border: '3px solid rgba(0, 0, 0, 0)',
 					borderTop: 'none',
 					borderBottom: 'none',
 					backgroundClip: 'padding-box',
 					backgroundColor: theme.palette.border.highlight
+				},
+				'.notistack-SnackbarContainer': {
+					zIndex: 9999
 				}
 			})
 		},
@@ -395,10 +431,10 @@ const SHARED: Readonly<Partial<CustomThemeOptions>> = {
 					fontSize: 14,
 					padding: theme.spacing(1, 1.5),
 					'&:hover': {
-						background: theme.palette.gradient1.main
+						background: theme.palette.gradient.main
 					},
 					'&.Mui-selected': {
-						background: theme.palette.gradient1.main
+						background: theme.palette.gradient.main
 					}
 				})
 			}
@@ -420,7 +456,7 @@ const SHARED: Readonly<Partial<CustomThemeOptions>> = {
 						borderWidth: 1
 					},
 					'&:hover fieldset': {
-						borderColor: `${theme.palette.primary[300]} !important`
+						borderColor: `${theme.palette.blue[300]} !important`
 					},
 					'&.Mui-focused fieldset': {
 						borderColor: `${theme.palette.border.default} !important`,
@@ -525,61 +561,67 @@ const SHARED: Readonly<Partial<CustomThemeOptions>> = {
 // Declare Light Mode
 const FRONT_COLORS_LIGHT: Readonly<PaletteOptions> = {
 	primary: {
-		900: '#4176FF',
-		700: '#5987FF',
-		500: '#9EB9FF',
-		300: '#D5E1FF',
-		main: '#ffffff' // random color because property is required
+		main: '#5987FF'
 	},
 	secondary: {
-		900: '#713DE0',
-		700: '#8E59FF',
-		500: '#B693FF',
-		main: '#ffffff' // random color because property is required
+		main: '#8E59FF'
 	},
 	success: {
-		main: '#5DC809'
+		main: '#4EA50B'
 	},
 	error: {
-		main: '#E84242'
+		main: '#D23D3D'
 	},
 	warning: {
-		main: '#F5DB53'
+		main: '#DAAF3F'
 	},
-	background: {
-		default: '#131313'
-	},
+	surface: { background: '#F1F1F1', buttonBg: '#FFFFFF', iconBtn: '#E5D9FF', container: '#FFFFFF' },
+	system: { default: '#E5D9FF', icon: '#606060' },
 	text: {
-		primary: '#FFFFFF',
-		secondary: '#D9CAF9'
+		primary: '#131313',
+		secondary: '#606060'
 	},
-	dark: {
-		900: '#131313',
-		700: '#1F1F1F',
-		500: '#2A2A2C'
+	buttonText: {
+		white: '#FFFFFF'
 	},
-	light: {
-		900: '#D9CAF9',
-		700: '#F5F0FF',
-		500: '#FFFFFF'
+	link: {
+		main: '#4176FF'
 	},
-	gradient1: {
-		main: 'linear-gradient(89.1deg, #8E59FF 0%, #5987FF 100%)'
-	},
-	gradient2: {
-		main: 'linear-gradient(267.57deg, #E84242 2.62%, #8063F3 98.59%)'
-	},
-	tertiary: {
-		main: '#E5D9FF'
+	gradient: {
+		main: 'linear-gradient(89.1deg, #8E59FF 0%, #5987FF 100%)',
+		secondary: 'linear-gradient(267.57deg, #E84242 2.62%, #8063F3 98.59%)'
 	},
 	shadow: {
 		main: '#3C6CE780',
 		secondary: '#A988FD33'
 	},
 	border: {
-		subtle: '#FFFFFF26',
-		default: '#FFFFFF4D',
-		highlight: '#FFFFFF73'
+		subtle: '#60606026',
+		default: '#6060604D',
+		highlight: '#60606080'
+	},
+	dark: {
+		900: '#131313',
+		700: '#1F1F1F',
+		500: '#242426',
+		400: '#606060'
+	},
+	light: {
+		300: '#D5D5D5',
+		200: '#F1F1F1',
+		100: '#FFFFFF'
+	},
+	blue: {
+		900: '#4176FF',
+		700: '#5987FF',
+		500: '#9EB9FF',
+		300: '#D5E1FF'
+	},
+	purple: {
+		900: '#713DE0',
+		700: '#8E59FF',
+		500: '#B693FF',
+		300: '#E5D9FF'
 	}
 };
 
@@ -594,61 +636,67 @@ const LIGHT_THEME: Readonly<CustomThemeOptions> = {
 //declare Dark Mode
 const FRONT_COLORS_DARK: Readonly<PaletteOptions> = {
 	primary: {
-		900: '#4176FF',
-		700: '#5987FF',
-		500: '#9EB9FF',
-		300: '#D5E1FF',
-		main: '#ffffff' // random color because property is required
+		main: '#5987FF'
 	},
 	secondary: {
-		900: '#713DE0',
-		700: '#8E59FF',
-		500: '#B693FF',
-		main: '#ffffff' // random color because property is required
+		main: '#8E59FF'
 	},
 	success: {
-		main: '#5DC809'
+		main: '#4EA50B'
 	},
 	error: {
-		main: '#E84242'
+		main: '#D23D3D'
 	},
 	warning: {
-		main: '#F5DB53'
+		main: '#DAAF3F'
 	},
-	background: {
-		default: '#131313'
-	},
+	surface: { background: '#131313', buttonBg: '#131313', iconBtn: '#E5D9FF', container: '#1F1F1F' },
+	system: { default: '#E5D9FF', icon: '#E5D9FF' },
 	text: {
 		primary: '#FFFFFF',
-		secondary: '#D9CAF9'
+		secondary: '#E5D9FF'
 	},
-	dark: {
-		900: '#131313',
-		700: '#1F1F1F',
-		500: '#2A2A2C'
+	buttonText: {
+		white: '#FFFFFF'
 	},
-	light: {
-		900: '#D9CAF9',
-		700: '#F5F0FF',
-		500: '#FFFFFF'
+	link: {
+		main: '#5987FF'
 	},
-	gradient1: {
-		main: 'linear-gradient(89.1deg, #8E59FF 0%, #5987FF 100%)'
-	},
-	gradient2: {
-		main: 'linear-gradient(267.57deg, #E84242 2.62%, #8063F3 98.59%)'
+	gradient: {
+		main: 'linear-gradient(89.79deg, #713DE0 -2.54%, #4176FF 99.87%)',
+		secondary: 'linear-gradient(269.83deg, #E84242 0.13%, #8063F3 99.84%)'
 	},
 	shadow: {
 		main: '#3C6CE780',
 		secondary: '#A988FD33'
 	},
-	tertiary: {
-		main: '#E5D9FF'
-	},
 	border: {
 		subtle: '#FFFFFF26',
 		default: '#FFFFFF4D',
-		highlight: '#FFFFFF73'
+		highlight: '#FFFFFF80'
+	},
+	dark: {
+		900: '#131313',
+		700: '#1F1F1F',
+		500: '#242426',
+		400: '#606060'
+	},
+	light: {
+		300: '#D5D5D5',
+		200: '#F1F1F1',
+		100: '#FFFFFF'
+	},
+	blue: {
+		900: '#4176FF',
+		700: '#5987FF',
+		500: '#9EB9FF',
+		300: '#D5E1FF'
+	},
+	purple: {
+		900: '#713DE0',
+		700: '#8E59FF',
+		500: '#B693FF',
+		300: '#E5D9FF'
 	}
 };
 const DARK_THEME: Readonly<CustomThemeOptions> = {
@@ -674,7 +722,7 @@ export const ColorModeContext = React.createContext<ColorModeContextInterface>({
 export type ColorMode = 'light' | 'dark';
 
 export const ColorModeProvider = ({ children }: PropsWithChildren) => {
-	const [mode, setMode] = useLocalStorage<ColorMode>('colorMode', 'light');
+	const [mode, setMode] = useLocalStorage<ColorMode>('colorMode', 'dark');
 	const { toggleColorMode } = React.useMemo(
 		() => ({
 			toggleColorMode: () => {

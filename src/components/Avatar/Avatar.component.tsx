@@ -8,7 +8,7 @@ import { avatarUrl } from 'src/constants/images.constants';
 import { useCustomSWR } from 'src/hooks/useCustomSWR';
 import { SxProps, Theme } from '@mui/system';
 import { NavLink } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { useSnackbar } from 'src/hooks';
 
 export const CustomAvatar = ({ image, ...props }: IAvatarProps) => {
 	return (
@@ -28,7 +28,7 @@ export const HeaderAvatar = ({ image, ...props }: IAvatarProps) => {
 				...props.sx,
 				width: theme => theme.spacing(3),
 				height: theme => theme.spacing(3),
-				border: `${theme.spacing(0.125)} solid ${theme.palette.primary[900]}`
+				border: `${theme.spacing(0.125)} solid ${theme.palette.blue[900]}`
 			}}
 		/>
 	);
@@ -44,7 +44,7 @@ export const AccAvatar = ({ image, ...props }: IAvatarProps) => {
 				...props.sx,
 				width: theme => theme.spacing(8),
 				height: theme => theme.spacing(8),
-				border: `${theme.spacing(0.25)} solid ${theme.palette.primary[900]}`
+				border: `${theme.spacing(0.25)} solid ${theme.palette.blue[900]}`
 			}}
 		/>
 	);
@@ -121,11 +121,12 @@ export const CAvatar = ({
 }) => {
 	const { getUserInfo } = useProfile();
 	const { data: user, isLoading } = useCustomSWR('getUserInfo' + address, () => getUserInfo(address));
+	const { warningSnackbar } = useSnackbar();
 
 	const handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
 		if (user && !user.isActive) {
 			event.preventDefault();
-			toast.warning('This user was deactivated!', { theme: 'colored' });
+			warningSnackbar('This user was deactivated!');
 		}
 	};
 

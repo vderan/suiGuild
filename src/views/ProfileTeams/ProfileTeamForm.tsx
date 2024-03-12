@@ -12,7 +12,7 @@ import { ipfsUrl } from 'src/helpers/ipfs.helpers';
 import { uploadAttachment } from 'src/helpers/upload.helpers';
 import { useGilder } from 'src/hooks/useGilder';
 import { teamFormSchema } from 'src/schemas/team.schema';
-import { ErrorHandler } from 'src/helpers';
+import { useErrorHandler } from 'src/hooks';
 
 export interface TeamForm {
 	name: string;
@@ -39,7 +39,7 @@ export const ProfileTeamForm = ({
 	const { addTeam, editTeam } = useGilder();
 	const { loadUserInfo } = useContext(AuthContext);
 	const [isSubmitting, setIsSubmitting] = useState(false);
-
+	const { errorProcess } = useErrorHandler();
 	const isEdit = Boolean(team);
 
 	const handleOnFormSubmit = async (data: TeamForm) => {
@@ -63,7 +63,7 @@ export const ProfileTeamForm = ({
 			await loadUserInfo();
 			onClose();
 		} catch (err) {
-			ErrorHandler.process(err);
+			errorProcess(err);
 		}
 		setIsSubmitting(false);
 	};

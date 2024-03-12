@@ -63,7 +63,7 @@ export const LoginModal = ({ open, onClose }: ILoginButtonProps) => {
 				<Box
 					sx={theme => ({
 						width: '50%',
-						background: theme.palette.gradient2.main,
+						background: theme.palette.gradient.secondary,
 						borderTopLeftRadius: theme.spacing(1.5),
 						borderBottomLeftRadius: theme.spacing(1.5),
 						display: 'flex',

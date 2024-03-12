@@ -11,7 +11,7 @@ import { joinedRoomsState } from 'src/recoil/joinedRooms';
 import { useSetRecoilState } from 'recoil';
 import { CircularProgress } from 'src/components/Progress';
 import { Box } from '@mui/material';
-import { toast } from 'react-toastify';
+import { useErrorHandler, useSnackbar } from 'src/hooks';
 
 interface IAuthClient {
 	signOut: () => Promise<void>;
@@ -65,6 +65,8 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 	const wallet = useCurrentWallet();
 	const account = useCurrentAccount();
 	const wallets = useWallets();
+	const { warningSnackbar } = useSnackbar();
+	const { errorProcess } = useErrorHandler();
 	const { mutateAsync: disconnect } = useDisconnectWallet();
 	const setJoinedRooms = useSetRecoilState(joinedRoomsState);
 	const { getUserInfo } = useProfile();
@@ -142,7 +144,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 		if (account?.address) {
 			const data = await getUserInfo(account.address);
 			if (data && !data.isActive) {
-				toast.warning('Your account was deactivated!', { theme: 'colored' });
+				warningSnackbar('Your account was deactivated!');
 				signOut();
 			} else {
 				const postNum = data?.userPosts?.some?.length || 0;
@@ -180,6 +182,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 		} else {
 			setUser(null);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [account?.address, getUserInfo, signOut]);
 
 	useEffect(() => {
@@ -195,7 +198,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 
 				await initChat(profile?.displayName);
 			} catch (e) {
-				toast.error(String(e), { theme: 'colored' });
+				errorProcess(e);
 			}
 			setIsLoaded(true);
 		}
@@ -230,7 +233,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 				</AuthContext.Provider>
 			) : (
 				<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
-					<CircularProgress size={60} />
+					<CircularProgress sx={{ color: theme => theme.palette.text.primary }} size={60} />
 				</Box>
 			)}
 		</>

@@ -8,8 +8,8 @@ import { useGilder } from 'src/hooks/useGilder';
 import { Grid, Stack, alpha } from '@mui/material';
 import { NotFound } from 'src/components/NotFound';
 import { useDevice } from 'src/hooks/useDevice';
-import { ErrorHandler } from 'src/helpers';
 import { Icon } from 'src/components/Icon';
+import { useErrorHandler } from 'src/hooks';
 
 const IMAGE_LINK = 'https://i.ytimg.com/vi/pSmc4C1KXrs/maxresdefault.jpg';
 
@@ -21,6 +21,7 @@ export const ProfileVideos = () => {
 	const [idx, setIdx] = useState(0);
 	const { iMd } = useDevice();
 	const [isDeleting, setIsDeleting] = useState(false);
+	const { errorProcess } = useErrorHandler();
 
 	const onDeleteHandle = async (index: number) => {
 		setIsDeleting(true);
@@ -29,7 +30,7 @@ export const ProfileVideos = () => {
 			await removeVideo(index);
 			await loadUserInfo();
 		} catch (e) {
-			ErrorHandler.process(e);
+			errorProcess(e);
 		}
 		setIsDeleting(false);
 	};

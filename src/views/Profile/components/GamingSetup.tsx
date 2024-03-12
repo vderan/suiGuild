@@ -90,9 +90,10 @@ const Card = ({ index, item }: { index: number; item: IGamingSetup }) => {
 				sx={{
 					width: '100%',
 					height: '100%',
-					background: `linear-gradient(180deg, rgba(0, 0, 0, 0) 23.05%, #000000 100%), url(${ipfsUrl(
-						item.coverImage.url
-					)})`,
+					background: theme =>
+						`linear-gradient(180deg, rgba(0, 0, 0, 0) 23.05%, ${theme.palette.dark[900]} 100%), url(${ipfsUrl(
+							item.coverImage.url
+						)})`,
 					backgroundPosition: '50% 50%',
 					backgroundRepeat: 'no-repeat',
 					backgroundSize: 'cover',

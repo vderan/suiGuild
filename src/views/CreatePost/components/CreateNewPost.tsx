@@ -6,7 +6,7 @@ import { PrimaryEditor } from 'src/components/TextEditor';
 import { CustomToggleButtonGroup, IToggleBtnOption } from 'src/components/ToggleButtonGroup';
 import { useGilder } from 'src/hooks/useGilder';
 import { ipfsUrl } from 'src/helpers/ipfs.helpers';
-import { ColorModeContext } from 'src/contexts';
+import { AuthContext, ColorModeContext } from 'src/contexts';
 import { sortForumsByKeyword } from 'src/helpers/sort.helpers';
 import { useCustomSWR } from 'src/hooks/useCustomSWR';
 import { ErrorMessage } from 'src/components/ErrorMessage';
@@ -16,27 +16,22 @@ import { NotFound } from 'src/components/NotFound';
 export const CreateNewPost = () => {
 	const { getAllCommunities } = useGilder();
 	const { theme } = useContext(ColorModeContext);
+	const { followingCommunities } = useContext(AuthContext);
 
-	const { data: forums, isLoading, error: isError } = useCustomSWR('getAllCommunities', getAllCommunities);
+	const { data: _forums, isLoading, error: isError } = useCustomSWR('getAllCommunities', getAllCommunities);
 	const [selectValue, setSelectValue] = useState('');
 	const [isSubmitting, setIsSubmitting] = useState(false);
 
-	// TODO: refactor
-	const selectOption: ISelectOption[] =
+	const forums = useMemo(() => {
+		return _forums?.filter(forum => followingCommunities.includes(forum.idx));
+	}, [followingCommunities, _forums]);
+
+	const selectOptions: ISelectOption[] =
 		forums?.map(forum => ({
 			id: forum.idx,
-			idx: Number(forum.idx),
 			avatar: ipfsUrl(forum.avatar.some.url),
-			coverImage: ipfsUrl(forum.coverImage.some.url),
-			createdAt: Number(forum.createdAt),
-			creatorInfo: forum.creatorInfo,
-			description: forum.description,
-			followers: forum.followers,
-			members: forum.members,
-			numPost: Number(forum.numPost),
 			label: forum.title,
-			value: forum.idx,
-			visible: forum.visible
+			value: forum.idx
 		})) || [];
 
 	const quickForums: IToggleBtnOption[] = useMemo(() => {
@@ -75,7 +70,7 @@ export const CreateNewPost = () => {
 					disabled={isSubmitting}
 					value={selectValue}
 					sxMenuItem={{ width: { sm: '100%', md: '250px' } }}
-					options={selectOption}
+					options={selectOptions}
 					onChange={option => setSelectValue(option)}
 				/>
 			</Stack>

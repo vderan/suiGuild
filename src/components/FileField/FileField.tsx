@@ -6,15 +6,16 @@ import { FormHelperText } from '@mui/material';
 import { icons } from 'src/components/icons';
 import { MAX_FILE_SIZE } from 'src/constants/constants';
 import { isValidFileSize } from 'src/helpers/file.helpers';
-import { toast } from 'react-toastify';
 import { Paragraph3, Label } from '../Typography';
 import { useDevice } from 'src/hooks/useDevice';
+import { useSnackbar } from 'src/hooks';
 
 export const FileField = ({
 	name,
 	maxSize = MAX_FILE_SIZE,
 	label,
 	btnLabel,
+	innerComponent,
 	isFullWidth = false,
 	isDisabled = false,
 	isButtonsOnNewField = false,
@@ -24,12 +25,14 @@ export const FileField = ({
 	maxSize?: number;
 	label?: string;
 	btnLabel?: string;
+	innerComponent?: React.ReactNode;
 	isFullWidth?: boolean;
 	isDisabled?: boolean;
 	isButtonsOnNewField?: boolean;
 	isUploadInfoInRow?: boolean;
 }) => {
 	const { iLg } = useDevice();
+	const { errorSnackbar } = useSnackbar();
 
 	const imageHeight = isFullWidth ? (iLg ? 110 : 160) : 80;
 	const imageWidth = isFullWidth ? '100%' : 80;
@@ -49,39 +52,45 @@ export const FileField = ({
 								flexDirection: isButtonsOnNewField ? 'column' : 'row'
 							}}
 						>
-							<Box
-								height={imageHeight}
-								width={imageWidth}
-								sx={{
-									display: 'flex',
-									alignItems: 'center',
-									justifyContent: 'center',
-									borderRadius: 1,
-									border: field.value ? 'none' : theme => `${theme.spacing(0.125)} solid ${theme.palette.border.subtle}`
-								}}
-							>
-								{field.value ? (
-									<img
-										height={imageHeight}
-										width={imageWidth}
-										src={field.value}
-										alt="Cover"
-										loading="lazy"
-										style={{
-											borderRadius: 'inherit',
-											objectFit: 'cover'
-										}}
-									/>
-								) : (
-									<icons.uploadFile
-										sx={theme => ({
-											width: theme.spacing(4),
-											height: theme.spacing(4),
-											color: theme.palette.tertiary.main
-										})}
-									/>
-								)}
-							</Box>
+							<Stack direction="row" alignItems="flex-start" gap={2} width={isFullWidth ? '100%' : 'initial'}>
+								<Box
+									height={imageHeight}
+									width={imageWidth}
+									minWidth={imageWidth}
+									sx={{
+										display: 'flex',
+										alignItems: 'center',
+										justifyContent: 'center',
+										borderRadius: 1,
+										border: field.value
+											? 'none'
+											: theme => `${theme.spacing(0.125)} solid ${theme.palette.border.subtle}`
+									}}
+								>
+									{field.value ? (
+										<img
+											height={imageHeight}
+											width={imageWidth}
+											src={field.value}
+											alt="Cover"
+											loading="lazy"
+											style={{
+												borderRadius: 'inherit',
+												objectFit: 'cover'
+											}}
+										/>
+									) : (
+										<icons.uploadFile
+											sx={theme => ({
+												width: theme.spacing(4),
+												height: theme.spacing(4),
+												color: theme.palette.system.icon
+											})}
+										/>
+									)}
+								</Box>
+								{innerComponent}
+							</Stack>
 							<Stack
 								direction={isUploadInfoInRow ? 'row' : 'column'}
 								alignItems={isUploadInfoInRow ? 'center' : 'initial'}
@@ -101,7 +110,7 @@ export const FileField = ({
 												if (!files?.length) return;
 												const file = files[0];
 												if (!isValidFileSize(file, maxSize)) {
-													toast.error(`You cannot upload a file exceeding ${maxSize} MB`, { theme: 'colored' });
+													errorSnackbar(`You cannot upload a file exceeding ${maxSize} MB`);
 													return;
 												}
 

@@ -1,7 +1,6 @@
 import { useContext, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Box, Collapse } from '@mui/material';
-import { toast } from 'react-toastify';
 import pluralize from 'pluralize';
 import { BackButton, OutlineButton } from 'src/components/Button';
 import { IconButton } from 'src/components/IconButton';
@@ -23,7 +22,7 @@ import { useCustomSWR } from 'src/hooks/useCustomSWR';
 import { Comment } from 'src/components/Post';
 import { ErrorMessage } from 'src/components/ErrorMessage';
 import { NotFound } from 'src/components/NotFound';
-import { ErrorHandler } from 'src/helpers';
+import { useErrorHandler, useSnackbar } from 'src/hooks';
 
 export const PostIndividualMain = () => {
 	const { id } = useParams();
@@ -36,6 +35,8 @@ export const PostIndividualMain = () => {
 	const [isShowExpandableSection, setIsShowExpandableSection] = useState(false);
 	const [isCommentSubmitting, setIsCommentSubmitting] = useState(false);
 	const [isVoteSubmitting, setIsVoteSubmitting] = useState(false);
+	const { warningSnackbar } = useSnackbar();
+	const { errorProcess } = useErrorHandler();
 
 	const handleComments = () => {
 		setIsShowExpandableSection(prev => !prev);
@@ -43,7 +44,7 @@ export const PostIndividualMain = () => {
 
 	const addComment = async (forumId: number, postId: number, content: string) => {
 		if (!profile?.displayName) {
-			toast.warning('You should have your own display name!', { theme: 'colored' });
+			warningSnackbar('You should have your own display name!');
 			return;
 		}
 		setIsCommentSubmitting(true);
@@ -51,21 +52,21 @@ export const PostIndividualMain = () => {
 			await createComment(forumId, postId, content);
 			commentRef.current?.reset();
 		} catch (err) {
-			ErrorHandler.process(err);
+			errorProcess(err);
 		}
 		setIsCommentSubmitting(false);
 	};
 
 	const votePost = async (postId: number) => {
 		if (!isLoggedIn) {
-			toast.warning('You should login into platform!', { theme: 'colored' });
+			warningSnackbar('You should login into platform!');
 			return;
 		}
 		setIsVoteSubmitting(true);
 		try {
 			await vote(postId);
 		} catch (err) {
-			ErrorHandler.process(err);
+			errorProcess(err);
 		}
 		setIsVoteSubmitting(false);
 	};

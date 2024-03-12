@@ -29,7 +29,7 @@ export const QuaternaryButton = ({
 			startIcon={
 				!loading ? (
 					startIcon ? (
-						<StartIcon fontSize={iconSize} sx={{ color: theme => theme.palette.tertiary.main }} />
+						<StartIcon fontSize={iconSize} sx={{ color: theme => theme.palette.system.icon }} />
 					) : startImage ? (
 						<img src={startImage} alt="startImg" width={BUTTON_ICON_SIZE} height={BUTTON_ICON_SIZE} />
 					) : undefined
@@ -38,7 +38,7 @@ export const QuaternaryButton = ({
 			endIcon={
 				!loading ? (
 					endIcon ? (
-						<EndIcon fontSize={iconSize} sx={{ color: theme => theme.palette.tertiary.main }} />
+						<EndIcon fontSize={iconSize} sx={{ color: theme => theme.palette.system.icon }} />
 					) : endImage ? (
 						<img src={endImage} alt="endImg" width={BUTTON_ICON_SIZE} height={BUTTON_ICON_SIZE} />
 					) : endElement ? (

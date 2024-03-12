@@ -40,7 +40,9 @@ export const CustomTabs = ({ tabs, isTertiary = false, tabsChildren }: ICustomTa
 					width: 'auto'
 				},
 				'& .MuiTabScrollButton-root.Mui-disabled': {
-					display: 'none'
+					opacity: 0.5,
+					cursor: 'not-allowed',
+					pointerEvents: 'auto'
 				}
 			})}
 		>
@@ -56,11 +58,11 @@ export const CustomTabs = ({ tabs, isTertiary = false, tabsChildren }: ICustomTa
 					value={value}
 					onChange={handleChange}
 					variant="scrollable"
-					allowScrollButtonsMobile={iMd && true}
+					allowScrollButtonsMobile={iMd}
 					sx={{
 						minHeight: '40px',
 						'& .MuiTabs-indicator': {
-							background: theme => (isTertiary ? theme.palette.gradient2.main : theme.palette.text.primary),
+							background: theme => (isTertiary ? theme.palette.gradient.secondary : theme.palette.text.primary),
 							height: theme => theme.spacing(0.125),
 							borderBottom: 'none'
 						}
@@ -115,7 +117,7 @@ const TabContent = ({ isTertiary, ...props }: ITabs & { isTertiary: boolean }) =
 				<Icon
 					icon={props.startIcon}
 					fontSize="small"
-					sx={{ color: theme => (props.isActive ? theme.palette.tertiary.main : theme.palette.border.highlight) }}
+					sx={{ color: theme => (props.isActive ? theme.palette.system.icon : theme.palette.border.highlight) }}
 				/>
 			) : props.startImage ? (
 				<img src={props.startImage} alt="startImg" width={BUTTON_ICON_SIZE} height={BUTTON_ICON_SIZE} />
@@ -139,7 +141,7 @@ const TabContent = ({ isTertiary, ...props }: ITabs & { isTertiary: boolean }) =
 				<Icon
 					icon={props.endIcon}
 					fontSize="small"
-					sx={{ color: theme => (props.isActive ? theme.palette.tertiary.main : theme.palette.border.highlight) }}
+					sx={{ color: theme => (props.isActive ? theme.palette.system.icon : theme.palette.border.highlight) }}
 				/>
 			) : props.endImage ? (
 				<img src={props.endImage} alt="endImg" width={BUTTON_ICON_SIZE} height={BUTTON_ICON_SIZE} />

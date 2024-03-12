@@ -14,7 +14,7 @@ import { PrimaryButton, SecondaryButton } from 'src/components/Button';
 import { useCurrentAccount } from '@mysten/dapp-kit';
 import { formatAddress } from 'src/helpers/format.helpers';
 import logoImg from 'src/assets/icons/logo.svg';
-import { toast } from 'react-toastify';
+import logoLightImg from 'src/assets/icons/logo-light.svg';
 import { ipfsUrl } from 'src/helpers/ipfs.helpers';
 import { avatarUrl } from 'src/constants/images.constants';
 import { LoginModal } from './LoginModal';
@@ -28,6 +28,7 @@ import { CreateCommunityModal } from 'src/components/Community';
 import { useSetRecoilState } from 'recoil';
 import { isSideMenuOpenedState } from 'src/recoil/sideMenu';
 import { SidebarDrawer } from '../Sidebar';
+import { useSnackbar } from 'src/hooks';
 
 export interface ICreateCommunityProps {
 	avatar: string;
@@ -53,6 +54,7 @@ export const Header = ({ isSidebarAlwaysClosed = false }: { isSidebarAlwaysClose
 	const isChatPage = window.location.pathname === '/chat';
 	const { isDarkMode, toggleColorMode } = useContext(ColorModeContext);
 	const setIsSideMenuOpenedState = useSetRecoilState(isSideMenuOpenedState);
+	const { warningSnackbar } = useSnackbar();
 
 	const menuData: IMenuProps = {
 		label: iMid ? (
@@ -112,7 +114,7 @@ export const Header = ({ isSidebarAlwaysClosed = false }: { isSidebarAlwaysClose
 				label: 'Community',
 				action: () => {
 					if (!profile?.displayName) {
-						toast.warning('You should have your own display name!', { theme: 'colored' });
+						warningSnackbar('You should have your own display name!');
 						navigate(`/setting/${account?.address}/eprofile`);
 					} else {
 						setIsCreateCommunityModalOpen(true);
@@ -123,7 +125,7 @@ export const Header = ({ isSidebarAlwaysClosed = false }: { isSidebarAlwaysClose
 				label: 'Post',
 				action: () => {
 					if (!profile?.displayName) {
-						toast.warning('You should have your own display name!', { theme: 'colored' });
+						warningSnackbar('You should have your own display name!');
 						navigate(`/setting/${account?.address}/eprofile`);
 					} else {
 						navigate('/createpost');
@@ -143,6 +145,7 @@ export const Header = ({ isSidebarAlwaysClosed = false }: { isSidebarAlwaysClose
 						width: '100%',
 						maxHeight: theme.spacing(9),
 						background: 'transparent',
+						boxShadow: 'none',
 						borderBottom: `${theme.spacing(0.125)} solid ${theme.palette.border.subtle}`,
 						backdropFilter: `blur(${theme.spacing(0.5)})`,
 						[theme.breakpoints.down('lg')]: {
@@ -161,7 +164,12 @@ export const Header = ({ isSidebarAlwaysClosed = false }: { isSidebarAlwaysClose
 									))}
 
 								<Link component={NavLink} sx={{ display: 'flex', alignItems: 'center' }} to="/home">
-									<img src={logoImg} alt="logoImg" width={iMid ? 95 : 125} height={iMid ? 23 : 32} />
+									<img
+										src={isDarkMode ? logoImg : logoLightImg}
+										alt="logoImg"
+										width={iMid ? 95 : 125}
+										height={iMid ? 23 : 32}
+									/>
 								</Link>
 							</Box>
 							{profile ? (
@@ -182,7 +190,7 @@ export const Header = ({ isSidebarAlwaysClosed = false }: { isSidebarAlwaysClose
 													}
 
 													if (!profile?.displayName) {
-														toast.warning('You should have your own display name!', { theme: 'colored' });
+														warningSnackbar('You should have your own display name!');
 														navigate(`/setting/${account?.address}/eprofile`);
 													} else {
 														setChatOpen(false);
@@ -234,7 +242,7 @@ export const Header = ({ isSidebarAlwaysClosed = false }: { isSidebarAlwaysClose
 							}
 
 							if (!profile?.displayName) {
-								toast.warning('You should have your own display name!', { theme: 'colored' });
+								warningSnackbar('You should have your own display name!');
 								navigate(`/setting/${account?.address}/eprofile`);
 							} else {
 								setChatOpen(true);

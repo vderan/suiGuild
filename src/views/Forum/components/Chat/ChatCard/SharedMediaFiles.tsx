@@ -129,7 +129,7 @@ const SharedMediaCard = ({ file }: { file: SharedMedia }) => {
 						style={{ borderRadius: 'inherit', objectFit: 'cover' }}
 					/>
 				) : (
-					<Icon icon="file" fontSize="extraLarge" sx={{ color: theme => theme.palette.primary[900] }} />
+					<Icon icon="file" fontSize="extraLarge" sx={{ color: theme => theme.palette.blue[900] }} />
 				)}
 			</Box>
 			<Stack direction="column" spacing={0.5} overflow="hidden">

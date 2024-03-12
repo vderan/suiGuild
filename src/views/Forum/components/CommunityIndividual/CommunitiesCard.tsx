@@ -143,7 +143,7 @@ export const CommunitiesCard = ({ sx, ...props }: BoxProps) => {
 													borderRadius: '50%',
 													WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
 													WebkitMaskComposite: 'xor',
-													background: isActive ? theme => theme.palette.gradient2.main : 'transparent',
+													background: isActive ? theme => theme.palette.gradient.secondary : 'transparent',
 													maskComposite: 'exclude'
 												}
 											}}
@@ -165,7 +165,7 @@ export const CommunitiesCard = ({ sx, ...props }: BoxProps) => {
 												sx={theme => ({
 													width: theme.spacing(0.25),
 													position: 'absolute',
-													background: theme.palette.gradient1.main,
+													background: theme.palette.gradient.main,
 													height: '100%',
 													left: 0,
 													top: 0

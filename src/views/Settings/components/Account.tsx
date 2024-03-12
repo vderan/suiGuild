@@ -10,8 +10,7 @@ import { useGilder } from 'src/hooks/useGilder';
 import { IEditUserProps } from 'src/hooks/types';
 import { Dialog } from 'src/components/Dialog';
 import { useProfile } from 'src/hooks/useProfile';
-import { toast } from 'react-toastify';
-import { ErrorHandler } from 'src/helpers';
+import { useErrorHandler, useSnackbar } from 'src/hooks';
 
 interface EditAccountForm {
 	email: string;
@@ -26,6 +25,8 @@ export const Account = () => {
 	const [isDeactivating, setIsDeactivating] = useState(false);
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const { checkUsername } = useProfile();
+	const { warningSnackbar, successSnackbar } = useSnackbar();
+	const { errorProcess } = useErrorHandler();
 
 	const handleEditAccount = async (data: EditAccountForm) => {
 		const editUserInfo: IEditUserProps = {
@@ -45,18 +46,18 @@ export const Account = () => {
 			if (!profile?.displayName) {
 				const isUserExist = await checkUsername(data.username);
 				if (isUserExist) {
-					toast.warning('Username already exists', { theme: 'colored' });
+					warningSnackbar('Username already exists');
 					setIsSubmitting(false);
 					return;
 				}
 			}
 
 			await editPersonalInfo(editUserInfo);
+			successSnackbar('Updated user successfully!');
 			const userInfo = await loadUserInfo();
 			await initChat(userInfo?.displayName);
-			toast.success('Updated user successfully!', { theme: 'colored' });
 		} catch (err) {
-			ErrorHandler.process(err);
+			errorProcess(err);
 		}
 		setIsSubmitting(false);
 	};
@@ -68,7 +69,7 @@ export const Account = () => {
 			await loadUserInfo();
 			setOpen(false);
 		} catch (err) {
-			ErrorHandler.process(err);
+			errorProcess(err);
 		}
 		setIsDeactivating(false);
 	};
@@ -114,7 +115,9 @@ export const Account = () => {
 				<Box className="setting-box">
 					<Box>
 						<H3Title>Deactivate account</H3Title>
-						<Paragraph3 color="text.secondary">Deactivating your account is a permanent action - be careful!</Paragraph3>
+						<Paragraph3 color="text.secondary">
+							Deactivating your account is a permanent action - be careful!
+						</Paragraph3>
 					</Box>
 					<Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
 						<SecondaryButton sx={{ width: 'auto' }} onClick={() => setOpen(true)}>

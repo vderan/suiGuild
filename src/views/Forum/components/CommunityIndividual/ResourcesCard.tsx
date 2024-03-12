@@ -12,7 +12,7 @@ import { InputField } from 'src/components/InputField';
 import { Control, useFieldArray } from 'react-hook-form';
 import { SecondaryButton } from 'src/components/Button';
 import { Icon } from 'src/components/Icon';
-import { ErrorHandler } from 'src/helpers';
+import { useErrorHandler } from 'src/hooks';
 
 type Resource = {
 	title: string;
@@ -28,6 +28,7 @@ export const ResourcesCard = ({ forum, isOwner }: { forum: IForum; isOwner: bool
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const resourcesFormRef = useRef<null | HTMLFormElement>(null);
 	const { editCommunity } = useGilder();
+	const { errorProcess } = useErrorHandler();
 
 	const resources = (() => {
 		if (!forum?.resources) return [];
@@ -52,7 +53,7 @@ export const ResourcesCard = ({ forum, isOwner }: { forum: IForum; isOwner: bool
 			});
 			setIsModalShown(false);
 		} catch (err) {
-			ErrorHandler.process(err);
+			errorProcess(err);
 		}
 		setIsSubmitting(false);
 	};
@@ -91,7 +92,7 @@ export const ResourcesCard = ({ forum, isOwner }: { forum: IForum; isOwner: bool
 												inset: 0,
 												padding: theme.spacing(0.125),
 												borderRadius: theme.spacing(1),
-												background: theme.palette.gradient2.main,
+												background: theme.palette.gradient.secondary,
 												WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
 												WebkitMaskComposite: 'xor',
 												maskComposite: 'exclude'

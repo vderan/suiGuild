@@ -1,7 +1,6 @@
 import { useState, useContext, useRef, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Box, Collapse, Link, Skeleton, Stack } from '@mui/material';
-import { toast } from 'react-toastify';
 import pluralize from 'pluralize';
 import { CAvatar, LargeAvatar, SmallAvatar } from 'src/components/Avatar';
 import { OutlineButton } from 'src/components/Button';
@@ -20,8 +19,8 @@ import { avatarUrl } from 'src/constants/images.constants';
 import ShareBox from 'src/components/ShareBox';
 import { useCustomSWR } from 'src/hooks/useCustomSWR';
 import { useDevice } from 'src/hooks/useDevice';
-import { ErrorHandler } from 'src/helpers';
 import { Dialog } from '../Dialog';
+import { useErrorHandler, useSnackbar } from 'src/hooks';
 
 interface IPostCardProps {
 	post: IPost;
@@ -46,6 +45,8 @@ export const PostCard = ({
 	const [isVoteSubmitting, setIsVoteSubmitting] = useState(false);
 	const [isCommentSubmitting, setIsCommentSubmitting] = useState(false);
 	const [isEditPostModalShown, setIsEditPostModalShown] = useState(false);
+	const { warningSnackbar } = useSnackbar();
+	const { errorProcess } = useErrorHandler();
 
 	const { iMd } = useDevice();
 
@@ -64,7 +65,7 @@ export const PostCard = ({
 
 	const addComment = async (forumId: number, postId: number, content: string) => {
 		if (!profile?.displayName) {
-			toast.warning('You should have your own display name!', { theme: 'colored' });
+			warningSnackbar('You should have your own display name!');
 			return;
 		}
 		setIsCommentSubmitting(true);
@@ -72,21 +73,21 @@ export const PostCard = ({
 			await createComment(forumId, postId, content);
 			commentRef.current?.reset();
 		} catch (err) {
-			ErrorHandler.process(err);
+			errorProcess(err);
 		}
 		setIsCommentSubmitting(false);
 	};
 
 	const votePost = async (postId: number) => {
 		if (!isLoggedIn) {
-			toast.warning('You should login into platform!', { theme: 'colored' });
+			warningSnackbar('You should login into platform!');
 			return;
 		}
 		setIsVoteSubmitting(true);
 		try {
 			await vote(postId);
 		} catch (err) {
-			ErrorHandler.process(err);
+			errorProcess(err);
 		}
 		setIsVoteSubmitting(false);
 	};

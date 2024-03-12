@@ -7,7 +7,7 @@ import { IconButton } from 'src/components/IconButton';
 import { InputField } from 'src/components/InputField';
 import { Paragraph2 } from 'src/components/Typography';
 import { AuthContext, IVideo } from 'src/contexts';
-import { ErrorHandler } from 'src/helpers';
+import { useErrorHandler } from 'src/hooks';
 import { useClipboard } from 'src/hooks/useClipboard';
 import { useGilder } from 'src/hooks/useGilder';
 import { videoFormSchema } from 'src/schemas/video.schema';
@@ -33,6 +33,7 @@ export const ProfileVideoForm = ({
 	const { loadUserInfo } = useContext(AuthContext);
 	const { copy } = useClipboard();
 	const [isSubmitting, setIsSubmitting] = useState(false);
+	const { errorProcess } = useErrorHandler();
 
 	const isEdit = Boolean(video);
 
@@ -47,7 +48,7 @@ export const ProfileVideoForm = ({
 			await loadUserInfo();
 			onClose();
 		} catch (err) {
-			ErrorHandler.process(err);
+			errorProcess(err);
 		}
 		setIsSubmitting(false);
 	};

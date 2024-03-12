@@ -1,11 +1,11 @@
 import { Box, ButtonBase, Skeleton } from '@mui/material';
 import pluralize from 'pluralize';
 import { useContext, useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
 import { Xmpp } from 'src/api/xmpp';
 import { Paragraph3, Subtitle } from 'src/components/Typography';
 import { AuthContext, ChatContext } from 'src/contexts';
 import { removeResourceFromJid } from 'src/helpers/xmpp.helpers';
+import { useErrorHandler } from 'src/hooks';
 import { useBookmarks } from 'src/hooks/useBookmarks';
 import { RoomMember } from 'src/types/Xmpp.types';
 
@@ -24,6 +24,7 @@ export const MutualGroups = () => {
 	const [mutualGroups, setMutualGroups] = useState<MutualGroup[]>([]);
 	const { jid } = useContext(AuthContext);
 	const { activeJid } = useContext(ChatContext);
+	const { errorProcess } = useErrorHandler();
 
 	useEffect(() => {
 		async function fetchData() {
@@ -60,12 +61,12 @@ export const MutualGroups = () => {
 				);
 				setMutualGroups(data.flat());
 			} catch (e) {
-				toast.error(String(e), { theme: 'colored' });
+				errorProcess(e);
 			}
 			setIsLoaded(true);
 		}
 		fetchData();
-	}, [activeJid, bookmarks, jid]);
+	}, [activeJid, bookmarks, errorProcess, jid]);
 
 	return (
 		<Box sx={{ padding: 2, gap: 1.5, display: 'flex', flexDirection: 'column' }}>

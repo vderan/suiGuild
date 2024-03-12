@@ -8,15 +8,15 @@ import { getAttachmentType, isValidFileSize } from 'src/helpers/file.helpers';
 import { Paragraph3 } from 'src/components/Typography';
 import { IconButton } from 'src/components/IconButton';
 import { StandaloneInputField } from 'src/components/InputField';
-import { GIPHY_API_KEY } from 'src/constants/api.constants';
 import { IGNORE_BODY } from 'src/constants/xmpp.constants';
 
 import { messageAttachmentsCountState } from 'src/recoil/messageAttachmentsCount';
-import { toast } from 'react-toastify';
 import { useDevice } from 'src/hooks/useDevice';
 import { ChatContext } from 'src/contexts';
 import { MAX_FILE_SIZE } from 'src/constants/constants';
 import { useLocation } from 'react-router-dom';
+import { useSnackbar } from 'src/hooks';
+import { GIPHY_API_KEY } from 'src/constants/env.constants';
 
 export const MessageField = ({
 	isDeactivated,
@@ -29,6 +29,7 @@ export const MessageField = ({
 	const { iMid, iSm } = useDevice();
 	const { pathname } = useLocation();
 	const fileRef = useRef<HTMLInputElement>(null);
+	const { warningSnackbar, errorSnackbar } = useSnackbar();
 
 	const [message, setMessage] = useState('');
 	const [attachments, setAttachments] = useState<File[]>([]);
@@ -98,7 +99,7 @@ export const MessageField = ({
 						bottom: '100%',
 						left: theme.spacing(2),
 						width: `calc(100% - ${iSm ? '30px' : iMid ? '112px' : '120px'})`,
-						backgroundColor: theme.palette.secondary[900],
+						backgroundColor: theme.palette.dark[500],
 						border: `${theme.spacing(0.125)} solid ${theme.palette.dark[500]}`,
 						borderRadius: 1
 					})}
@@ -135,7 +136,7 @@ export const MessageField = ({
 					if (e.key === 'Enter' && !e.shiftKey) {
 						e.preventDefault();
 						if (isDeactivated) {
-							toast.warning('This user was deactivated!', { theme: 'colored' });
+							warningSnackbar('This user was deactivated!');
 						} else {
 							handleOnSendMessage();
 						}
@@ -239,10 +240,10 @@ export const MessageField = ({
 						e.target.value = '';
 
 						if (value.length > 10) {
-							toast.error('You cannot upload more than 10 files', { theme: 'colored' });
+							errorSnackbar('You cannot upload more than 10 files');
 							return;
 						} else if (!isSizeValid) {
-							toast.error(`You cannot upload a file exceeding ${MAX_FILE_SIZE} MB`, { theme: 'colored' });
+							errorSnackbar(`You cannot upload a file exceeding ${MAX_FILE_SIZE} MB`);
 							return;
 						}
 						setAttachments(value);

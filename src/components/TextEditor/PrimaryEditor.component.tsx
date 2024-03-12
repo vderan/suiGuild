@@ -9,9 +9,8 @@ import { useGilder } from 'src/hooks/useGilder';
 import { uploadAttachment } from 'src/helpers/upload.helpers';
 import { createPostSchema } from 'src/schemas/create-post.schema';
 import { ipfsUrl } from 'src/helpers/ipfs.helpers';
-import { useForums } from 'src/hooks';
+import { useErrorHandler, useForums, useSnackbar } from 'src/hooks';
 import { AuthContext } from 'src/contexts';
-import { toast } from 'react-toastify';
 import { Controller } from 'react-hook-form';
 import { EditorField } from '../EditorField';
 import { useProfile } from 'src/hooks/useProfile';
@@ -19,7 +18,6 @@ import { useCustomSWR } from 'src/hooks/useCustomSWR';
 import { MediumAvatar } from '../Avatar';
 import { differenceDate } from 'src/helpers/date.helpers';
 import { Paragraph2, PreTitle } from '../Typography';
-import { ErrorHandler } from 'src/helpers';
 
 interface CreatePostForm {
 	title: string;
@@ -55,6 +53,8 @@ export const PrimaryEditor = ({
 	const formRef = useRef<null | HTMLFormElement>(null);
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const { data: forums } = useForums();
+	const { warningSnackbar } = useSnackbar();
+	const { errorProcess } = useErrorHandler();
 	const { profile } = useContext(AuthContext);
 	const isDraftRef = useRef<boolean>(false);
 	const isEditPost = Boolean(post?.idx);
@@ -69,7 +69,7 @@ export const PrimaryEditor = ({
 
 	const handleCreate = async (data: CreatePostForm) => {
 		if (communityIndex === undefined) {
-			toast.warning('You need to choose the community!', { theme: 'colored' });
+			warningSnackbar('You need to choose the community!');
 			return;
 		}
 		//  TODO: create a function to get the address with 0x
@@ -110,12 +110,12 @@ export const PrimaryEditor = ({
 				onCreate?.();
 				onClose?.();
 			} catch (err) {
-				ErrorHandler.process(err);
+				errorProcess(err);
 			}
 			setIsSubmitting(false);
 			onSubmitEnd?.();
 		} else {
-			toast.warning('You can not post about communities you do not follow!', { theme: 'colored' });
+			warningSnackbar('You can not post about communities you do not follow!');
 		}
 	};
 

@@ -171,7 +171,7 @@ export const AudioAttachment = (audio: MessageAttachment) => {
 			spacing={1}
 			sx={{
 				p: 1,
-				backgroundColor: theme => theme.palette.secondary[900],
+				backgroundColor: theme => theme.palette.dark[500],
 				borderRadius: theme => `${theme.shape.borderRadius}px`
 			}}
 		>
@@ -222,7 +222,7 @@ export const FileAttachment = (file: MessageAttachment) => {
 		<Box
 			sx={{
 				p: 1,
-				backgroundColor: theme => theme.palette.secondary[900],
+				backgroundColor: theme => theme.palette.dark[500],
 				color: 'inherit',
 				textDecoration: 'none',
 				borderRadius: theme => `${theme.shape.borderRadius}px`,

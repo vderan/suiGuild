@@ -1,12 +1,12 @@
 import { Box } from '@mui/material';
 import { useRef, useState } from 'react';
-import { toast } from 'react-toastify';
 import { Dialog } from 'src/components/Dialog';
 import { FileField } from 'src/components/FileField';
 import { Form } from 'src/components/Form';
 import { ImageField } from 'src/components/ImageField';
 import { InputField } from 'src/components/InputField';
 import { ipfsUrl } from 'src/helpers/ipfs.helpers';
+import { useErrorHandler } from 'src/hooks';
 import { newGroupSchema } from 'src/schemas/new-group.schema';
 
 interface GroupFormData {
@@ -28,6 +28,7 @@ export const GroupForm = ({
 }) => {
 	const formRef = useRef<null | HTMLFormElement>(null);
 	const [isSubmitting, setIsSubmitting] = useState(false);
+	const { errorProcess } = useErrorHandler();
 
 	const handleOnFormSubmit = async (data: GroupFormData) => {
 		setIsSubmitting(true);
@@ -36,7 +37,7 @@ export const GroupForm = ({
 			await onSubmit(data);
 			onClose();
 		} catch (error) {
-			toast.error((error as Error).message, { theme: 'colored' });
+			errorProcess(error);
 		}
 		setIsSubmitting(false);
 	};
@@ -77,10 +78,12 @@ export const GroupForm = ({
 						name="avatar"
 						label="Avatar"
 						btnLabel="Upload"
+						innerComponent={
+							<Box>
+								<ImageField disabled={isSubmitting} name="avatar" />
+							</Box>
+						}
 					/>
-					<Box sx={{ marginTop: 3.625 }}>
-						<ImageField disabled={isSubmitting} name="avatar" />
-					</Box>
 				</Box>
 				<InputField
 					name="name"

@@ -4,7 +4,7 @@ import { useProfile } from 'src/hooks/useProfile';
 import { NavLink } from 'react-router-dom';
 import { Link, Skeleton } from '@mui/material';
 import { useCustomSWR } from 'src/hooks/useCustomSWR';
-import { toast } from 'react-toastify';
+import { useSnackbar } from 'src/hooks';
 
 export const HeaderLarge = ({ children, ...props }: PropsWithChildren<TypographyProps>) => {
 	return (
@@ -233,12 +233,14 @@ export const Label = ({ children, ...props }: PropsWithChildren<TypographyProps>
 
 export const CTitle = ({ address }: { address: string }) => {
 	const { getUserInfo } = useProfile();
+	const { warningSnackbar } = useSnackbar();
+
 	const { data: user, isLoading } = useCustomSWR('getUserInfo' + address, () => getUserInfo(address));
 
 	const handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
 		if (user && !user.isActive) {
 			event.preventDefault();
-			toast.warning('This user was deactivated!', { theme: 'colored' });
+			warningSnackbar('This user was deactivated!');
 		}
 	};
 

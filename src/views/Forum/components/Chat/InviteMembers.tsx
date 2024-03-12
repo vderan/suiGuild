@@ -1,6 +1,5 @@
 import { Stack } from '@mui/material';
 import { useContext, useMemo, useRef, useState } from 'react';
-import { toast } from 'react-toastify';
 import { Xmpp } from 'src/api/xmpp';
 import { MediumAvatar } from 'src/components/Avatar';
 import { Dialog } from 'src/components/Dialog';
@@ -17,6 +16,7 @@ import { useRoomInfo } from 'src/hooks/useRoomInfo';
 import { useRoomMembers } from 'src/hooks/useRoomMembers';
 import { Members } from './ChatCard/Members';
 import { inviteMembersSchema } from 'src/schemas/invite-membets.schema';
+import { useErrorHandler } from 'src/hooks';
 
 interface InviteMembersFormData {
 	member: string;
@@ -29,7 +29,7 @@ export const InviteMembers = ({ roomJid, open, onClose }: { roomJid: string; ope
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [members, setMembers] = useState<string[]>([]);
 	const formRef = useRef<null | HTMLFormElement>(null);
-
+	const { errorProcess } = useErrorHandler();
 	const { data: roomInfo } = useRoomInfo(roomJid);
 	const { data: vCard } = useRoomVCard(roomJid);
 	const { data: roomMembers } = useRoomMembers(roomJid);
@@ -67,7 +67,7 @@ export const InviteMembers = ({ roomJid, open, onClose }: { roomJid: string; ope
 				);
 			}
 		} catch (error) {
-			toast.error((error as Error).message, { theme: 'colored' });
+			errorProcess(error);
 		}
 		setIsSubmitting(false);
 		onClose();

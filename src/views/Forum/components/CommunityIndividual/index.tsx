@@ -99,9 +99,12 @@ const BackBtn = () => {
 		<ButtonBase sx={{ gap: 0.5 }} onClick={onClick}>
 			<Icon
 				icon="chevronLeft"
-				sx={{ filter: 'drop-shadow(1px 1px 3px #000000)', color: theme => theme.palette.text.secondary }}
+				sx={{
+					filter: theme => `drop-shadow(1px 1px 1px ${theme.palette.dark[900]})`,
+					color: theme => theme.palette.text.secondary
+				}}
 			/>
-			<ButtonSmallText color="text.secondary" sx={{ textShadow: '0 0 3px #000000' }}>
+			<ButtonSmallText color="text.secondary" sx={{ textShadow: theme => `0 0 1px ${theme.palette.dark[900]}` }}>
 				Go back
 			</ButtonSmallText>
 		</ButtonBase>

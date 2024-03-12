@@ -10,7 +10,7 @@ import { gamingSetupFormSchema } from 'src/schemas/gaming-setup.schema';
 import { uploadAttachment } from 'src/helpers/upload.helpers';
 import { useGilder } from 'src/hooks/useGilder';
 import { ipfsUrl } from 'src/helpers/ipfs.helpers';
-import { ErrorHandler } from 'src/helpers';
+import { useErrorHandler } from 'src/hooks';
 
 interface GamingSetupForm {
 	name: string;
@@ -34,7 +34,7 @@ export const ProfileGamingSetupForm = ({
 	const { addGameSetup, editGameSetup } = useGilder();
 	const { loadUserInfo } = useContext(AuthContext);
 	const [isSubmitting, setIsSubmitting] = useState(false);
-
+	const { errorProcess } = useErrorHandler();
 	const isEdit = Boolean(item);
 
 	const handleOnFormSubmit = async (data: GamingSetupForm) => {
@@ -49,7 +49,7 @@ export const ProfileGamingSetupForm = ({
 			await loadUserInfo();
 			onClose();
 		} catch (err) {
-			ErrorHandler.process(err);
+			errorProcess(err);
 		}
 		setIsSubmitting(false);
 	};

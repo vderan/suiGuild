@@ -78,7 +78,7 @@ const TabButtonContainer = styled(Button, {
 	borderRadius: theme.spacing(1),
 	boxSizing: 'border-box',
 	opacity: disabled ? 0.3 : 1,
-	background: isFocused ? theme.palette.gradient2.main : 'none',
+	background: isFocused ? theme.palette.gradient.secondary : 'none',
 	fontFamily: 'Clash Display',
 	fontStyle: 'normal',
 	fontWeight: 600,

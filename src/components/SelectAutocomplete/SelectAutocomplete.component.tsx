@@ -7,6 +7,7 @@ import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import { Label } from '../Typography';
 import { FormHelperText, Paper, PaperProps } from '@mui/material';
+import { alpha } from '@mui/material';
 
 const CustomPaper = (props: PaperProps) => {
 	return (
@@ -22,7 +23,7 @@ const CustomPaper = (props: PaperProps) => {
 				},
 				'& .MuiAutocomplete-option': {
 					fontSize: theme => theme.spacing(1.75),
-					color: 'rgba(255,255,255,0.5)',
+					color: theme => alpha(theme.palette.text.primary, 0.5),
 					padding: theme => `${theme.spacing(1, 1.5)}!important`,
 					'&:hover': {
 						backgroundColor: 'transparent!important',
@@ -39,14 +40,14 @@ const CustomPaper = (props: PaperProps) => {
 					},
 					'&[aria-selected="true"]': {
 						backgroundColor: 'transparent!important',
-						color: theme => theme.palette.primary[700]
+						color: theme => theme.palette.blue[700]
 					},
 					'&:not(:last-child)': {
 						borderBottom: theme => `${theme.spacing(0.125)} solid ${theme.palette.border.subtle}`
 					},
 
 					'& .MuiTypography-root': {
-						color: 'rgba(255,255,255,0.5)'
+						color: theme => alpha(theme.palette.text.primary, 0.5)
 					}
 				},
 				...props.sx
@@ -134,7 +135,7 @@ export const SelectAutocomplete = ({
 										borderRadius: `${theme.spacing(1)} !important`
 									},
 									'&:hover fieldset': {
-										borderColor: `${theme.palette.primary[300]} !important`
+										borderColor: `${theme.palette.blue[300]} !important`
 									},
 									'&.Mui-focused fieldset': {
 										// - Set the Input border when parent is focused

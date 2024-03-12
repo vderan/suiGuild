@@ -81,15 +81,8 @@ export const Dialog = ({
 				<DialogContent
 					sx={{
 						pt: dialogTitle ? 0 : 4,
-						'::-webkit-scrollbar': {
-							width: theme => theme.spacing(0.25)
-						},
-						'::-webkit-scrollbar-track': {
-							boxShadow: theme => theme.palette.secondary[900],
-							webkitBoxShadow: theme => theme.palette.secondary[900]
-						},
 						'::-webkit-scrollbar-thumb': {
-							backgroundColor: theme => theme.palette.light[700]
+							backgroundColor: theme => theme.palette.border.highlight
 						}
 					}}
 				>

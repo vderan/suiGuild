@@ -112,7 +112,7 @@ const Award = ({ coverImage, link, month, year, title }: IAward) => {
 							inset: 0,
 							padding: theme.spacing(0.125),
 							borderRadius: theme.spacing(1),
-							background: theme.palette.gradient2.main,
+							background: theme.palette.gradient.secondary,
 							WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
 							WebkitMaskComposite: 'xor',
 							maskComposite: 'exclude'

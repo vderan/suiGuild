@@ -10,7 +10,7 @@ import { NotFound } from 'src/components/NotFound';
 import { useDevice } from 'src/hooks/useDevice';
 import { ipfsUrl } from 'src/helpers/ipfs.helpers';
 import { getPlacements } from 'src/helpers/number.helpers';
-import { ErrorHandler } from 'src/helpers';
+import { useErrorHandler } from 'src/hooks';
 
 export const ProfileAchievements = () => {
 	const { achievements, loadUserInfo } = useContext(AuthContext);
@@ -20,6 +20,7 @@ export const ProfileAchievements = () => {
 	const [idx, setIdx] = useState(0);
 	const { iMd } = useDevice();
 	const [isDeleting, setIsDeleting] = useState(false);
+	const { errorProcess } = useErrorHandler();
 
 	const onDeleteHandle = async (index: number) => {
 		setIsDeleting(true);
@@ -28,7 +29,7 @@ export const ProfileAchievements = () => {
 			await removeAchievement(index);
 			await loadUserInfo();
 		} catch (e) {
-			ErrorHandler.process(e);
+			errorProcess(e);
 		}
 		setIsDeleting(false);
 	};

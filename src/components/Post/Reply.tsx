@@ -1,6 +1,5 @@
 import { useContext, useRef, useState } from 'react';
 import { Box, ButtonBase, Collapse } from '@mui/material';
-import { toast } from 'react-toastify';
 import { AuthContext, IReplyProps } from 'src/contexts';
 import { Paragraph2, Paragraph3 } from 'src/components/Typography';
 import { differenceDate } from 'src/helpers/date.helpers';
@@ -17,8 +16,8 @@ import { ReadMore } from 'src/components/ReadMore';
 import pluralize from 'pluralize';
 import { useCustomSWR } from 'src/hooks/useCustomSWR';
 import { useProfile } from 'src/hooks/useProfile';
-import { ErrorHandler } from 'src/helpers';
 import { useDevice } from 'src/hooks/useDevice';
+import { useErrorHandler, useSnackbar } from 'src/hooks';
 
 export const Reply = ({ depth, comment, communityIdx, reply }: IReplyProps) => {
 	const { profile, isLoggedIn } = useContext(AuthContext);
@@ -29,7 +28,8 @@ export const Reply = ({ depth, comment, communityIdx, reply }: IReplyProps) => {
 	const { getUserInfo } = useProfile();
 	const { data: user } = useCustomSWR('getUserInfo' + reply.creatorInfo, () => getUserInfo(reply.creatorInfo));
 	const { iMd } = useDevice();
-
+	const { warningSnackbar } = useSnackbar();
+	const { errorProcess } = useErrorHandler();
 	const limit = depth + 1;
 
 	const replies = comment.reply.filter(newReply => newReply.parentIdx === reply.threadIdx);
@@ -43,7 +43,7 @@ export const Reply = ({ depth, comment, communityIdx, reply }: IReplyProps) => {
 
 	const addReplyToReply = async (content: string) => {
 		if (!profile?.displayName) {
-			toast.warning('You should have your own display name!', { theme: 'colored' });
+			warningSnackbar('You should have your own display name!');
 			return;
 		}
 		setIsReplySubmitting(true);
@@ -57,7 +57,7 @@ export const Reply = ({ depth, comment, communityIdx, reply }: IReplyProps) => {
 			);
 			replyToReplyRef.current?.reset();
 		} catch (err) {
-			ErrorHandler.process(err);
+			errorProcess(err);
 		}
 		setIsReplySubmitting(false);
 	};

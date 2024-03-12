@@ -8,10 +8,8 @@ import { AuthContext, UserInfo } from 'src/contexts';
 import { StandaloneInputField } from 'src/components/InputField';
 import { SmallAvatar } from 'src/components/Avatar';
 import { ipfsUrl } from 'src/helpers/ipfs.helpers';
-import { toast } from 'react-toastify';
-import { ErrorHandler } from 'src/helpers';
 import { SecondaryButton } from '../Button';
-import { useActiveUsers } from 'src/hooks';
+import { useActiveUsers, useErrorHandler, useSnackbar } from 'src/hooks';
 import { ErrorMessage } from '../ErrorMessage';
 import { ListSkeleton, FriendCardSkeleton } from '../Skeleton';
 import { NotFound } from '../NotFound';
@@ -90,6 +88,8 @@ const FriendInfo = ({ user }: { user: UserInfo }) => {
 	const { emit } = useSocketEmit();
 	const { sendFriendRequest } = useGilder();
 	const [isSubmitting, setIsSubmitting] = useState(false);
+	const { warningSnackbar } = useSnackbar();
+	const { errorProcess } = useErrorHandler();
 
 	const profileFriends = [
 		...(profile?.friends || []),
@@ -100,7 +100,7 @@ const FriendInfo = ({ user }: { user: UserInfo }) => {
 	const addFriend = async () => {
 		const username = user?.userInfo.some?.displayName;
 		if (!profile?.displayName || !username) {
-			toast.warning("Username doesn't exist", { theme: 'colored' });
+			warningSnackbar("Username doesn't exist");
 			return;
 		}
 		setIsSubmitting(true);
@@ -109,7 +109,7 @@ const FriendInfo = ({ user }: { user: UserInfo }) => {
 			emit('friend_request_sent', [{ from: profile.displayName, to: username, type: 'friend-request' }]);
 			await loadUserInfo();
 		} catch (error) {
-			ErrorHandler.process(error);
+			errorProcess(error);
 		}
 		setIsSubmitting(false);
 	};

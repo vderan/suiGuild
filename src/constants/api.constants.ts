@@ -1,10 +1,6 @@
-export const BASE_URL = import.meta.env.VITE_BASE_URL as string;
-
 export const LOCAL_STORAGE = {
 	JWT: 'jwt'
 };
-
-export const GIPHY_API_KEY = import.meta.env.VITE_GIPHY_API_KEY as string;
 
 export const BACKEND_URL = 'https://gilder-backend.vercel.app';
 

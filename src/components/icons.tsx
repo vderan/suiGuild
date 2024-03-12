@@ -63,6 +63,8 @@ import OpenseaIcon from './Icons/OpenseaIcon';
 import MediumIcon from './Icons/MediumIcon';
 import FriendRequestIcon from './Icons/FriendRequestIcon';
 import DeleteIcon from './Icons/DeleteIcon';
+import VerifiedIcon from './Icons/VerifiedIcon';
+import AlertIcon from './Icons/AlertIcon';
 
 const icons = {
 	wallet: WalletIcon,
@@ -130,7 +132,9 @@ const icons = {
 	people: PeopleIcon,
 	medium: MediumIcon,
 	opensea: OpenseaIcon,
-	delete: DeleteIcon
+	delete: DeleteIcon,
+	alert: AlertIcon,
+	verified: VerifiedIcon
 };
 export type Icons = keyof typeof icons;
 export { icons };

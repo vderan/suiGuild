@@ -4,7 +4,6 @@ import { EditorFieldProps } from './EditorField.types';
 import { Editor, Toolbar } from '@wangeditor/editor-for-react';
 import { IDomEditor, IEditorConfig, IToolbarConfig, i18nChangeLanguage, SlateElement } from '@wangeditor/editor';
 import '@wangeditor/editor/dist/css/style.css';
-import { toast } from 'react-toastify';
 import { isValidFileSize } from 'src/helpers/file.helpers';
 import { MAX_FILE_SIZE } from 'src/constants/constants';
 import { ButtonMediumText, Label } from '../Typography';
@@ -13,6 +12,7 @@ import React from 'react';
 import { TransitionProps } from '@mui/material/transitions';
 import { IconButton } from '../IconButton';
 import { useDevice } from 'src/hooks/useDevice';
+import { useSnackbar } from 'src/hooks';
 
 i18nChangeLanguage('en');
 
@@ -70,7 +70,7 @@ const StyledEditor = styled(Editor)<{ isReadonly?: boolean; numberLinesToDisplay
 				fontSize: theme.spacing(1.5)
 			},
 			'& a': {
-				color: theme.palette.primary[900],
+				color: theme.palette.blue[900],
 				textDecoration: 'none'
 			},
 			'& .w-e-textarea-video-container': {
@@ -99,7 +99,7 @@ const StyledEditor = styled(Editor)<{ isReadonly?: boolean; numberLinesToDisplay
 					right: 0
 				},
 				'&:hover': {
-					color: theme.palette.primary[900]
+					color: theme.palette.blue[900]
 				}
 			},
 			'& .w-e-text-container .w-e-max-length-info': {
@@ -245,6 +245,7 @@ export const EditorField = ({
 	const [isImageModalOpen, setIsImageModalOpen] = useState(false);
 	const [imageSrc, setImageSrc] = useState('');
 	const { iMid } = useDevice();
+	const { errorSnackbar } = useSnackbar();
 
 	const toolbarConfig: Partial<IToolbarConfig> = {};
 
@@ -281,7 +282,7 @@ export const EditorField = ({
 		editorConfig.MENU_CONF['uploadImage'] = {
 			async customUpload(file: File, insertFn: InsertImageType) {
 				if (!isValidFileSize(file)) {
-					toast.error(`You cannot upload an image exceeding ${MAX_FILE_SIZE} MB`, { theme: 'colored' });
+					errorSnackbar(`You cannot upload an image exceeding ${MAX_FILE_SIZE} MB`);
 					return;
 				}
 				const imgUrl = URL.createObjectURL(file);
@@ -293,7 +294,7 @@ export const EditorField = ({
 		editorConfig.MENU_CONF['uploadVideo'] = {
 			async customUpload(file: File, insertFn: InsertVideoType) {
 				if (!isValidFileSize(file)) {
-					toast.error(`You cannot upload a video exceeding ${MAX_FILE_SIZE} MB`, { theme: 'colored' });
+					errorSnackbar(`You cannot upload a video exceeding ${MAX_FILE_SIZE} MB`);
 					return;
 				}
 				const videoUrl = URL.createObjectURL(file);
@@ -395,7 +396,7 @@ export const EditorField = ({
 						>
 							<ButtonMediumText
 								sx={{
-									background: theme => theme.palette.gradient1.main,
+									background: theme => theme.palette.gradient.main,
 									WebkitBackgroundClip: 'text',
 									backgroundClip: 'text',
 									WebkitTextFillColor: 'transparent',

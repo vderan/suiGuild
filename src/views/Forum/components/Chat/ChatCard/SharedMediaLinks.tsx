@@ -54,7 +54,7 @@ export const SharedMediaLinks = () => {
 								textDecoration: 'none',
 								gap: 2,
 								p: 1.5,
-								backgroundColor: theme => theme.palette.secondary[900],
+								backgroundColor: theme => theme.palette.dark[500],
 								borderRadius: theme => `${theme.shape.borderRadius}px`
 							}}
 						>
