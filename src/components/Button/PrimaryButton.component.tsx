@@ -40,7 +40,7 @@ export const PrimaryButton = ({
 			startIcon={
 				!loading ? (
 					startIcon ? (
-						<StartIcon fontSize={iconSize || size} sx={{ color: theme => theme.palette.system.icon }} />
+						<StartIcon fontSize={iconSize || size} sx={{ color: theme => theme.palette.buttonText.white }} />
 					) : startImage ? (
 						<img src={startImage} alt="startImg" width={BUTTON_ICON_SIZE} height={BUTTON_ICON_SIZE} />
 					) : undefined
@@ -49,7 +49,7 @@ export const PrimaryButton = ({
 			endIcon={
 				!loading ? (
 					endIcon ? (
-						<EndIcon fontSize={iconSize || size} sx={{ color: theme => theme.palette.system.icon }} />
+						<EndIcon fontSize={iconSize || size} sx={{ color: theme => theme.palette.buttonText.white }} />
 					) : endImage ? (
 						<img src={endImage} alt="endImg" width={BUTTON_ICON_SIZE} height={BUTTON_ICON_SIZE} />
 					) : endElement ? (
@@ -107,18 +107,25 @@ const PrimaryButtonContainer = styled(Button, {
 		fontWeight: 600,
 		textTransform: 'none',
 		whiteSpace: 'nowrap',
-		color: theme.palette.text.primary,
+		color: theme.palette.buttonText.white,
 		position: 'relative',
 		'&:hover': {
 			boxShadow: `${theme.spacing(0, 1, 2, 0)} ${theme.palette.shadow.main}`
 		},
 		'&:focus': {
-			outline: `${theme.spacing(0.25)} solid ${theme.palette.blue[300]}`,
+			outline: `${theme.spacing(0.25)} solid ${theme.palette.system.default}`,
 			outlineOffset: theme.spacing(-0.25)
 		},
 		'&:active': {
 			outline: 'none',
 			background: 'none',
+			...(theme.palette.mode === 'light' && {
+				background: theme.palette.gradient.main,
+				WebkitBackgroundClip: 'text',
+				backgroundClip: 'text',
+				WebkitTextFillColor: 'transparent',
+				WebkitBoxDecorationBreak: 'clone'
+			}),
 
 			'&::after': {
 				content: '""',
@@ -139,7 +146,7 @@ const PrimaryButtonContainer = styled(Button, {
 			margin: 0
 		},
 		'&.Mui-disabled': {
-			color: theme.palette.text.primary
+			color: theme.palette.buttonText.white
 		}
 	};
 });

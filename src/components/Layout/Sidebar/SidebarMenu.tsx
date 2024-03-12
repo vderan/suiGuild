@@ -4,9 +4,12 @@ import { useDevice } from 'src/hooks/useDevice';
 import { useRecoilValue } from 'recoil';
 import { isSideMenuOpenedState } from 'src/recoil/sideMenu';
 import { SidebarCommunities } from './SidebarCommunities';
+import { ColorModeContext } from 'src/contexts';
+import { useContext } from 'react';
 
 export const SidebarMenu = ({ isSidebarAlwaysClosed = false }: { isSidebarAlwaysClosed?: boolean }) => {
 	const { isSidebarFullShown } = useDevice();
+	const { isDarkMode } = useContext(ColorModeContext);
 
 	const isSideMenuOpened = useRecoilValue(isSideMenuOpenedState);
 
@@ -21,7 +24,8 @@ export const SidebarMenu = ({ isSidebarAlwaysClosed = false }: { isSidebarAlways
 				overflowY: 'auto',
 				maxHeight: theme => `calc(100vh - ${theme.spacing(9)})`,
 				borderRight: `${theme.spacing(0.125)} solid`,
-				borderColor: isMenuOpened ? 'transparent' : theme.palette.border.subtle,
+				borderColor: isMenuOpened && isDarkMode ? 'transparent' : theme.palette.border.subtle,
+				background: theme => (isDarkMode ? 'transparent' : theme.palette.surface.container),
 				gap: 4
 			})}
 		>

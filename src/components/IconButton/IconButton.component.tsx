@@ -15,6 +15,7 @@ export const IconButton = ({
 	return (
 		<MUIIconButton
 			{...props}
+			disableRipple
 			disabled={props.disabled || loading}
 			sx={{
 				padding: 0,

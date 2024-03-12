@@ -23,5 +23,4 @@ stats.html
 *.njsproj
 *.sln
 *.sw?
-.env
 .eslintcache

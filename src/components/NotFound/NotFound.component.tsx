@@ -3,11 +3,14 @@ import { INotFoundProps } from './NotFound.types';
 import { ButtonMediumText, H2Title, H3Title, Paragraph1, Paragraph2, Paragraph3 } from '../Typography';
 import NoDataIcon from '../Icons/NoDataIcon';
 import { useDevice } from 'src/hooks/useDevice';
+import { ColorModeContext } from 'src/contexts';
+import { useContext } from 'react';
 
 export const NotFound = ({ title = '', description = '', iconProps, isSmall = false, ...rest }: INotFoundProps) => {
 	const { iMid } = useDevice();
 	const Title = isSmall ? ButtonMediumText : iMid ? H3Title : H2Title;
 	const Description = isSmall ? Paragraph3 : iMid ? Paragraph2 : Paragraph1;
+	const { isDarkMode } = useContext(ColorModeContext);
 
 	return (
 		<Stack spacing={3} alignItems="center" {...rest}>
@@ -16,7 +19,13 @@ export const NotFound = ({ title = '', description = '', iconProps, isSmall = fa
 				sx={{
 					width: theme => (isSmall ? theme.spacing(19.75) : theme.spacing(27.5)),
 					height: theme => (isSmall ? theme.spacing(11.625) : theme.spacing(16.25)),
-					color: theme => theme.palette.dark[700],
+					color: isDarkMode ? theme => theme.palette.surface.container : '#D4D4D4', // TODO: change color
+					'.title': {
+						fill: isDarkMode ? 'url(#title)' : 'url(#titleWhite)'
+					},
+					'.title-border': {
+						fill: isDarkMode ? '#FFFFFF' : '#474747'
+					},
 					...iconProps?.sx
 				}}
 			/>

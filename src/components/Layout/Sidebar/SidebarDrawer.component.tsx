@@ -31,7 +31,7 @@ export const SidebarDrawer = () => {
 				onClose={() => setIsDrawerOpen(false)}
 				sx={theme => ({
 					'& .MuiDrawer-paper': {
-						background: theme.palette.dark[700],
+						background: theme.palette.surface.container,
 						padding: theme.spacing(2.5, 3),
 						maxWidth: '297px',
 						width: '100%',

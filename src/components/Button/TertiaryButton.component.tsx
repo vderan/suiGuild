@@ -123,7 +123,7 @@ const TertiaryButtonContainer = styled(Button, {
 		padding: paddings(),
 		borderRadius: theme.spacing(1),
 		opacity: disabled ? 0.5 : 1,
-		background: theme.palette.light[300],
+		background: theme.palette.buttonText.white,
 		fontFamily: 'Clash Display',
 		fontStyle: 'normal',
 		fontWeight: 600,
