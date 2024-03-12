@@ -10,20 +10,21 @@ import { PrimaryButton, SecondaryButton } from 'src/components/Button';
 import { useGilder } from 'src/hooks/useGilder';
 import { api } from 'src/api';
 import { styled } from '@mui/system';
-import { ErrorHandler } from 'src/helpers';
+import { useErrorHandler } from 'src/hooks';
 
 export const NotificationCard = ({ notification }: { notification: INotification }) => {
 	const { emit } = useSocketEmit();
 	const { loadUserInfo } = useContext(AuthContext);
 	const { getNotifications } = useContext(NotificationContext);
 	const { acceptFriendRequest, rejectFriendRequest } = useGilder();
+	const { errorProcess } = useErrorHandler();
 
 	const markOneAsRead = async () => {
 		try {
 			await api.markAsRead(notification._id);
 			await getNotifications();
 		} catch (e) {
-			ErrorHandler.process(e);
+			errorProcess(e);
 		}
 	};
 
@@ -40,7 +41,7 @@ export const NotificationCard = ({ notification }: { notification: INotification
 			}
 			await loadUserInfo();
 		} catch (err) {
-			ErrorHandler.process(err);
+			errorProcess(err);
 		}
 	};
 

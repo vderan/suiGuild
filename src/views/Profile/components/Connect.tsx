@@ -57,7 +57,7 @@ export const Connect = ({ userId }: { userId?: string }) => {
 						</ListSkeleton>
 					</Grid>
 				</Grid>
-			) : userSocialsLinks.every(social => social.isShown) ? (
+			) : userSocialsLinks.some(social => social.isShown) ? (
 				<Grid container spacing={{ lg: 15.5, xs: 3 }}>
 					<Grid item xs={12} sm={12} md={12} lg={6}>
 						<Stack
@@ -90,7 +90,7 @@ export const Connect = ({ userId }: { userId?: string }) => {
 													}}
 												>
 													<H3Title>{social.label}</H3Title>
-													<Paragraph2 color="text.secondary" noWrap width="100%">
+													<Paragraph2 color="text.secondary" sx={{ textAlign: 'left' }} noWrap width="100%">
 														{social?.url}
 													</Paragraph2>
 												</Box>

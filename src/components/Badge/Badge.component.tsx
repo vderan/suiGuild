@@ -59,7 +59,7 @@ export const CountBadge = ({ count }: { count: string }) => {
 			sx={theme => ({
 				fontSize: 12,
 				fontWeight: 700,
-				color: theme.palette.primary[500],
+				color: theme.palette.blue[500],
 				background: theme.palette.border.subtle,
 				borderRadius: 1,
 				whiteSpace: 'nowrap',

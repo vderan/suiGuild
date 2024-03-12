@@ -60,7 +60,7 @@ const MenuButtonContainer = styled(Button, {
 		opacity: isFocused ? 1 : 0.5
 	},
 	borderRadius: theme.spacing(1),
-	background: isFocused ? theme.palette.gradient2.main : null,
+	background: isFocused ? theme.palette.gradient.secondary : null,
 	fontFamily: 'Clash Display',
 	fontStyle: 'normal',
 	fontWeight: 600,
@@ -69,6 +69,6 @@ const MenuButtonContainer = styled(Button, {
 	whiteSpace: 'nowrap',
 	color: theme.palette.text.primary,
 	'&:acive': {
-		background: theme.palette.gradient2.main
+		background: theme.palette.gradient.secondary
 	}
 }));

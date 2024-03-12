@@ -24,7 +24,7 @@ export const ReadMore = ({ children, maxLength = 300 }: { children: JSX.Element;
 				>
 					<ButtonMediumText
 						sx={{
-							background: theme => theme.palette.gradient1.main,
+							background: theme => theme.palette.gradient.main,
 							WebkitBackgroundClip: 'text',
 							backgroundClip: 'text',
 							WebkitTextFillColor: 'transparent',

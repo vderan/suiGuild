@@ -46,8 +46,7 @@ export const ImageField = ({ name, disabled = false }: { name: string; disabled?
 										opacity: disabled ? 0.5 : 1,
 										cursor: disabled ? 'default' : 'pointer',
 										objectFit: 'cover',
-										outline:
-											field.value === image ? `${theme.spacing(0.25)} solid ${theme.palette.primary[900]}` : 'none',
+										outline: field.value === image ? `${theme.spacing(0.25)} solid ${theme.palette.blue[900]}` : 'none',
 										border: field.value === image ? 'none' : `${theme.spacing(0.125)} solid ${theme.palette.dark[500]}`
 									})}
 									onClick={() => !disabled && field.onChange(image)}

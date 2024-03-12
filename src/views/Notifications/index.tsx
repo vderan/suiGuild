@@ -8,25 +8,26 @@ import { NotFound } from 'src/components/NotFound';
 import { markAllAsRead } from 'src/api/notification';
 import { useNavigate } from 'react-router-dom';
 import { useCurrentAccount } from '@mysten/dapp-kit';
-import { toast } from 'react-toastify';
-import { ErrorHandler } from 'src/helpers';
+import { useErrorHandler, useSnackbar } from 'src/hooks';
 
 export const Notifications = () => {
 	const navigate = useNavigate();
 	const account = useCurrentAccount();
 	const { profile } = useContext(AuthContext);
 	const { notifications, getNotifications } = useContext(NotificationContext);
+	const { warningSnackbar } = useSnackbar();
+	const { errorProcess } = useErrorHandler();
 
 	const markAllRead = async () => {
 		if (!profile?.displayName) {
-			toast.warning('You should have your own display name!', { theme: 'colored' });
+			warningSnackbar('You should have your own display name!');
 			return;
 		}
 		try {
 			await markAllAsRead(profile.displayName);
 			await getNotifications();
 		} catch (e) {
-			ErrorHandler.process(e);
+			errorProcess(e);
 		}
 	};
 

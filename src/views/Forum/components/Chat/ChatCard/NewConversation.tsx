@@ -1,6 +1,5 @@
 import { Box } from '@mui/material';
 import { useContext, useEffect, useMemo, useRef, useState } from 'react';
-import { toast } from 'react-toastify';
 import { useSetRecoilState } from 'recoil';
 import { Xmpp } from 'src/api/xmpp';
 import { Dialog } from 'src/components/Dialog';
@@ -17,6 +16,7 @@ import { ChatHeader } from '../ChatHeader';
 import { useBookmarks } from 'src/hooks/useBookmarks';
 import { RoomMember } from 'src/types/Xmpp.types';
 import { Members } from './Members';
+import { useErrorHandler, useSnackbar } from 'src/hooks';
 
 interface ConversationFormData {
 	member: string;
@@ -36,7 +36,8 @@ export const NewConversation = ({
 }) => {
 	const formRef = useRef<null | HTMLFormElement>(null);
 	const [isSubmitting, setIsSubmitting] = useState(false);
-
+	const { warningSnackbar, errorSnackbar } = useSnackbar();
+	const { errorProcess } = useErrorHandler();
 	const setSharedMediaOpen = useSetRecoilState(sharedMediaOpenState);
 	const setJoinedRooms = useSetRecoilState(joinedRoomsState);
 
@@ -44,7 +45,6 @@ export const NewConversation = ({
 	const { setActiveJid, conversationOpen, setConversationCreating } = useContext(ChatContext);
 	const { mutate } = useSWRConfig();
 	const { data: bookmarks } = useBookmarks();
-
 	const filteredBookmarks = useMemo(() => {
 		if (!bookmarks) return [];
 
@@ -88,7 +88,7 @@ export const NewConversation = ({
 			const roomJid = await Xmpp.createRoom(roomName);
 			if (!roomJid) {
 				setIsSubmitting(false);
-				return toast.error('Failed to create room', { theme: 'colored' });
+				return errorSnackbar('Failed to create room');
 			}
 
 			if (!isGroup) {
@@ -97,7 +97,7 @@ export const NewConversation = ({
 				if (bookmark) {
 					setIsSubmitting(false);
 					setConversationCreating(false);
-					return toast.warning('You already have DM with this user!', { theme: 'colored' });
+					return warningSnackbar('You already have DM with this user!');
 				}
 			}
 
@@ -129,7 +129,7 @@ export const NewConversation = ({
 			setIsSubmitting(false);
 			setIsCreating();
 			setConversationCreating(false);
-			toast.error((error as Error).message, { theme: 'colored' });
+			errorProcess(error);
 		}
 	};
 

@@ -14,8 +14,8 @@ import { Icon } from 'src/components/Icon';
 import { Controller } from 'react-hook-form';
 import { EditorField } from 'src/components/EditorField';
 import { MembersModal } from './MembersModal';
-import { ErrorHandler } from 'src/helpers';
 import { SecondaryButton } from 'src/components/Button';
+import { useErrorHandler } from 'src/hooks';
 
 interface CommunityAboutForm {
 	description: string;
@@ -45,6 +45,7 @@ export const AboutCard = ({ forum, isOwner }: { forum: IForum; isOwner: boolean 
 	const linkFormRef = useRef<null | HTMLFormElement>(null);
 	const { editCommunity } = useGilder();
 	const [isMembersModalShown, setIsMembersModalShown] = useState(false);
+	const { errorProcess } = useErrorHandler();
 
 	const socials = (() => {
 		if (!forum?.links) return {};
@@ -81,7 +82,7 @@ export const AboutCard = ({ forum, isOwner }: { forum: IForum; isOwner: boolean 
 			});
 			setIsModalShown(false);
 		} catch (err) {
-			ErrorHandler.process(err);
+			errorProcess(err);
 		}
 		setIsSubmitting(false);
 	};

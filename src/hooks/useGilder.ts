@@ -7,7 +7,6 @@ import {
 	useSuiClient
 } from '@mysten/dapp-kit';
 import { SUI_CLOCK_OBJECT_ID } from '@mysten/sui.js/utils';
-import { toast } from 'react-toastify';
 import { OBJECT_RECORD, ZERO_ADDRESS } from 'src/constants/sui.constants/objectIds';
 import { DEFAULT_CHAIN, provider } from 'src/constants/sui.constants/rpc';
 import { TransactionBlock } from '@mysten/sui.js/transactions';
@@ -24,6 +23,7 @@ import { TeamForm } from 'src/views/ProfileTeams';
 import { AwardForm } from 'src/views/ProfileAwards';
 import { ICreateCommunityProps } from 'src/components/Layout/Header';
 import { IPostData } from 'src/components/TextEditor';
+import { useSnackbar } from './useSnackbar';
 
 const bcs = getBCS();
 
@@ -36,68 +36,7 @@ export const useGilder = () => {
 	const gilderObjectId = OBJECT_RECORD[DEFAULT_CHAIN].GILDER_GILDER;
 	const profileObjectId = OBJECT_RECORD[DEFAULT_CHAIN].PROFILE_STORE;
 	const client = useSuiClient();
-
-	const mintTestNFT = async () => {
-		if (!wallet.isConnected && !account) return;
-		try {
-			const txb = new TransactionBlock();
-			txb.moveCall({
-				target: `${packageObjectId}::nft::mint`,
-				arguments: [txb.pure('Test'), txb.pure('Test'), txb.pure('Test')]
-			});
-			await signAndExecuteTransactionBlock(
-				{
-					transactionBlock: txb,
-					chain: DEFAULT_CHAIN
-				},
-				{
-					onSuccess: () => toast.success('NFT mint successfully!', { theme: 'colored' })
-				}
-			);
-			return true;
-		} catch (err) {
-			return false;
-		}
-	};
-
-	const getNFTs = async () => {
-		if (!wallet.isConnected && !account) return;
-		const nfts = await provider.getOwnedObjects({
-			owner: account?.address || '',
-			options: {
-				showContent: true,
-				showDisplay: true,
-				showType: true,
-				showBcs: true,
-				showOwner: true,
-				showPreviousTransaction: true,
-				showStorageRebate: true
-			},
-			filter: {
-				MatchNone: [
-					{
-						StructType: '0x2::coin::Coin'
-					}
-				]
-			}
-		});
-		try {
-			const txb = new TransactionBlock();
-			const NFTs = txb.makeMoveVec({ objects: [txb.object(nfts.data[0].data?.objectId || '')] });
-			txb.moveCall({
-				target: `${packageObjectId}::gilder::transferNFTs`,
-				arguments: [NFTs, txb.pure('0xbcfedec0e8713faf497b8195735eb7927ca011b12be8ff9beeed0ff82082f056')],
-				typeArguments: [`${packageObjectId}::nft::NFT`]
-			});
-			await signAndExecuteTransactionBlock({
-				transactionBlock: txb,
-				chain: DEFAULT_CHAIN
-			});
-			return true;
-		} catch (err) {
-			return false;
-		}
-	};
+	const { warningSnackbar,successSnackbar } = useSnackbar();
 
 	const getSuiBallance = async () => {
 		if (!account) return 0;
@@ -224,7 +163,7 @@ export const useGilder = () => {
 
 		await axios.post(SEND_SPONSORED_TRANSACTION_URL, sponsoredTransactionExecutionParam);
 
-		toast.success('Added a new game successfully!', { theme: 'colored' });
+		successSnackbar('Added a new game successfully!');
 	};
 
 	const removeGameSummary = async (index: number) => {
@@ -256,7 +195,7 @@ export const useGilder = () => {
 
 		await axios.post(SEND_SPONSORED_TRANSACTION_URL, sponsoredTransactionExecutionParam);
 
-		toast.success('Removed game summary successfully!', { theme: 'colored' });
+		successSnackbar('Removed game summary successfully!');
 	};
 
 	const addAchievement = async (achievementData: AchievementForm) => {
@@ -298,7 +237,7 @@ export const useGilder = () => {
 
 		await axios.post(SEND_SPONSORED_TRANSACTION_URL, sponsoredTransactionExecutionParam);
 
-		toast.success('Added a new achievement successfully!', { theme: 'colored' });
+		successSnackbar('Added a new achievement successfully!');
 	};
 
 	const editAchievement = async ({ achievementData, idx }: { achievementData: AchievementForm; idx: number }) => {
@@ -340,7 +279,7 @@ export const useGilder = () => {
 
 		await axios.post(SEND_SPONSORED_TRANSACTION_URL, sponsoredTransactionExecutionParam);
 
-		toast.success('Updated achievement successfully!', { theme: 'colored' });
+		successSnackbar('Updated achievement successfully!');
 	};
 
 	const removeAchievement = async (index: number) => {
@@ -371,7 +310,7 @@ export const useGilder = () => {
 
 		await axios.post(SEND_SPONSORED_TRANSACTION_URL, sponsoredTransactionExecutionParam);
 
-		toast.success('Removed achievement successfully!', { theme: 'colored' });
+		successSnackbar('Removed achievement successfully!');
 	};
 
 	const addGameSetup = async (name: string, component: string, community: string, coverImage: string) => {
@@ -408,7 +347,7 @@ export const useGilder = () => {
 
 		await axios.post(SEND_SPONSORED_TRANSACTION_URL, sponsoredTransactionExecutionParam);
 
-		toast.success('Added a new game setup successfully!', { theme: 'colored' });
+		successSnackbar('Added a new game setup successfully!');
 	};
 
 	const editGameSetup = async (
@@ -452,7 +391,7 @@ export const useGilder = () => {
 
 		await axios.post(SEND_SPONSORED_TRANSACTION_URL, sponsoredTransactionExecutionParam);
 
-		toast.success('Updated game setup successfully!', { theme: 'colored' });
+		successSnackbar('Updated game setup successfully!');
 	};
 
 	const removeGameSetup = async (index: number) => {
@@ -483,7 +422,7 @@ export const useGilder = () => {
 
 		await axios.post(SEND_SPONSORED_TRANSACTION_URL, sponsoredTransactionExecutionParam);
 
-		toast.success('Removed a game setup successfully!', { theme: 'colored' });
+		successSnackbar('Removed a game setup successfully!');
 	};
 
 	const addTeam = async (teamData: TeamForm) => {
@@ -522,7 +461,7 @@ export const useGilder = () => {
 
 		await axios.post(SEND_SPONSORED_TRANSACTION_URL, sponsoredTransactionExecutionParam);
 
-		toast.success('Added a new team successfully!', { theme: 'colored' });
+		successSnackbar('Added a new team successfully!');
 	};
 
 	const editTeam = async ({ teamData, idx }: { teamData: TeamForm; idx: number }) => {
@@ -562,7 +501,7 @@ export const useGilder = () => {
 
 		await axios.post(SEND_SPONSORED_TRANSACTION_URL, sponsoredTransactionExecutionParam);
 
-		toast.success('Updated team successfully!', { theme: 'colored' });
+		successSnackbar('Updated team successfully!');
 	};
 
 	const removeTeam = async (index: number) => {
@@ -593,7 +532,7 @@ export const useGilder = () => {
 
 		await axios.post(SEND_SPONSORED_TRANSACTION_URL, sponsoredTransactionExecutionParam);
 
-		toast.success('Removed a team successfully!', { theme: 'colored' });
+		successSnackbar('Removed a team successfully!');
 	};
 
 	const addVideo = async (name: string, link: string) => {
@@ -628,7 +567,7 @@ export const useGilder = () => {
 
 		await axios.post(SEND_SPONSORED_TRANSACTION_URL, sponsoredTransactionExecutionParam);
 
-		toast.success('Added a new video successfully!', { theme: 'colored' });
+		successSnackbar('Added a new video successfully!');
 	};
 
 	const editVideo = async (name: string, link: string, index: number) => {
@@ -664,7 +603,7 @@ export const useGilder = () => {
 
 		await axios.post(SEND_SPONSORED_TRANSACTION_URL, sponsoredTransactionExecutionParam);
 
-		toast.success('Updated video successfully!', { theme: 'colored' });
+		successSnackbar('Updated video successfully!');
 	};
 
 	const removeVideo = async (index: number) => {
@@ -695,7 +634,7 @@ export const useGilder = () => {
 
 		await axios.post(SEND_SPONSORED_TRANSACTION_URL, sponsoredTransactionExecutionParam);
 
-		toast.success('Removed a video successfully!', { theme: 'colored' });
+		successSnackbar('Removed a video successfully!');
 	};
 
 	const addAward = async (awardData: AwardForm) => {
@@ -733,7 +672,7 @@ export const useGilder = () => {
 
 		await axios.post(SEND_SPONSORED_TRANSACTION_URL, sponsoredTransactionExecutionParam);
 
-		toast.success('Added a new award successfully!', { theme: 'colored' });
+		successSnackbar('Added a new award successfully!');
 	};
 
 	const editAward = async ({ awardData, idx }: { awardData: AwardForm; idx: number }) => {
@@ -772,7 +711,7 @@ export const useGilder = () => {
 
 		await axios.post(SEND_SPONSORED_TRANSACTION_URL, sponsoredTransactionExecutionParam);
 
-		toast.success('Updated award successfully!', { theme: 'colored' });
+		successSnackbar('Updated award successfully!');
 	};
 
 	const removeAward = async (index: number) => {
@@ -803,7 +742,7 @@ export const useGilder = () => {
 
 		await axios.post(SEND_SPONSORED_TRANSACTION_URL, sponsoredTransactionExecutionParam);
 
-		toast.success('Removed an award successfully!', { theme: 'colored' });
+		successSnackbar('Removed an award successfully!');
 	};
 
 	const createCommunity = async (communityData: ICreateCommunityProps) => {
@@ -846,7 +785,7 @@ export const useGilder = () => {
 
 		await axios.post(SEND_SPONSORED_TRANSACTION_URL, sponsoredTransactionExecutionParam);
 
-		toast.success('Created a new community successfully!', { theme: 'colored' });
+		successSnackbar('Created a new community successfully!');
 	};
 
 	const editCommunity = async ({ idx, communityData }: { idx: number; communityData: ICreateCommunityProps }) => {
@@ -887,7 +826,7 @@ export const useGilder = () => {
 
 		await axios.post(SEND_SPONSORED_TRANSACTION_URL, sponsoredTransactionExecutionParam);
 
-		toast.success('Edited community successfully!', { theme: 'colored' });
+		successSnackbar('Edited community successfully!');
 	};
 
 	const getPost = async (pIndex: number) => {
@@ -952,7 +891,7 @@ export const useGilder = () => {
 
 		await axios.post(SEND_SPONSORED_TRANSACTION_URL, sponsoredTransactionExecutionParam);
 
-		toast.success('Created a new post successfully!', { theme: 'colored' });
+		successSnackbar('Created a new post successfully!');
 	};
 
 	const editPost = async ({ pId, postData }: { pId: number; postData: IPostData }) => {
@@ -997,9 +936,7 @@ export const useGilder = () => {
 
 		await axios.post(SEND_SPONSORED_TRANSACTION_URL, sponsoredTransactionExecutionParam);
 
-		toast.success(postData.isDraft ? 'Updated a draft successfully!' : 'Updated a post successfully!', {
-			theme: 'colored'
-		});
+		successSnackbar(postData.isDraft ? 'Updated a draft successfully!' : 'Updated a post successfully!');
 	};
 
 	const createComment = async (cIndex: number, pIndex: number, content: string) => {
@@ -1037,7 +974,7 @@ export const useGilder = () => {
 
 		await axios.post(SEND_SPONSORED_TRANSACTION_URL, sponsoredTransactionExecutionParam);
 
-		toast.success('Created a new comment successfully!', { theme: 'colored' });
+		successSnackbar('Created a new comment successfully!');
 	};
 
 	const createReply = async (
@@ -1082,7 +1019,7 @@ export const useGilder = () => {
 
 		await axios.post(SEND_SPONSORED_TRANSACTION_URL, sponsoredTransactionExecutionParam);
 
-		toast.success('Created a new reply successfully!', { theme: 'colored' });
+		successSnackbar('Created a new reply successfully!');
 	};
 
 	const follow = async (cIndex: number) => {
@@ -1113,7 +1050,7 @@ export const useGilder = () => {
 
 		await axios.post(SEND_SPONSORED_TRANSACTION_URL, sponsoredTransactionExecutionParam);
 
-		toast.success('Joined successfully!', { theme: 'colored' });
+		successSnackbar('Joined successfully!');
 	};
 
 	const unfollow = async (cIndex: number) => {
@@ -1144,7 +1081,7 @@ export const useGilder = () => {
 
 		await axios.post(SEND_SPONSORED_TRANSACTION_URL, sponsoredTransactionExecutionParam);
 
-		toast.success('Left successfully!', { theme: 'colored' });
+		successSnackbar('Left successfully!');
 	};
 
 	const vote = async (postIndex: number) => {
@@ -1155,9 +1092,7 @@ export const useGilder = () => {
 		const isAlreadyVoted = post?.voted.find(address => `0x${address}` === account.address);
 
 		if (isOwner || isAlreadyVoted) {
-			toast.warning(isAlreadyVoted ? "You're already voted to this post" : 'You cannot vote in your own post!', {
-				theme: 'colored'
-			});
+			warningSnackbar(isAlreadyVoted ? "You're already voted to this post" : 'You cannot vote in your own post!');
 			return;
 		}
 		const txbody = {
@@ -1181,7 +1116,7 @@ export const useGilder = () => {
 			responseSignature: sponsoredResponse.signature
 		});
 
-		toast.success('Voted successfully!', { theme: 'colored' });
+		successSnackbar('Voted successfully!');
 	};
 
 	const getAllCommunities = useCallback(async () => {
@@ -1292,7 +1227,7 @@ export const useGilder = () => {
 
 		await axios.post(SEND_SPONSORED_TRANSACTION_URL, sponsoredTransactionExecutionParam);
 
-		toast.success('Sent friend request!', { theme: 'colored' });
+		successSnackbar('Sent friend request!');
 	};
 
 	const acceptFriendRequest = async (friendname: string, username: string) => {
@@ -1323,7 +1258,7 @@ export const useGilder = () => {
 
 		await axios.post(SEND_SPONSORED_TRANSACTION_URL, sponsoredTransactionExecutionParam);
 
-		toast.success('Accepted friend request!', { theme: 'colored' });
+		successSnackbar('Accepted friend request!');
 	};
 
 	const rejectFriendRequest = async (friendname: string, username: string) => {
@@ -1354,7 +1289,7 @@ export const useGilder = () => {
 
 		await axios.post(SEND_SPONSORED_TRANSACTION_URL, sponsoredTransactionExecutionParam);
 
-		toast.success('Declined friend request!', { theme: 'colored' });
+		successSnackbar('Declined friend request!');
 	};
 
 	const removeFriend = async (friendname: string, username: string) => {
@@ -1385,7 +1320,7 @@ export const useGilder = () => {
 
 		await axios.post(SEND_SPONSORED_TRANSACTION_URL, sponsoredTransactionExecutionParam);
 
-		toast.success('Removed friend successfully!', { theme: 'colored' });
+		successSnackbar('Removed friend successfully!');
 	};
 
 	const deactivateAccount = async () => {
@@ -1451,8 +1386,6 @@ export const useGilder = () => {
 		follow,
 		unfollow,
 		vote,
-		mintTestNFT,
-		getNFTs,
 		esimateSendSuiTokenGas,
 		getUsernames,
 		sendFriendRequest,

@@ -16,7 +16,7 @@ export const WelcomeBanner = () => {
 				sx={theme => ({
 					display: 'flex',
 					position: 'relative',
-					background: theme.palette.gradient2.main,
+					background: theme.palette.gradient.secondary,
 					borderRadius: theme.spacing(1.5),
 					[theme.breakpoints.down('md')]: {
 						overflow: 'hidden'

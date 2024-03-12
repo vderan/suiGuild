@@ -1,12 +1,12 @@
 import { Box } from '@mui/material';
 import { useContext, useState } from 'react';
-import { toast } from 'react-toastify';
 import { QuaternaryButton } from 'src/components/Button';
 import { Icon } from 'src/components/Icon';
 import { IconButton } from 'src/components/IconButton';
 import ShareBox from 'src/components/ShareBox';
 import { AuthContext, IForum } from 'src/contexts';
-import { ErrorHandler } from 'src/helpers';
+import { useErrorHandler, useSnackbar } from 'src/hooks';
+
 import { useGilder } from 'src/hooks/useGilder';
 
 export const CommunityActions = ({ forum }: { forum: IForum }) => {
@@ -14,10 +14,12 @@ export const CommunityActions = ({ forum }: { forum: IForum }) => {
 	const { follow, unfollow } = useGilder();
 	const isFollowing = forum?.followers.find(follower => `0x${follower}` === profile?.id);
 	const [isSubmitting, setIsSubmitting] = useState(false);
+	const { warningSnackbar } = useSnackbar();
+	const { errorProcess } = useErrorHandler();
 
 	const handleFollow = async () => {
 		if (profile?.id === `0x${forum.creatorInfo}` && isFollowing) {
-			toast.warning("You can't leave your own community!", { theme: 'colored' });
+			warningSnackbar("You can't leave your own community!");
 			return;
 		}
 		setIsSubmitting(true);
@@ -26,7 +28,7 @@ export const CommunityActions = ({ forum }: { forum: IForum }) => {
 			isFollowing ? await unfollow(idx) : await follow(idx);
 			await loadUserInfo();
 		} catch (e) {
-			ErrorHandler.process(e);
+			errorProcess(e);
 		}
 		setIsSubmitting(false);
 	};
@@ -35,7 +37,8 @@ export const CommunityActions = ({ forum }: { forum: IForum }) => {
 			{profile && (
 				<QuaternaryButton
 					sx={{
-						boxShadow: '0 0 1px #000000'
+						boxShadow: theme => `0 0 1px ${theme.palette.dark[900]}`,
+						textShadow: theme => `0 0 1px ${theme.palette.dark[900]}`
 					}}
 					loading={isSubmitting}
 					onClick={handleFollow}
@@ -43,7 +46,13 @@ export const CommunityActions = ({ forum }: { forum: IForum }) => {
 					{isFollowing ? 'LEAVE' : 'JOIN'}
 				</QuaternaryButton>
 			)}
-			<Icon icon="notification" fontSize="small" sx={{ filter: 'drop-shadow(0 0 3px #000000)' }} />
+			<Icon
+				icon="notification"
+				fontSize="small"
+				sx={{
+					filter: theme => `drop-shadow(0 0 1px ${theme.palette.dark[900]})`
+				}}
+			/>
 
 			<ShareBox
 				links={[
@@ -53,7 +62,13 @@ export const CommunityActions = ({ forum }: { forum: IForum }) => {
 						icon: 'link'
 					}
 				]}
-				element={<IconButton size="small" sx={{ filter: 'drop-shadow(0 0 3px #000000)', padding: 0 }} icon="share" />}
+				element={
+					<IconButton
+						size="small"
+						sx={{ filter: theme => `drop-shadow(0 0 1px ${theme.palette.dark[900]})`, padding: 0 }}
+						icon="share"
+					/>
+				}
 			/>
 		</Box>
 	);

@@ -1,5 +1,5 @@
 import { Controller } from 'react-hook-form';
-import { Box, Stack } from '@mui/material';
+import { Box, Stack, alpha } from '@mui/material';
 import FormHelperText from '@mui/material/FormHelperText';
 import InputAdornment from '@mui/material/InputAdornment';
 import MenuItem from '@mui/material/MenuItem';
@@ -127,12 +127,12 @@ export const StandaloneSelect = ({
 							<Paragraph2
 								noWrap
 								sx={{
-									color: 'rgba(255,255,255,0.5)',
+									color: theme => alpha(theme.palette.text.primary, 0.5),
 									'.MuiMenuItem-root:hover &': {
 										color: theme => theme.palette.text.primary
 									},
 									'.Mui-selected &': {
-										color: theme => theme.palette.primary[700]
+										color: theme => theme.palette.blue[700]
 									}
 								}}
 							>

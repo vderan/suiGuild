@@ -116,7 +116,7 @@ const Game = ({ backgroundImage, name }: { backgroundImage: string; name: string
 				px: 2
 			}}
 		>
-			<H3Title noWrap title={name} sx={{ textShadow: '0 0 3px #000000' }}>
+			<H3Title noWrap title={name} sx={{ textShadow: theme => `0 0 1px ${theme.palette.dark[900]}` }}>
 				{name}
 			</H3Title>
 		</Box>

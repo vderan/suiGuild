@@ -4,12 +4,12 @@ import { Dialog } from 'src/components/Dialog';
 import { Form } from 'src/components/Form';
 import { InputField } from 'src/components/InputField';
 import { useGilder } from 'src/hooks/useGilder';
-import { toast } from 'react-toastify';
 import { H4Title } from '../Typography';
 import { avatarUrl, coverUrl } from 'src/constants/images.constants';
 import { useProfile } from 'src/hooks/useProfile';
 import { IEditUserProps } from 'src/hooks/types';
 import { createUsernameSchema } from 'src/schemas/create-username.schema';
+import { useErrorHandler, useSnackbar } from 'src/hooks';
 
 export const UsernameDialog = () => {
 	const { profile, isUsernameVisible, changeUsernameModalVisible, loadUserInfo, initChat } = useContext(AuthContext);
@@ -17,12 +17,14 @@ export const UsernameDialog = () => {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const { editPersonalInfo } = useGilder();
 	const { checkUsername } = useProfile();
+	const { warningSnackbar, successSnackbar } = useSnackbar();
+	const { errorProcess } = useErrorHandler();
 
 	const handleSubmit = async (data: { username: string }) => {
 		const isUser = await checkUsername(data.username);
 
 		if (isUser) {
-			toast.warning('Username already exists', { theme: 'colored' });
+			warningSnackbar('Username already exists');
 			return;
 		}
 
@@ -45,9 +47,9 @@ export const UsernameDialog = () => {
 			await editPersonalInfo(editUserInfo);
 			const userInfo = await loadUserInfo();
 			await initChat(userInfo?.displayName);
-			toast.success('Updated username successfully!', { theme: 'colored' });
+			successSnackbar('Updated username successfully!');
 		} catch (error) {
-			toast.error((error as Error).message, { theme: 'colored' });
+			errorProcess(error);
 		}
 		setIsLoading(false);
 	};

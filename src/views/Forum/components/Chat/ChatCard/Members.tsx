@@ -208,7 +208,7 @@ const MemberInfo = ({
 				alignItems: 'center',
 				justifyContent: 'space-between',
 				gap: 1,
-				background: theme => theme.palette.gradient2.main,
+				background: theme => theme.palette.gradient.secondary,
 				padding: theme => theme.spacing(0.625, 1.25),
 				borderRadius: theme => theme.spacing(1),
 				overflow: 'hidden'

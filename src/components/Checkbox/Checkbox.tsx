@@ -42,7 +42,7 @@ export const Checkbox = ({
 											border: `${theme.spacing(0.125)} solid ${theme.palette.border.default}`,
 											borderRadius: 'inherit',
 											'.MuiCheckbox-root:hover &': {
-												borderColor: theme.palette.primary[700]
+												borderColor: theme.palette.blue[700]
 											}
 										})}
 									/>
@@ -54,7 +54,7 @@ export const Checkbox = ({
 											height: theme.spacing(2.5),
 											border: `${theme.spacing(0.125)} solid ${theme.palette.border.default}`,
 											borderRadius: 'inherit',
-											backgroundColor: theme.palette.primary[700]
+											backgroundColor: theme.palette.blue[700]
 										})}
 									/>
 								}

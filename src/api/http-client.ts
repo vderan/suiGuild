@@ -1,4 +1,5 @@
-import { BASE_URL, LOCAL_STORAGE } from 'src/constants/api.constants';
+import { LOCAL_STORAGE } from 'src/constants/api.constants';
+import { BASE_URL } from 'src/constants/env.constants';
 import { ApiError } from 'src/types/Api.types';
 
 export const httpClient = async <T>({

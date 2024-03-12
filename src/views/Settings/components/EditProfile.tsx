@@ -12,14 +12,13 @@ import { IEditUserProps } from 'src/hooks/types';
 import { avatarUrl, coverUrl } from 'src/constants/images.constants';
 import { LanguageSelector } from 'src/components/LanguageSelector';
 import { CountrySelector } from 'src/components/CountrySelector';
-import { toast } from 'react-toastify';
 import { Xmpp } from 'src/api/xmpp';
 import { useSWRConfig } from 'swr';
 import { QUERY_KEYS } from 'src/constants/querykeys.constants';
 import { removeResourceFromJid } from 'src/helpers/xmpp.helpers';
 import { ipfsUrl } from 'src/helpers/ipfs.helpers';
 import { FileField } from 'src/components/FileField';
-import { ErrorHandler } from 'src/helpers';
+import { useErrorHandler, useSnackbar } from 'src/hooks';
 
 interface EditProfileForm {
 	avatar: string;
@@ -39,6 +38,8 @@ export const EditProfile = () => {
 	const { activeJid, setMessages } = useContext(ChatContext);
 	const { profile, jid, loadUserInfo } = useContext(AuthContext);
 	const { mutate } = useSWRConfig();
+	const { successSnackbar } = useSnackbar();
+	const { errorProcess } = useErrorHandler();
 
 	// TODO: refactor
 
@@ -57,7 +58,7 @@ export const EditProfile = () => {
 				avatar = await uploadAttachment(data.avatar, 'avatar');
 			} catch (error) {
 				setIsUploading(false);
-				ErrorHandler.process(error);
+				errorProcess(error);
 
 				return;
 			}
@@ -80,7 +81,7 @@ export const EditProfile = () => {
 				cover = await uploadAttachment(data.cover, 'cover');
 			} catch (error) {
 				setIsUploading(false);
-				ErrorHandler.process(error);
+				errorProcess(error);
 
 				return;
 			}
@@ -103,10 +104,10 @@ export const EditProfile = () => {
 
 		try {
 			await editPersonalInfo(editUserInfo);
+			successSnackbar('Updated user successfully!');
 			await loadUserInfo();
-			toast.success('Updated user successfully!', { theme: 'colored' });
 		} catch (error) {
-			ErrorHandler.process(error);
+			errorProcess(error);
 		}
 
 		setIsUploading(false);

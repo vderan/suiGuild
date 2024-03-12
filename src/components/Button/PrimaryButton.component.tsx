@@ -40,7 +40,7 @@ export const PrimaryButton = ({
 			startIcon={
 				!loading ? (
 					startIcon ? (
-						<StartIcon fontSize={iconSize || size} sx={{ color: theme => theme.palette.tertiary.main }} />
+						<StartIcon fontSize={iconSize || size} sx={{ color: theme => theme.palette.system.icon }} />
 					) : startImage ? (
 						<img src={startImage} alt="startImg" width={BUTTON_ICON_SIZE} height={BUTTON_ICON_SIZE} />
 					) : undefined
@@ -49,7 +49,7 @@ export const PrimaryButton = ({
 			endIcon={
 				!loading ? (
 					endIcon ? (
-						<EndIcon fontSize={iconSize || size} sx={{ color: theme => theme.palette.tertiary.main }} />
+						<EndIcon fontSize={iconSize || size} sx={{ color: theme => theme.palette.system.icon }} />
 					) : endImage ? (
 						<img src={endImage} alt="endImg" width={BUTTON_ICON_SIZE} height={BUTTON_ICON_SIZE} />
 					) : endElement ? (
@@ -98,7 +98,7 @@ const PrimaryButtonContainer = styled(Button, {
 		padding: paddings(),
 		gap: theme.spacing(1),
 		borderRadius: theme.spacing(1),
-		background: theme.palette.gradient1.main,
+		background: theme.palette.gradient.main,
 		opacity: disabled ? 0.5 : 1,
 		fontSize: isSmall ? theme.spacing(1.5) : isLarge ? theme.spacing(2) : theme.spacing(1.75),
 		lineHeight: isSmall ? theme.spacing(2.5) : theme.spacing(3),
@@ -113,7 +113,7 @@ const PrimaryButtonContainer = styled(Button, {
 			boxShadow: `${theme.spacing(0, 1, 2, 0)} ${theme.palette.shadow.main}`
 		},
 		'&:focus': {
-			outline: `${theme.spacing(0.25)} solid ${theme.palette.primary[300]}`,
+			outline: `${theme.spacing(0.25)} solid ${theme.palette.blue[300]}`,
 			outlineOffset: theme.spacing(-0.25)
 		},
 		'&:active': {
@@ -126,7 +126,7 @@ const PrimaryButtonContainer = styled(Button, {
 				inset: 0,
 				padding: theme.spacing(0.125),
 				borderRadius: theme.spacing(1),
-				background: theme.palette.gradient1.main,
+				background: theme.palette.gradient.main,
 				WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
 				WebkitMaskComposite: 'xor',
 				maskComposite: 'exclude'

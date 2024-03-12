@@ -268,7 +268,7 @@ export const Layout = ({ isSidebarAlwaysClosed = false }: { isSidebarAlwaysClose
 						overflowY: 'auto',
 						maxHeight: theme => `calc(100vh - ${theme.spacing(9)})`,
 						minHeight: theme => `calc(100vh - ${theme.spacing(9)})`,
-						paddingBottom: (profile?.displayName && !isChat) || iMid ? 10 : 'initial',
+						paddingBottom: isChat ? 'initial' : profile?.displayName ? 10 : 5,
 						[theme.breakpoints.down('lg')]: {
 							overflowY: 'inital',
 							maxHeight: 'initial',

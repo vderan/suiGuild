@@ -1,5 +1,4 @@
 import { BrowserRouter, Route, Routes, Navigate, useLocation } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
 import { Providers } from './providers';
 import { RequireXmppAuth } from './components/RequireXmppAuth';
 import { RequireOwner, RequireUsername, RequireIsLoggedIn } from './components/RequireOwner';
@@ -83,12 +82,11 @@ function App() {
 			<ThemeProvider>
 				<BrowserRouter>
 					<ScrollToTop />
-					<ToastContainer autoClose={3000} limit={3} pauseOnFocusLoss={false} />
 					<Suspense
 						fallback={
 							<>
 								<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
-									<CircularProgress size={60} />
+									<CircularProgress sx={{ color: theme => theme.palette.text.primary }} size={60} />
 								</Box>
 							</>
 						}

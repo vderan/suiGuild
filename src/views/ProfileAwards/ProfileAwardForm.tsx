@@ -13,7 +13,7 @@ import { useGilder } from 'src/hooks/useGilder';
 import { ipfsUrl } from 'src/helpers/ipfs.helpers';
 import { IconButton } from 'src/components/IconButton';
 import { useClipboard } from 'src/hooks/useClipboard';
-import { ErrorHandler } from 'src/helpers';
+import { useErrorHandler } from 'src/hooks';
 
 export interface AwardForm {
 	title: string;
@@ -39,6 +39,7 @@ export const ProfileAwardForm = ({
 	const { loadUserInfo } = useContext(AuthContext);
 	const { copy } = useClipboard();
 	const [isSubmitting, setIsSubmitting] = useState(false);
+	const { errorProcess } = useErrorHandler();
 
 	const isEdit = Boolean(award);
 
@@ -60,7 +61,7 @@ export const ProfileAwardForm = ({
 			await loadUserInfo();
 			onClose();
 		} catch (err) {
-			ErrorHandler.process(err);
+			errorProcess(err);
 		}
 		setIsSubmitting(false);
 	};

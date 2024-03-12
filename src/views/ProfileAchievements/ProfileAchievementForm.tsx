@@ -12,7 +12,7 @@ import { getPlacements } from 'src/helpers/number.helpers';
 import { uploadAttachment } from 'src/helpers/upload.helpers';
 import { useGilder } from 'src/hooks/useGilder';
 import { achievementFormSchema } from 'src/schemas/achievemet.schema';
-import { ErrorHandler } from 'src/helpers';
+import { useErrorHandler } from 'src/hooks';
 
 export interface AchievementForm {
 	title: string;
@@ -40,6 +40,7 @@ export const ProfileAchievementForm = ({
 	const { addAchievement, editAchievement } = useGilder();
 	const { loadUserInfo } = useContext(AuthContext);
 	const [isSubmitting, setIsSubmitting] = useState(false);
+	const { errorProcess } = useErrorHandler();
 
 	const isEdit = Boolean(achievement);
 
@@ -61,7 +62,7 @@ export const ProfileAchievementForm = ({
 			await loadUserInfo();
 			onClose();
 		} catch (err) {
-			ErrorHandler.process(err);
+			errorProcess(err);
 		}
 		setIsSubmitting(false);
 	};

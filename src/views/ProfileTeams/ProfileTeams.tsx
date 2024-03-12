@@ -8,9 +8,9 @@ import { NotFound } from 'src/components/NotFound';
 import { useGilder } from 'src/hooks/useGilder';
 import { Grid } from '@mui/material';
 import { useDevice } from 'src/hooks/useDevice';
-import { ErrorHandler } from 'src/helpers';
 import { ipfsUrl } from 'src/helpers/ipfs.helpers';
 import { readableDate } from 'src/helpers/date.helpers';
+import { useErrorHandler } from 'src/hooks';
 
 export const ProfileTeams = () => {
 	const { teams, loadUserInfo } = useContext(AuthContext);
@@ -20,6 +20,7 @@ export const ProfileTeams = () => {
 	const [idx, setIdx] = useState(0);
 	const { iMd } = useDevice();
 	const [isDeleting, setIsDeleting] = useState(false);
+	const { errorProcess } = useErrorHandler();
 
 	const onDeleteHandle = async (index: number) => {
 		setIsDeleting(true);
@@ -28,7 +29,7 @@ export const ProfileTeams = () => {
 			await removeTeam(index);
 			await loadUserInfo();
 		} catch (e) {
-			ErrorHandler.process(e);
+			errorProcess(e);
 		}
 		setIsDeleting(false);
 	};

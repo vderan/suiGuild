@@ -36,14 +36,19 @@ export const CommunityHeader = ({ forum, isLoading = false }: { forum?: IForum; 
 					sx={{
 						width: theme => theme.spacing(11),
 						height: theme => theme.spacing(11),
-						boxShadow: '0 0 3px #000000'
+						boxShadow: theme => `0 0 1px ${theme.palette.dark[900]}`
 					}}
 				/>
 			)}
 			<Box display="flex" flexDirection="column" gap={2.5} zIndex={100} overflow="hidden">
 				<Box display="flex" gap={3} alignItems="flex-start">
 					<Box display="flex" gap={1} alignItems="center" overflow="hidden">
-						<H2Title noWrap sx={{ textShadow: '0 0 2px #000000' }}>
+						<H2Title
+							noWrap
+							sx={{
+								textShadow: theme => `0 0 1px ${theme.palette.dark[900]}`
+							}}
+						>
 							{forum?.title}
 						</H2Title>
 						{isOwner && <IconButton size="small" icon="edit" onClick={() => setIsEditCommunityModalShown(true)} />}

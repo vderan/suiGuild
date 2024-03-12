@@ -8,16 +8,16 @@ import { EditorField } from '../EditorField';
 import { useRef, useState } from 'react';
 import { useGilder } from 'src/hooks/useGilder';
 import { uploadAttachment } from 'src/helpers/upload.helpers';
-import { ErrorHandler } from 'src/helpers';
 import { createCommunitySchema } from 'src/schemas/create-community.schema';
 import { useDevice } from 'src/hooks/useDevice';
+import { useErrorHandler } from 'src/hooks';
 
 export const CreateCommunityModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const formRef = useRef<null | HTMLFormElement>(null);
 	const { createCommunity } = useGilder();
 	const { iMd } = useDevice();
-
+	const { errorProcess } = useErrorHandler();
 	const handleOnFormSubmit = async (data: CreateCommunityForm) => {
 		setIsSubmitting(true);
 
@@ -38,7 +38,7 @@ export const CreateCommunityModal = ({ isOpen, onClose }: { isOpen: boolean; onC
 			});
 			onClose();
 		} catch (err) {
-			ErrorHandler.process(err);
+			errorProcess(err);
 		}
 		setIsSubmitting(false);
 	};

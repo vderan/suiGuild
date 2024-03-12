@@ -2,7 +2,6 @@ import { Box, Link, Stack } from '@mui/material';
 import { useContext, useMemo, useState } from 'react';
 import { useSocketEmit } from 'use-socket-io-react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import { useSWRConfig } from 'swr';
 import { useSetRecoilState } from 'recoil';
 import { TeamAvatar } from 'src/components/Avatar';
@@ -20,7 +19,7 @@ import { useGilder } from 'src/hooks/useGilder';
 import { api } from 'src/api';
 import { useBookmarks } from 'src/hooks/useBookmarks';
 import { Xmpp } from 'src/api/xmpp';
-import { ErrorHandler } from 'src/helpers';
+import { useErrorHandler, useSnackbar } from 'src/hooks';
 
 interface FriendCardProps {
 	friend: UserInfo;
@@ -42,7 +41,8 @@ export const FriendCard = ({ friend, isOwner = false, isRequest = false }: Frien
 	const { mutate } = useSWRConfig();
 	const setJoinedRooms = useSetRecoilState(joinedRoomsState);
 	const setSharedMediaOpen = useSetRecoilState(sharedMediaOpenState);
-
+	const { warningSnackbar, errorSnackbar } = useSnackbar();
+	const { errorProcess } = useErrorHandler();
 	const friendName = friend.userInfo.some?.displayName;
 
 	const filteredBookmarks = useMemo(() => {
@@ -55,7 +55,7 @@ export const FriendCard = ({ friend, isOwner = false, isRequest = false }: Frien
 
 	const deleteFriend = async () => {
 		if (!profile?.displayName || !friendName) {
-			toast.warning("Username or Friend name doesn't exist", { theme: 'colored' });
+			warningSnackbar("Username or Friend name doesn't exist");
 			return;
 		}
 		setIsSubmitting(true);
@@ -64,7 +64,7 @@ export const FriendCard = ({ friend, isOwner = false, isRequest = false }: Frien
 			emit('friend_request_deletion', [{ from: profile.displayName, to: friendName, type: 'friend-deletion' }]);
 			await loadUserInfo();
 		} catch (err) {
-			ErrorHandler.process(err);
+			errorProcess(err);
 		}
 		setIsSubmitting(false);
 		setIsDeleteFriendModalOpened(false);
@@ -84,7 +84,7 @@ export const FriendCard = ({ friend, isOwner = false, isRequest = false }: Frien
 
 	const handleFriendRequest = async (isAccept: boolean) => {
 		if (!profile?.displayName || !friendName) {
-			toast.warning("Username or Friend name doesn't exist", { theme: 'colored' });
+			warningSnackbar("Username or Friend name doesn't exist");
 			return;
 		}
 		setIsSubmitting(true);
@@ -100,7 +100,7 @@ export const FriendCard = ({ friend, isOwner = false, isRequest = false }: Frien
 			}
 			await loadUserInfo();
 		} catch (err) {
-			ErrorHandler.process(err);
+			errorProcess(err);
 		}
 		setIsSubmitting(false);
 	};
@@ -124,10 +124,10 @@ export const FriendCard = ({ friend, isOwner = false, isRequest = false }: Frien
 
 	const sendMessage = async () => {
 		if (!friend.isActive) {
-			toast.warning('This user was deactivated!', { theme: 'colored' });
+			warningSnackbar('This user was deactivated!');
 			return;
 		} else if (!friendName) {
-			toast.warning("Friend name doesn't exist!", { theme: 'colored' });
+			warningSnackbar("Friend name doesn't exist!");
 			return;
 		}
 		try {
@@ -141,7 +141,7 @@ export const FriendCard = ({ friend, isOwner = false, isRequest = false }: Frien
 				const roomJid = await Xmpp.createRoom(friendName);
 				if (!roomJid) {
 					setIsDMLoading(false);
-					return toast.error('Failed to create room', { theme: 'colored' });
+					return errorSnackbar('Failed to create room');
 				}
 
 				await Xmpp.setRoomVCard({ roomJid, roomRole: 'DM' });
@@ -161,7 +161,7 @@ export const FriendCard = ({ friend, isOwner = false, isRequest = false }: Frien
 			}
 			navigate('/chat');
 		} catch (error) {
-			ErrorHandler.process(error);
+			errorProcess(error);
 		}
 		setIsDMLoading(false);
 	};
@@ -172,7 +172,8 @@ export const FriendCard = ({ friend, isOwner = false, isRequest = false }: Frien
 				borderRadius: 1,
 				padding: 3,
 				backgroundColor: theme => theme.palette.dark[700],
-				gap: 3
+				gap: 3,
+				height: '100%'
 			}}
 		>
 			<Link component={NavLink} to={`/profile/0x${friend?.userAddress}`} gap={1} display="flex" flexDirection="column">

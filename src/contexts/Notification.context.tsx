@@ -5,8 +5,7 @@ import { INotification } from './types';
 import { api } from 'src/api';
 import { AuthContext } from './Auth.context';
 import { sortNotificationsByDate } from 'src/helpers/sort.helpers';
-import { toast } from 'react-toastify';
-import { ErrorHandler } from 'src/helpers';
+import { useErrorHandler } from 'src/hooks';
 
 interface INotificationContext {
 	notifications: INotification[];
@@ -21,12 +20,13 @@ export const NotificationContext = createContext<INotificationContext>({
 export const NotificationProvider = ({ children }: PropsWithChildren) => {
 	const { profile, loadUserInfo } = useContext(AuthContext);
 	const [notifications, setNotifications] = useState<INotification[]>([]);
+	const { errorProcess, errorProcessWithoutFeedback } = useErrorHandler();
 
 	const notificationHandler = () => {
 		try {
 			Promise.all([loadUserInfo(), getNotifications()]);
 		} catch (e) {
-			toast.error((e as Error).message, { theme: 'colored' });
+			errorProcess(e);
 		}
 	};
 
@@ -58,11 +58,11 @@ export const NotificationProvider = ({ children }: PropsWithChildren) => {
 			try {
 				await getNotifications();
 			} catch (e) {
-				ErrorHandler.processWithoutFeedback(e);
+				errorProcessWithoutFeedback(e);
 			}
 		};
 		init();
-	}, [getNotifications]);
+	}, [errorProcessWithoutFeedback, getNotifications]);
 
 	return (
 		<>

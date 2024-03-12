@@ -165,7 +165,7 @@ const Member = ({
 					alignItems: 'center',
 					flexDirection: 'row',
 					overflow: 'hidden',
-					gap: 2,
+					gap: 2
 				}}
 			>
 				<Box
@@ -183,7 +183,7 @@ const Member = ({
 								alignItems: 'center',
 								justifyContent: 'center',
 								position: 'absolute',
-								backgroundColor: theme => theme.palette.primary[900],
+								backgroundColor: theme => theme.palette.secondary.main,
 								borderRadius: '50%',
 								width: 14,
 								height: 14,
@@ -215,7 +215,7 @@ const Member = ({
 								icon="moreHorizontal"
 								className="member-menu"
 								sx={{
-									opacity: 0,
+									opacity: 0
 								}}
 							/>
 						),

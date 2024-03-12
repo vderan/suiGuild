@@ -9,11 +9,11 @@ import { StandaloneInputField } from 'src/components/InputField';
 import { IForum, UserInfo } from 'src/contexts';
 import { styled } from '@mui/system';
 import { NotFound } from 'src/components/NotFound';
-import { toast } from 'react-toastify';
 import { NavLink } from 'react-router-dom';
 import { useCustomSWR } from 'src/hooks/useCustomSWR';
 import { ListSkeleton } from 'src/components/Skeleton';
 import { ErrorMessage } from 'src/components/ErrorMessage';
+import { useSnackbar } from 'src/hooks';
 
 export const MembersModal = ({ isOpen, onClose, forum }: { isOpen: boolean; onClose: () => void; forum?: IForum }) => {
 	const { getUserInfo } = useProfile();
@@ -103,10 +103,12 @@ const Content = styled(Box)(({ theme }) => ({
 }));
 
 const Member = ({ member }: { member: UserInfo }) => {
+	const { warningSnackbar } = useSnackbar();
+
 	const handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
 		if (member && !member.isActive) {
 			event.preventDefault();
-			toast.warning('This user was deactivated!', { theme: 'colored' });
+			warningSnackbar('This user was deactivated!');
 		}
 	};
 	return (

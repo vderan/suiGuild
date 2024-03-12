@@ -34,7 +34,7 @@ export const BottomNavigationBar = () => {
 					gap: 0.625,
 					padding: isProfileSelected ? theme.spacing(1, 2, 1, 1.5) : 1,
 					borderRadius: 1,
-					background: isProfileSelected ? theme.palette.gradient2.main : 'transparent'
+					background: isProfileSelected ? theme.palette.gradient.secondary : 'transparent'
 				})}
 			>
 				<Avatar image={ipfsUrl(profile?.avatar || avatarUrl)} />
@@ -116,7 +116,7 @@ export const BottomNavigationBar = () => {
 								gap: 0.625,
 								padding: isActive ? theme.spacing(1, 2, 1, 1.5) : 1,
 								borderRadius: 1,
-								background: isActive ? theme.palette.gradient2.main : 'transparent'
+								background: isActive ? theme.palette.gradient.secondary : 'transparent'
 							})}
 						>
 							<Icon icon={item.icon} fontSize="small" sx={{ opacity: isActive ? 1 : 0.5 }} />

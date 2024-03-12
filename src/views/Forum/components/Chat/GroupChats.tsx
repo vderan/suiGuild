@@ -37,7 +37,7 @@ import { useCustomSWR } from 'src/hooks/useCustomSWR';
 import { useProfile } from 'src/hooks/useProfile';
 import { useIsOwner } from 'src/hooks/useIsOwner';
 import { ChatHeader } from './ChatHeader';
-import { ErrorHandler } from 'src/helpers';
+import { useErrorHandler } from 'src/hooks';
 
 export const GroupChats = () => {
 	const [search, setSearch] = useState('');
@@ -151,21 +151,28 @@ export const GroupChats = () => {
 										overflowY: 'auto'
 									}}
 								>
-									{searchedBookmarks.map(bookmark => {
-										const isNotifsEnabled = isNotificationsEnabled(bookmark.jid, notificationSettings ?? []);
+									{searchedBookmarks
+										.sort((a, b) => {
+											const dateA = lastestRoomMessages[a.jid]?.date || new Date(a.date);
+											const dateB = lastestRoomMessages[b.jid]?.date || new Date(b.date);
 
-										return (
-											<GroupChat
-												key={bookmark.jid}
-												bookmark={bookmark}
-												isActive={bookmark.jid === activeJid}
-												onJoinRoom={() => handleOnJoinRoom(bookmark.jid)}
-												isNotifsEnabled={isNotifsEnabled}
-												latestMessage={lastestRoomMessages[bookmark.jid]}
-												onToggleNotification={() => handleOnNotificationToggle(bookmark.jid, !isNotifsEnabled)}
-											/>
-										);
-									})}
+											return dateB.getTime() - dateA.getTime();
+										})
+										.map(bookmark => {
+											const isNotifsEnabled = isNotificationsEnabled(bookmark.jid, notificationSettings ?? []);
+
+											return (
+												<GroupChat
+													key={bookmark.jid}
+													bookmark={bookmark}
+													isActive={bookmark.jid === activeJid}
+													onJoinRoom={() => handleOnJoinRoom(bookmark.jid)}
+													isNotifsEnabled={isNotifsEnabled}
+													latestMessage={lastestRoomMessages[bookmark.jid]}
+													onToggleNotification={() => handleOnNotificationToggle(bookmark.jid, !isNotifsEnabled)}
+												/>
+											);
+										})}
 								</Box>
 							</Box>
 						</>
@@ -246,9 +253,9 @@ const StyledBox = styled(Box)(({ theme }) => ({
 			'&.active': {
 				borderRight: `${theme.spacing(0.25)} solid`,
 				borderImageSlice: 1,
-				borderImageSource: theme.palette.gradient1.main,
+				borderImageSource: theme.palette.gradient.main,
 				'& .info .name-date .chat-name': {
-					background: theme.palette.gradient1.main,
+					background: theme.palette.gradient.main,
 					backgroundClip: 'text',
 					textFillColor: 'transparent'
 				}
@@ -260,7 +267,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
 						display: 'none'
 					},
 					'& .chat-name': {
-						background: theme.palette.gradient1.main,
+						background: theme.palette.gradient.main,
 						backgroundClip: 'text',
 						textFillColor: 'transparent'
 					},
@@ -317,6 +324,7 @@ export const GroupChat = ({
 	const setJoinedRooms = useSetRecoilState(joinedRoomsState);
 	const { activeJid, setActiveJid } = useContext(ChatContext);
 	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+	const { errorProcess } = useErrorHandler();
 
 	useEffect(() => {
 		const init = async () => {
@@ -370,20 +378,17 @@ export const GroupChat = ({
 				setIsDeleteModalOpen(false);
 			}
 		} catch (error) {
-			ErrorHandler.process(error);
+			errorProcess(error);
 		}
 	};
 
 	const isOnlyAttachmentsInMessage = !latestMessage?.message && latestMessage?.attachments.length;
-	console.log(isOnlyAttachmentsInMessage);
 	const isOnlyAttachmentsIsImage =
 		isOnlyAttachmentsInMessage && latestMessage?.attachments.every(attachment => attachment.type === 'image');
 
 	const getLatestMessageIcon = () => {
 		if (isOnlyAttachmentsIsImage) {
 			return 'image';
-		} else if (isOnlyAttachmentsInMessage) {
-			return 'file';
 		} else if (isGif) {
 			return 'gif';
 		}

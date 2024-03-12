@@ -35,7 +35,7 @@ const SwitchContanier = styled(Switch)(({ theme, checked, disabled }) => ({
 	borderRadius: theme.spacing(3),
 	border: `${theme.spacing(0.125)} solid ${theme.palette.border.default}`,
 	'&:hover': {
-		borderColor: disabled ? theme.palette.border.default : theme.palette.tertiary.main
+		borderColor: disabled ? theme.palette.border.default : theme.palette.light[300]
 	},
 	'.MuiSwitch-switchBase': {
 		height: '100%',

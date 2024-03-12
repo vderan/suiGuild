@@ -12,7 +12,7 @@ import { Control, useFieldArray } from 'react-hook-form';
 import { SecondaryButton } from 'src/components/Button';
 import { NotFound } from 'src/components/NotFound';
 import { RuleCollapseCard } from './RuleCollapseCard';
-import { ErrorHandler } from 'src/helpers';
+import { useErrorHandler } from 'src/hooks';
 
 type Rule = {
 	title: string;
@@ -28,6 +28,7 @@ export const RulesCard = ({ forum, isOwner }: { forum: IForum; isOwner: boolean 
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const ruleFormRef = useRef<null | HTMLFormElement>(null);
 	const { editCommunity } = useGilder();
+	const { errorProcess } = useErrorHandler();
 
 	const rules = (() => {
 		if (!forum?.rules) return [];
@@ -53,7 +54,7 @@ export const RulesCard = ({ forum, isOwner }: { forum: IForum; isOwner: boolean 
 			});
 			setIsModalShown(false);
 		} catch (err) {
-			ErrorHandler.process(err);
+			errorProcess(err);
 		}
 		setIsSubmitting(false);
 	};

@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useContext, useMemo, useState } from 'react';
 import { Box, Skeleton, Stack } from '@mui/material';
 import { PrimaryButton } from 'src/components/Button';
 import { H4Title, Paragraph2, Paragraph3 } from 'src/components/Typography';
-import { IPost } from 'src/contexts';
+import { AuthContext, IPost } from 'src/contexts';
 import { PrimaryEditor } from 'src/components/TextEditor';
 import { useGilder } from 'src/hooks/useGilder';
 import { ipfsUrl } from 'src/helpers/ipfs.helpers';
@@ -13,27 +13,22 @@ import { differenceDate } from 'src/helpers/date.helpers';
 
 export const DraftCard = ({ draft }: { draft: IPost }) => {
 	const { getAllCommunities } = useGilder();
-	const { data: forums, isLoading } = useCustomSWR('getAllCommunities', getAllCommunities);
+	const { data: _forums, isLoading } = useCustomSWR('getAllCommunities', getAllCommunities);
 	const [isEditModalOpened, setIsEditModalOpened] = useState(false);
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [communityIndex, setCommunityIndex] = useState<string>(draft.communityIdx);
+	const { followingCommunities } = useContext(AuthContext);
 
-	// TODO: refactor
-	const selectOption: ISelectOption[] =
+	const forums = useMemo(() => {
+		return _forums?.filter(forum => followingCommunities.includes(forum.idx));
+	}, [followingCommunities, _forums]);
+
+	const selectOptions: ISelectOption[] =
 		forums?.map(forum => ({
 			id: forum.idx,
-			idx: Number(forum.idx),
 			avatar: ipfsUrl(forum.avatar.some.url),
-			coverImage: ipfsUrl(forum.coverImage.some.url),
-			createdAt: Number(forum.createdAt),
-			creatorInfo: forum.creatorInfo,
-			description: forum.description,
-			followers: forum.followers,
-			members: forum.members,
-			numPost: Number(forum.numPost),
 			label: forum.title,
-			value: forum.idx,
-			visible: forum.visible
+			value: forum.idx
 		})) || [];
 
 	const forum = forums?.find(forum => forum.idx === draft.communityIdx);
@@ -92,7 +87,7 @@ export const DraftCard = ({ draft }: { draft: IPost }) => {
 					fullWidth
 					disabled={isSubmitting}
 					value={communityIndex}
-					options={selectOption}
+					options={selectOptions}
 					onChange={index => setCommunityIndex(index)}
 				/>
 				<PrimaryEditor

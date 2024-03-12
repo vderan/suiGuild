@@ -6,11 +6,11 @@ import { AuthContext } from 'src/contexts';
 import { useContext, useState } from 'react';
 import { AddFriends } from 'src/components/AddFriends';
 import { PrimaryButton, SecondaryButton } from 'src/components/Button';
-import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { CreateCommunityModal } from 'src/components/Community';
 import { H3Title } from 'src/components/Typography';
 import { useDevice } from 'src/hooks/useDevice';
+import { useSnackbar } from 'src/hooks';
 
 export const Home = () => {
 	const { isLoggedIn } = useContext(AuthContext);
@@ -68,6 +68,7 @@ const AddFriendsAndActions = () => {
 	const { profile } = useContext(AuthContext);
 	const navigate = useNavigate();
 	const [isCreateCommunityModalOpen, setIsCreateCommunityModalOpen] = useState(false);
+	const { warningSnackbar } = useSnackbar();
 
 	return (
 		<Box sx={{ gap: 2, display: 'flex', flexDirection: 'column' }}>
@@ -76,7 +77,7 @@ const AddFriendsAndActions = () => {
 					sx={{ flex: 1, minWidth: theme => theme.spacing(13) }}
 					onClick={() => {
 						if (!profile?.displayName) {
-							toast.warning('You should have your own display name!', { theme: 'colored' });
+							warningSnackbar('You should have your own display name!');
 							navigate(`/setting/${profile?.id}/eprofile`);
 						} else {
 							navigate('/createpost');

@@ -42,7 +42,7 @@ export const SecondaryButton = ({
 			startIcon={
 				!loading ? (
 					startIcon ? (
-						<StartIcon fontSize={iconSize || size} sx={{ color: theme => theme.palette.tertiary.main }} />
+						<StartIcon fontSize={iconSize || size} sx={{ color: theme => theme.palette.system.icon }} />
 					) : startImage ? (
 						<img src={startImage} alt="startImg" width={BUTTON_ICON_SIZE} height={BUTTON_ICON_SIZE} />
 					) : undefined
@@ -51,7 +51,7 @@ export const SecondaryButton = ({
 			endIcon={
 				!loading ? (
 					endIcon ? (
-						<EndIcon fontSize={iconSize || size} sx={{ color: theme => theme.palette.tertiary.main }} />
+						<EndIcon fontSize={iconSize || size} sx={{ color: theme => theme.palette.system.icon }} />
 					) : endImage ? (
 						<img src={endImage} alt="endImg" width={BUTTON_ICON_SIZE} height={BUTTON_ICON_SIZE} />
 					) : undefined
@@ -110,7 +110,7 @@ const SecondaryButtonContainer = styled(Button, {
 			inset: 0,
 			padding: theme.spacing(0.125),
 			borderRadius: theme.spacing(1),
-			background: theme.palette.gradient1.main,
+			background: theme.palette.gradient.main,
 			WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
 			WebkitMaskComposite: 'xor',
 			maskComposite: 'exclude'
@@ -125,14 +125,14 @@ const SecondaryButtonContainer = styled(Button, {
 			boxShadow: `${theme.spacing(0, 1, 2, 0)} ${theme.palette.shadow.main}`,
 			'&::after': {
 				padding: theme.spacing(0.125),
-				background: theme.palette.primary[300]
+				background: theme.palette.blue[300]
 			}
 		},
 		'&:active': {
 			background: theme.palette.border.subtle,
 			'&::after': {
 				padding: theme.spacing(0.125),
-				background: theme.palette.gradient1.main
+				background: theme.palette.gradient.main
 			}
 		},
 		'& .MuiButton-startIcon': {

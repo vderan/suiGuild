@@ -35,7 +35,7 @@ import { useCustomSWR } from 'src/hooks/useCustomSWR';
 import { useProfile } from 'src/hooks/useProfile';
 import { useIsOwner } from 'src/hooks/useIsOwner';
 import { ChatHeader } from '../ChatHeader';
-import { ErrorHandler } from 'src/helpers';
+import { useErrorHandler } from 'src/hooks';
 
 export const ChatCard = ({ sideBarOpen, onSideBarToggle }: { sideBarOpen?: boolean; onSideBarToggle?: () => void }) => {
 	const { iSm } = useDevice();
@@ -44,7 +44,7 @@ export const ChatCard = ({ sideBarOpen, onSideBarToggle }: { sideBarOpen?: boole
 	const [pageInfo, setPageInfo] = useState<PageInfo | undefined>(undefined);
 	const [inviteMembersOpen, setInviteMembersOpen] = useState(false);
 	const [open, setOpen] = useState(false);
-
+	const { errorProcess } = useErrorHandler();
 	const setJoinedRooms = useSetRecoilState(joinedRoomsState);
 	const sharedMediaOpen = useRecoilValue(sharedMediaOpenState);
 
@@ -101,7 +101,7 @@ export const ChatCard = ({ sideBarOpen, onSideBarToggle }: { sideBarOpen?: boole
 			await mutate([QUERY_KEYS.XMPP_BOOKMARKS, removeResourceFromJid(jid)]);
 			setOpen(false);
 		} catch (error) {
-			ErrorHandler.process(error);
+			errorProcess(error);
 		}
 	};
 
@@ -147,7 +147,7 @@ export const ChatCard = ({ sideBarOpen, onSideBarToggle }: { sideBarOpen?: boole
 		<StyledStack direction="column" gap={1}>
 			<Box
 				sx={theme => ({
-					backdropFilter: { xs: 'none', sm: `blur(${theme.spacing(2.75)})` },
+					backdropFilter: { xs: 'none', sm: `blur(${theme.spacing(2.75)})` }
 				})}
 			>
 				{chatOpen ? (
@@ -178,14 +178,16 @@ export const ChatCard = ({ sideBarOpen, onSideBarToggle }: { sideBarOpen?: boole
 										)}
 									</Stack>
 								</Box>
-								<Stack width={{ xs: '100%', sm: 'auto' }} direction="row" alignItems="center" justifyContent="space-between">
+								<Stack
+									width={{ xs: '100%', sm: 'auto' }}
+									direction="row"
+									alignItems="center"
+									justifyContent="space-between"
+								>
 									<Stack direction="row" alignItems="center" gap={1.5}>
 										<SearchBar />
-										<IconButton
-											icon="sidebar"
-											onClick={onSideBarToggle}
-										/>
-										{!(isOwner || !isRoom) ? null :
+										<IconButton icon="sidebar" onClick={onSideBarToggle} />
+										{!(isOwner || !isRoom) ? null : (
 											<TertiaryButton
 												sx={{
 													textWrap: 'nowrap'
@@ -193,7 +195,8 @@ export const ChatCard = ({ sideBarOpen, onSideBarToggle }: { sideBarOpen?: boole
 												onClick={() => setInviteMembersOpen(true)}
 											>
 												Add people
-											</TertiaryButton>}
+											</TertiaryButton>
+										)}
 									</Stack>
 									{iSm && (
 										<Menu
@@ -264,7 +267,7 @@ const StyledStack = styled(Stack)(({ theme }) => ({
 	flexDirection: 'column',
 	maxHeight: 'calc(100vh - 100px)',
 	'& .header-box': {
-		background: theme.palette.gradient2.main,
+		background: theme.palette.gradient.secondary,
 		padding: theme.spacing(2),
 		display: 'flex',
 		justifyContent: 'space-between',
@@ -300,7 +303,7 @@ const StyledStack = styled(Stack)(({ theme }) => ({
 			},
 			'&:hover': {
 				background: theme.palette.dark[500],
-				borderRadius: theme.spacing(1),
+				borderRadius: theme.spacing(1)
 			}
 		}
 	},
@@ -308,9 +311,9 @@ const StyledStack = styled(Stack)(({ theme }) => ({
 		display: 'flex',
 		alignItems: 'center',
 		marginTop: 'auto',
-		gap: theme.spacing(1.5),
+		gap: theme.spacing(1.5)
 	}
-}))
+}));
 
 const SearchBar = () => {
 	const [isSearching, setIsSearching] = useState(false);

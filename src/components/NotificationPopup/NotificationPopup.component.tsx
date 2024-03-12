@@ -3,21 +3,21 @@ import Popover from '@mui/material/Popover';
 import { IconButton } from '../IconButton';
 import { ButtonBase, Stack } from '@mui/material';
 import { Label } from '../Typography';
-import { ErrorHandler } from 'src/helpers';
 import { AuthContext, NotificationContext } from 'src/contexts';
 import { markAllAsRead } from 'src/api/notification';
 import { NotificationCard } from 'src/views/Notifications/components/NotificationCard';
 import { PrimaryButton } from '../Button';
 import { useNavigate } from 'react-router-dom';
 import { NotFound } from '../NotFound';
-import { toast } from 'react-toastify';
+import { useErrorHandler, useSnackbar } from 'src/hooks';
 
 export const NotificationPopup = () => {
 	const { notifications, getNotifications } = useContext(NotificationContext);
 
 	const { profile } = useContext(AuthContext);
 	const navigate = useNavigate();
-
+	const { warningSnackbar } = useSnackbar();
+	const { errorProcess } = useErrorHandler();
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const isNofificationsExists = Boolean(notifications.length);
 
@@ -27,14 +27,14 @@ export const NotificationPopup = () => {
 
 	const markAllRead = async () => {
 		if (!profile?.displayName) {
-			toast.warning('You should have your own display name!', { theme: 'colored' });
+			warningSnackbar('You should have your own display name!');
 			return;
 		}
 		try {
 			await markAllAsRead(profile.displayName);
 			await getNotifications();
 		} catch (err) {
-			ErrorHandler.process(err);
+			errorProcess(err);
 		}
 	};
 

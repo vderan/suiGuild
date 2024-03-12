@@ -36,9 +36,9 @@ const PaginationItemContainer = styled(PaginationItem)(({ theme }) => ({
 	backdropFilter: `blur(${theme.spacing(2.75)})`,
 	'&.Mui-selected': {
 		border: 'none',
-		background: theme.palette.gradient2.main
+		background: theme.palette.gradient.secondary
 	},
 	'& .MuiSvgIcon-root': {
-		color: theme.palette.tertiary.main
+		color: theme.palette.system.icon
 	}
 }));

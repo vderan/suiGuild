@@ -118,7 +118,7 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
 			borderRadius: theme.spacing(1)
 		},
 		'&.Mui-selected': {
-			background: theme.palette.gradient2.main,
+			background: theme.palette.gradient.secondary,
 			border: 'none',
 			'& .MuiSvgIcon-root': {
 				color: theme.palette.text.primary

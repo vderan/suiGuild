@@ -27,12 +27,11 @@ import { profileTabsHashes } from 'src/constants/tab.constants';
 import { Icons } from 'src/components/icons';
 import { useCustomSWR } from 'src/hooks/useCustomSWR';
 import { useGilder } from 'src/hooks/useGilder';
-import { toast } from 'react-toastify';
 import { Friends } from './components/Friends';
 import { Requests } from './components/Requests';
 import { ListSkeleton } from 'src/components/Skeleton';
 import { ErrorMessage } from 'src/components/ErrorMessage';
-import { ErrorHandler } from 'src/helpers';
+import { useErrorHandler, useSnackbar } from 'src/hooks';
 
 const flagUrl = 'https://flagcdn.com/w40';
 
@@ -353,7 +352,7 @@ export const Profile = () => {
 													lineHeight: 'normal',
 													maxWidth: theme => ({ xs: 'none', lg: theme.spacing(25) }),
 													width: 'fit-content',
-													color: theme => theme.palette.primary[900]
+													color: theme => theme.palette.blue[900]
 												}}
 											>
 												<Paragraph2 color="inherit">{user?.userInfo?.some?.website}</Paragraph2>
@@ -399,7 +398,8 @@ const FriendsButtons = () => {
 	const { sendFriendRequest, acceptFriendRequest, removeFriend } = useGilder();
 	const { data: user } = useCustomSWR('getUserInfo' + id, () => getUserInfo(id));
 	const [isSubmitting, setIsSubmitting] = useState(false);
-
+	const { warningSnackbar } = useSnackbar();
+	const { errorProcess } = useErrorHandler();
 	const isFriend = profile?.friends?.some(friend => friend === user?.userInfo?.some?.displayName);
 	const isRequestSent = profile?.sentRequests?.some(friend => friend === user?.userInfo?.some?.displayName);
 	const isRequestReceived = profile?.receivedRequests?.some(friend => friend === user?.userInfo?.some?.displayName);
@@ -409,10 +409,10 @@ const FriendsButtons = () => {
 		const username = profile?.displayName;
 
 		if (!username || !friendname) {
-			toast.warning("Username or friendname doesn't exist", { theme: 'colored' });
+			warningSnackbar("Username or friendname doesn't exist");
 			return;
 		} else if (!user.isActive) {
-			toast.warning('This account was deactivated!', { theme: 'colored' });
+			warningSnackbar('This account was deactivated!');
 			return;
 		}
 		setIsSubmitting(true);
@@ -426,7 +426,7 @@ const FriendsButtons = () => {
 			}
 			await loadUserInfo();
 		} catch (err) {
-			ErrorHandler.process(err);
+			errorProcess(err);
 		}
 		setIsSubmitting(false);
 	};
@@ -436,7 +436,7 @@ const FriendsButtons = () => {
 		const username = profile?.displayName || '';
 
 		if (!username || !friendname) {
-			toast.warning("Username or friendname doesn't exist", { theme: 'colored' });
+			warningSnackbar("Username or friendname doesn't exist");
 			return;
 		}
 		setIsSubmitting(true);
@@ -445,7 +445,7 @@ const FriendsButtons = () => {
 			emit('friend_request_deletion', [{ from: username, to: friendname, type: 'friend-deletion' }]);
 			await loadUserInfo();
 		} catch (err) {
-			ErrorHandler.process(err);
+			errorProcess(err);
 		}
 		setIsSubmitting(false);
 	};

@@ -25,7 +25,7 @@ export const GuideLine = () => {
 								alignItems: 'center',
 								justifyContent: 'center',
 								padding: theme.spacing(0.25, 0.875),
-								background: theme.palette.gradient2.main,
+								background: theme.palette.gradient.secondary,
 								borderRadius: 0.5
 							})}
 						>

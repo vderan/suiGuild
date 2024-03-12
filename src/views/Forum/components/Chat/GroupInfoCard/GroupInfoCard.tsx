@@ -27,10 +27,9 @@ import useSWR, { useSWRConfig } from 'swr';
 import { differenceDate } from 'src/helpers/date.helpers';
 import { toBareJid } from 'src/helpers/xmpp.helpers';
 import { QUERY_KEYS } from 'src/constants/querykeys.constants';
-import { toast } from 'react-toastify';
 import { ChatHeader } from '../ChatHeader';
 import { MutualGroups } from './MutualGroups';
-import { ErrorHandler } from 'src/helpers';
+import { useErrorHandler } from 'src/hooks';
 
 export const GroupInfoCard = () => {
 	const { activeJid, chatOpen, infoOpen, setSideBarOpen } = useContext(ChatContext);
@@ -168,6 +167,7 @@ const BlockCard = () => {
 	const { activeJid } = useContext(ChatContext);
 	const [open, setOpen] = useState(false);
 	const { mutate: swrMutate } = useSWRConfig();
+	const { errorProcess } = useErrorHandler();
 
 	const { data: blockedList, isLoading: blockedListIsLoading, mutate } = useBlockList();
 	const { data: roomMembers, isLoading: roomMembersIsLoading } = useRoomMembers(activeJid);
@@ -195,7 +195,7 @@ const BlockCard = () => {
 			await mutate();
 			setOpen(false);
 		} catch (e) {
-			ErrorHandler.process(e);
+			errorProcess(e);
 		}
 	};
 
@@ -406,7 +406,7 @@ const MemberInfo = ({ username }: { username: string }) => {
 	const { activeJid } = useContext(ChatContext);
 	const { data: vCard } = useRoomVCard(activeJid);
 	const { data: roomMembers } = useRoomMembers(activeJid);
-
+	const { errorProcess } = useErrorHandler();
 	const [isAdding, setIsAdding] = useState(false);
 
 	const addToChat = async () => {
@@ -425,7 +425,7 @@ const MemberInfo = ({ username }: { username: string }) => {
 				await Xmpp.editRoomName(activeJid, [...roomMembers.map(roomMember => roomMember.name), username].join(', '));
 			}
 		} catch (error) {
-			toast.error((error as Error).message, { theme: 'colored' });
+			errorProcess(error);
 		}
 		setIsAdding(false);
 	};
