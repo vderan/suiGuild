@@ -59,7 +59,7 @@ declare module '@mui/material/styles' {
 			500: string;
 			300: string;
 		};
-		surface: { background: string; buttonBg: string; iconBtn: string; container: string };
+		surface: { background: string; buttonBg: string; iconBtn: string; container: string; containerSilver: string };
 		system: { default: string; icon: string };
 		link: {
 			main: string;
@@ -106,7 +106,7 @@ declare module '@mui/material/styles' {
 			500: string;
 			300: string;
 		};
-		surface: { background: string; buttonBg: string; iconBtn: string; container: string };
+		surface: { background: string; buttonBg: string; iconBtn: string; container: string; containerSilver: string };
 		system: { default: string; icon: string };
 		link: {
 			main: string;
@@ -359,7 +359,7 @@ const SHARED: Readonly<Partial<CustomThemeOptions>> = {
 					zIndex: 1500
 				},
 				paper: ({ theme }) => ({
-					background: theme.palette.dark[700],
+					background: theme.palette.surface.container,
 					border: `1px solid ${theme.palette.border.subtle}`,
 					borderRadius: theme.spacing(1),
 					margin: theme.spacing(2),
@@ -393,7 +393,7 @@ const SHARED: Readonly<Partial<CustomThemeOptions>> = {
 			styleOverrides: {
 				root: ({ theme }) => ({
 					borderTop: `1px solid ${theme.palette.border.subtle}`,
-					background: theme.palette.dark[500],
+					background: theme.palette.surface.containerSilver,
 					padding: theme.spacing(2, 4)
 				})
 			}
@@ -418,7 +418,7 @@ const SHARED: Readonly<Partial<CustomThemeOptions>> = {
 					color: theme.palette.text.primary,
 					marginTop: theme.spacing(0.375),
 					border: `1px solid ${theme.palette.border.subtle}`,
-					backgroundColor: theme.palette.surface.container
+					backgroundColor: theme.palette.surface.containerSilver
 				})
 			}
 		},
@@ -458,7 +458,7 @@ const SHARED: Readonly<Partial<CustomThemeOptions>> = {
 						borderWidth: 1
 					},
 					'&:hover fieldset': {
-						borderColor: `${theme.palette.blue[300]} !important`
+						borderColor: `${theme.palette.text.primary} !important`
 					},
 					'&.Mui-focused fieldset': {
 						borderColor: `${theme.palette.border.default} !important`,
@@ -577,7 +577,13 @@ const FRONT_COLORS_LIGHT: Readonly<PaletteOptions> = {
 	warning: {
 		main: '#DAAF3F'
 	},
-	surface: { background: '#F1F1F1', buttonBg: '#FFFFFF', iconBtn: '#E5D9FF', container: '#FFFFFF' },
+	surface: {
+		background: '#F1F1F1',
+		buttonBg: '#FFFFFF',
+		iconBtn: '#E5D9FF',
+		container: '#FFFFFF',
+		containerSilver: '#FFFFFF'
+	},
 	system: { default: '#E5D9FF', icon: '#606060' },
 	text: {
 		primary: '#131313',
@@ -590,7 +596,7 @@ const FRONT_COLORS_LIGHT: Readonly<PaletteOptions> = {
 		main: '#4176FF'
 	},
 	gradient: {
-		main: 'linear-gradient(89.1deg, #8E59FF 0%, #5987FF 100%)',
+		main: 'linear-gradient(89.79deg, #713DE0 -2.54%, #4176FF 99.87%)',
 		secondary: 'linear-gradient(267.57deg, #E84242 2.62%, #8063F3 98.59%)'
 	},
 	shadow: {
@@ -655,7 +661,13 @@ const FRONT_COLORS_DARK: Readonly<PaletteOptions> = {
 	warning: {
 		main: '#DAAF3F'
 	},
-	surface: { background: '#131313', buttonBg: '#131313', iconBtn: '#E5D9FF', container: '#1F1F1F' },
+	surface: {
+		background: '#131313',
+		buttonBg: '#131313',
+		iconBtn: '#E5D9FF',
+		container: '#1F1F1F',
+		containerSilver: '#242426'
+	},
 	system: { default: '#E5D9FF', icon: '#E5D9FF' },
 	text: {
 		primary: '#FFFFFF',

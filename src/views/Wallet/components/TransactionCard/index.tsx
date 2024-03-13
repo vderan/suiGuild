@@ -19,7 +19,7 @@ export const TransactionCard = ({ address, type, price }: ITransactionProps) => 
 			sx={{
 				padding: 1.5,
 				gap: 2,
-				backgroundColor: theme => theme.palette.dark[700],
+				backgroundColor: theme => theme.palette.surface.container,
 				borderRadius: 1
 			}}
 		>
@@ -38,7 +38,7 @@ export const TransactionCard = ({ address, type, price }: ITransactionProps) => 
 						<Icon
 							icon={isReceive ? 'arrowDownCircle' : 'arrowUpCircle'}
 							fontSize="large"
-							sx={{ color: theme => theme.palette.dark[900] }}
+							sx={{ color: theme => theme.palette.text.primary }}
 						/>
 					}
 				</Stack>

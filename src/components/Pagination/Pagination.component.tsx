@@ -31,14 +31,16 @@ const PaginationItemContainer = styled(PaginationItem)(({ theme }) => ({
 	fontFamily: 'Clash Display',
 	fontWeight: '600',
 	padding: theme.spacing(1),
-	border: `${theme.spacing(0.125)} solid ${theme.palette.border.default}`,
+	border: `${theme.spacing(0.125)} solid ${theme.palette.border.subtle}`,
+	background: theme.palette.surface.buttonBg,
 	borderRadius: theme.spacing(1),
-	backdropFilter: `blur(${theme.spacing(2.75)})`,
+	color: theme.palette.text.primary,
 	'&.Mui-selected': {
 		border: 'none',
-		background: theme.palette.gradient.secondary
+		background: theme.palette.gradient.secondary,
+		color: theme.palette.buttonText.white
 	},
 	'& .MuiSvgIcon-root': {
-		color: theme.palette.system.icon
+		color: theme.palette.border.highlight
 	}
 }));

@@ -28,7 +28,7 @@ export const PostIndividual = () => {
 						flexDirection: 'column',
 						[theme.breakpoints.down('lg')]: {
 							padding: 3,
-							background: theme.palette.dark[500],
+							background: theme.palette.surface.container,
 							borderRadius: 1.5,
 							border: `${theme.spacing(0.125)} solid ${theme.palette.border.subtle}`
 						}

@@ -140,6 +140,7 @@ export const Comment = ({ comment, communityIdx }: ICommentProps) => {
 										<IconButton
 											sx={{ mt: 0.625 }}
 											icon="send"
+											iconColor="text"
 											loading={isReplySubmitting}
 											onClick={() =>
 												replyFormRef.current?.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }))

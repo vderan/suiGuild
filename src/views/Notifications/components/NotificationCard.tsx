@@ -57,7 +57,7 @@ export const NotificationCard = ({ notification }: { notification: INotification
 	}));
 
 	const ContentText = styled(Paragraph3)(({ theme }) => ({
-		color: theme.palette.text.secondary
+		color: theme.palette.text.primary
 	}));
 
 	const ContentTextUsername = styled('span')(({ theme }) => ({
@@ -91,7 +91,8 @@ export const NotificationCard = ({ notification }: { notification: INotification
 				display: 'flex',
 				justifyContent: 'space-between',
 				alignItems: 'flex-start',
-				background: theme.palette.dark[700],
+				background: theme.palette.surface.containerSilver,
+				border: `${theme.spacing(0.125)} solid ${theme.palette.border.subtle}`,
 				borderRadius: 1,
 				padding: 1.5,
 				gap: 1
@@ -103,12 +104,12 @@ export const NotificationCard = ({ notification }: { notification: INotification
 					justifyContent: 'center',
 					alignItems: 'center',
 					padding: 2,
-					background: theme.palette.dark[500],
-					border: `${theme.spacing(0.125)} solid ${theme.palette.border.default}`,
+					background: theme.palette.surface.container,
+					border: `${theme.spacing(0.125)} solid ${theme.palette.border.highlight}`,
 					borderRadius: 0.5
 				})}
 			>
-				<Icon fontSize="small" icon="friendRequest" />
+				<Icon sx={{ color: theme => theme.palette.text.primary }} fontSize="small" icon="friendRequest" />
 			</Box>
 			<Box
 				sx={{

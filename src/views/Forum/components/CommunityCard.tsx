@@ -46,7 +46,7 @@ export const CommunityCard = ({ forum }: { forum: IForum }) => {
 				gap: theme.spacing(1),
 				width: '100%',
 				padding: 2.5,
-				background: theme.palette.dark[700],
+				background: theme.palette.surface.container,
 				borderRadius: 1.5,
 				position: 'relative'
 			})}
@@ -79,14 +79,22 @@ export const CommunityCard = ({ forum }: { forum: IForum }) => {
 				</Box>
 				<Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
 					<Box sx={{ display: 'flex', alignItems: 'center', gap: 1, overflow: 'hidden' }}>
-						<Icon icon="posts" fontSize="extraSmall" sx={{ color: theme => theme.palette.text.secondary }} />
+						<Icon
+							icon="posts"
+							fontSize="extraSmall"
+							sx={{ color: theme => theme.palette.text.primary, opacity: 0.5 }}
+						/>
 						<Paragraph2 noWrap color="text.secondary">
 							{forum.numPost} {!iSm && pluralize('post', Number(forum.numPost))}
 						</Paragraph2>
 					</Box>
 					<Paragraph2 color="text.secondary">·</Paragraph2>
 					<Box sx={{ display: 'flex', alignItems: 'center', gap: 1, overflow: 'hidden' }}>
-						<Icon icon="message" fontSize="extraSmall" sx={{ color: theme => theme.palette.text.secondary }} />
+						<Icon
+							icon="message"
+							fontSize="extraSmall"
+							sx={{ color: theme => theme.palette.text.primary, opacity: 0.5 }}
+						/>
 						<Paragraph2 noWrap color="text.secondary">
 							{forum.numComment} {!iSm && pluralize('comment', Number(forum.numComment))}
 						</Paragraph2>
@@ -95,7 +103,11 @@ export const CommunityCard = ({ forum }: { forum: IForum }) => {
 					<Paragraph2 color="text.secondary">·</Paragraph2>
 
 					<Box sx={{ display: 'flex', alignItems: 'center', gap: 1, overflow: 'hidden' }}>
-						<Icon icon="users" fontSize="extraSmall" sx={{ color: theme => theme.palette.text.secondary }} />
+						<Icon
+							icon="users"
+							fontSize="extraSmall"
+							sx={{ color: theme => theme.palette.text.primary, opacity: 0.5 }}
+						/>
 						<Paragraph2 noWrap color="text.secondary">
 							{forum.followers.length} {!iSm && pluralize('member', Number(forum.followers.length))}
 						</Paragraph2>

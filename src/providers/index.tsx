@@ -17,8 +17,8 @@ export const Providers = ({ children }: PropsWithChildren) => {
 	return (
 		<QueryClientProvider client={queryClient}>
 			<SuiClientProvider networks={networks} defaultNetwork="testnet">
-				{/* TODO: add endpoint */}
-				<SocketProvider uri={''}>
+				{/* TODO: add endpoint and remove autoconnect */}
+				<SocketProvider uri={''} config={{ autoConnect: false }}>
 					<WalletProvider autoConnect>
 						<RecoilRoot>
 							<AuthProvider>

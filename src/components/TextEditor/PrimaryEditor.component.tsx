@@ -139,7 +139,10 @@ export const PrimaryEditor = ({
 						maxLength={100}
 						placeholder="Title"
 						disabled={isSubmitting}
-						boxSx={{ marginBottom: 1 }}
+						boxSx={{
+							marginBottom: 1,
+							'& .MuiInputBase-root': { backgroundColor: theme => theme.palette.surface.container }
+						}}
 					/>
 				)}
 
@@ -191,7 +194,7 @@ export const PrimaryEditor = ({
 						sx={theme => ({
 							marginTop: 3,
 							width: '100%',
-							backgroundColor: theme.palette.dark[500],
+							backgroundColor: theme.palette.surface.container,
 							display: 'flex',
 							flexDirection: 'column',
 							justifyContent: 'center',

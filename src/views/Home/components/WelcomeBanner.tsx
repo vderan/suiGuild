@@ -38,8 +38,8 @@ export const WelcomeBanner = () => {
 						}
 					})}
 				>
-					<H1Title> Enter the Realm of Web3 Gaming</H1Title>
-					<Paragraph2 lineHeight="20px">
+					<H1Title color={theme => theme.palette.buttonText.white}> Enter the Realm of Web3 Gaming</H1Title>
+					<Paragraph2 color={theme => theme.palette.buttonText.white} lineHeight="20px">
 						Welcome to Gilder, where the future of gaming meets limitless possibilities.
 					</Paragraph2>
 					<TertiaryButton size={iMd ? 'large' : 'medium'} sx={{ mt: 2 }} onClick={() => setIsLoginModalOpened(true)}>

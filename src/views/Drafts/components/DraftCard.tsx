@@ -38,7 +38,7 @@ export const DraftCard = ({ draft }: { draft: IPost }) => {
 			sx={theme => ({
 				gap: 3,
 				padding: 3,
-				background: theme.palette.dark[700],
+				background: theme.palette.surface.container,
 				borderRadius: 1
 			})}
 		>

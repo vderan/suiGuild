@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Box, BoxProps, ButtonBase, Collapse, Skeleton, Stack } from '@mui/material';
 import { LargeAvatar } from 'src/components/Avatar';
@@ -12,6 +12,7 @@ import { sortForumsByKeyword } from 'src/helpers/sort.helpers';
 import { NotFound } from 'src/components/NotFound';
 import { ErrorMessage } from 'src/components/ErrorMessage';
 import { ListSkeleton } from 'src/components/Skeleton';
+import { ColorModeContext } from 'src/contexts';
 
 export const CommunitiesCard = ({ sx, ...props }: BoxProps) => {
 	const { id: communityId } = useParams();
@@ -20,6 +21,7 @@ export const CommunitiesCard = ({ sx, ...props }: BoxProps) => {
 	const [searchValue, setSearchValue] = useState('');
 	const { iXLg, iMid } = useDevice();
 	const [isShowExpandableSection, setIsShowExpandableSection] = useState(iXLg && !iMid ? false : true);
+	const { isDarkMode } = useContext(ColorModeContext);
 
 	const filteredForums = useMemo(() => {
 		if (!forums) return [];
@@ -51,7 +53,7 @@ export const CommunitiesCard = ({ sx, ...props }: BoxProps) => {
 			sx={{
 				position: 'relative',
 				height: 'fit-content',
-				background: theme => theme.palette.dark[500],
+				background: theme => theme.palette.surface.container,
 				borderRadius: 1,
 				py: 2,
 				display: isBlockHidden ? 'none' : 'flex',
@@ -104,7 +106,16 @@ export const CommunitiesCard = ({ sx, ...props }: BoxProps) => {
 						}}
 					>
 						{isError && isShowExpandableSection ? (
-							<ErrorMessage description="There was an error while loading" />
+							<ErrorMessage
+								iconProps={{
+									sx: {
+										...(isDarkMode && {
+											color: theme => theme.palette.dark[900]
+										})
+									}
+								}}
+								description="There was an error while loading"
+							/>
 						) : isLoading ? (
 							<ListSkeleton numberOfItems={4} gap={1.5}>
 								<Stack direction="row" padding={theme => theme.spacing(0, 2)} gap={1} alignItems="center">
@@ -176,7 +187,16 @@ export const CommunitiesCard = ({ sx, ...props }: BoxProps) => {
 								);
 							})
 						) : isShowExpandableSection ? (
-							<NotFound description="No communities" />
+							<NotFound
+								iconProps={{
+									sx: {
+										...(isDarkMode && {
+											color: theme => theme.palette.dark[900]
+										})
+									}
+								}}
+								description="No communities"
+							/>
 						) : (
 							<></>
 						)}

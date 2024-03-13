@@ -92,19 +92,32 @@ const BackBtn = () => {
 	const { iMid } = useDevice();
 
 	const onClick = () => (location.state?.isComunityIndividualPage ? navigate('/forum#communities') : navigate(-1));
-
 	return iMid ? (
-		<SecondaryButton startIcon="chevronLeft" size="small" onClick={onClick} />
+		<SecondaryButton
+			sx={{
+				'&::after': { background: theme => theme.palette.buttonText.white },
+				'& .MuiSvgIcon-root path[fill]': { fill: theme => theme.palette.buttonText.white },
+				'&:hover .MuiSvgIcon-root path[fill]': { fill: theme => theme.palette.text.primary },
+				color: theme => theme.palette.buttonText.white,
+				filter: theme => `drop-shadow(0 0 1px ${theme.palette.dark[900]})`
+			}}
+			startIcon="chevronLeft"
+			size="small"
+			onClick={onClick}
+		/>
 	) : (
 		<ButtonBase sx={{ gap: 0.5 }} onClick={onClick}>
 			<Icon
 				icon="chevronLeft"
 				sx={{
 					filter: theme => `drop-shadow(1px 1px 1px ${theme.palette.dark[900]})`,
-					color: theme => theme.palette.text.secondary
+					color: theme => theme.palette.system.default
 				}}
 			/>
-			<ButtonSmallText color="text.secondary" sx={{ textShadow: theme => `0 0 1px ${theme.palette.dark[900]}` }}>
+			<ButtonSmallText
+				color={theme => theme.palette.system.default}
+				sx={{ textShadow: theme => `0 0 1px ${theme.palette.dark[900]}` }}
+			>
 				Go back
 			</ButtonSmallText>
 		</ButtonBase>

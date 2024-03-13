@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { Box, ButtonBase, Fade, FormHelperText, Stack, styled } from '@mui/material';
+import { useState, useEffect, useContext } from 'react';
+import { Box, ButtonBase, Fade, FormHelperText, Stack, styled, alpha } from '@mui/material';
 import { EditorFieldProps } from './EditorField.types';
 import { Editor, Toolbar } from '@wangeditor/editor-for-react';
 import { IDomEditor, IEditorConfig, IToolbarConfig, i18nChangeLanguage, SlateElement } from '@wangeditor/editor';
@@ -13,6 +13,7 @@ import { TransitionProps } from '@mui/material/transitions';
 import { IconButton } from '../IconButton';
 import { useDevice } from 'src/hooks/useDevice';
 import { useSnackbar } from 'src/hooks';
+import { ColorModeContext } from 'src/contexts';
 
 i18nChangeLanguage('en');
 
@@ -25,7 +26,8 @@ const StyledEditor = styled(Editor)<{ isReadonly?: boolean; numberLinesToDisplay
 		height: isReadonly ? '100%' : editorHeight,
 		'& .w-e-text-placeholder': {
 			fontStyle: 'normal',
-			color: theme.palette.text.primary
+			color: theme.palette.text.primary,
+			opacity: 0.5
 		},
 		'& .w-e-text-container': {
 			backgroundColor: 'transparent',
@@ -38,25 +40,25 @@ const StyledEditor = styled(Editor)<{ isReadonly?: boolean; numberLinesToDisplay
 				height: 'auto!important'
 			},
 			'& .w-e-modal': {
-				backgroundColor: theme.palette.dark[700],
+				backgroundColor: theme.palette.surface.containerSilver,
 				color: theme.palette.text.primary,
 				fontSize: theme.spacing(1.75),
-				border: `${theme.spacing(0.125)} solid ${theme.palette.dark[500]}`,
+				border: `${theme.spacing(0.125)} solid ${theme.palette.border.subtle}`,
 				height: theme.spacing(37.5),
 				borderRadius: `${theme.spacing(1.5)}px`,
 				left: `${theme.spacing(0)} !important`,
 				right: `${theme.spacing(0)} !important`,
 				top: `${theme.spacing(1.125)} !important`,
 				'& .babel-container input': {
-					backgroundColor: theme.palette.dark[500],
-					border: 'none',
+					backgroundColor: theme.palette.surface.containerSilver,
+					border: `${theme.spacing(0.125)} solid ${theme.palette.border.subtle}`,
 					color: theme.palette.text.primary,
 					fontFamily: 'Exo',
 					fontSize: theme.spacing(1.75)
 				},
 				'& .button-container button': {
-					backgroundColor: theme.palette.dark[500],
-					border: `${theme.spacing(0.125)} solid ${theme.palette.dark[700]}`,
+					backgroundColor: theme.palette.surface.containerSilver,
+					border: `${theme.spacing(0.125)} solid ${theme.palette.border.subtle}`,
 					color: theme.palette.text.primary,
 					fontFamily: 'Exo',
 					fontSize: theme.spacing(1.75)
@@ -67,10 +69,12 @@ const StyledEditor = styled(Editor)<{ isReadonly?: boolean; numberLinesToDisplay
 			},
 			'& .w-e-max-length-info': {
 				bottom: theme.spacing(-4),
-				fontSize: theme.spacing(1.5)
+				fontSize: theme.spacing(1.5),
+				color: theme.palette.text.primary,
+				opacity: 0.5
 			},
 			'& a': {
-				color: theme.palette.blue[900],
+				color: theme.palette.link.main,
 				textDecoration: 'none'
 			},
 			'& .w-e-textarea-video-container': {
@@ -91,7 +95,7 @@ const StyledEditor = styled(Editor)<{ isReadonly?: boolean; numberLinesToDisplay
 				right: theme.spacing(1),
 				border: 0,
 				background: 'transparent',
-				color: theme.palette.text.primary,
+				color: theme.palette.buttonText.white,
 				cursor: 'pointer',
 				display: 'flex',
 				'&--top': {
@@ -99,7 +103,7 @@ const StyledEditor = styled(Editor)<{ isReadonly?: boolean; numberLinesToDisplay
 					right: 0
 				},
 				'&:hover': {
-					color: theme.palette.blue[900]
+					color: theme.palette.primary.main
 				}
 			},
 			'& .w-e-text-container .w-e-max-length-info': {
@@ -135,20 +139,20 @@ const StyledEditor = styled(Editor)<{ isReadonly?: boolean; numberLinesToDisplay
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
 	'& .w-e-toolbar': {
-		backgroundColor: theme.palette.dark[500],
+		backgroundColor: theme.palette.border.subtle,
 		borderRadius: `${theme.shape.borderRadius}px`,
 		border: `${theme.spacing(0.125)} solid ${theme.palette.border.subtle}`,
 		width: 'fit-content',
 		'& .w-e-bar-item:focus': {
 			'&:focus': {
-				backgroundColor: theme.palette.dark[500],
-				borderRadius: theme.spacing(0.5)
+				backgroundColor: theme.palette.border.subtle,
+				borderRadius: theme.spacing(1)
 			}
 		},
 		'& .w-e-bar-item button': {
 			'&:hover': {
-				backgroundColor: theme.palette.dark[500],
-				borderRadius: theme.spacing(0.5)
+				backgroundColor: theme.palette.border.subtle,
+				borderRadius: theme.spacing(1)
 			},
 			'& svg': {
 				fill: theme.palette.text.primary
@@ -159,8 +163,8 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
 		},
 		'& .w-e-bar-item .w-e-drop-panel': {
 			top: theme.spacing(0.625),
-			backgroundColor: theme.palette.dark[900],
-			border: `${theme.spacing(0.125)} solid ${theme.palette.dark[500]}`,
+			backgroundColor: theme.palette.surface.containerSilver,
+			border: `${theme.spacing(0.125)} solid ${theme.palette.border.subtle}`,
 			borderRadius: `${theme.shape.borderRadius}px`,
 			'& .w-e-panel-content-emotion': {
 				width: theme.spacing(23),
@@ -169,24 +173,14 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
 				'& li': {
 					padding: theme.spacing(0.5),
 					'&:hover': {
-						backgroundColor: theme.palette.dark[500]
+						backgroundColor: theme.palette.border.subtle
 					}
 				}
 			}
 		},
 		'& .w-e-bar-item button.active': {
-			backgroundColor: theme.palette.dark[900],
+			backgroundColor: theme.palette.border.subtle,
 			borderRadius: theme.spacing(1)
-		},
-		'& .w-e-bar-item-group .w-e-bar-item-menus-container': {
-			backgroundColor: theme.palette.dark[700],
-			border: `${theme.spacing(0.125)} solid ${theme.palette.dark[500]}`,
-			borderRadius: `${theme.shape.borderRadius}px`,
-			'& button': {
-				color: theme.palette.text.primary,
-				fontFamily: 'Exo',
-				fontSize: theme.spacing(1.75)
-			}
 		}
 	}
 }));
@@ -246,6 +240,7 @@ export const EditorField = ({
 	const [imageSrc, setImageSrc] = useState('');
 	const { iMid } = useDevice();
 	const { errorSnackbar } = useSnackbar();
+	const { isDarkMode } = useContext(ColorModeContext);
 
 	const toolbarConfig: Partial<IToolbarConfig> = {};
 
@@ -356,7 +351,7 @@ export const EditorField = ({
 					width: '100%',
 					position: 'relative',
 					padding: readOnly ? 0 : theme => theme.spacing(1.5, 1.5, 5),
-					backgroundColor: 'transparent',
+					backgroundColor: readOnly ? 'transparent' : theme => theme.palette.surface.container,
 					border: readOnly ? 'none' : theme => `${theme.spacing(0.125)} solid ${theme.palette.border.subtle}`,
 					borderRadius: readOnly ? 0 : 1,
 					opacity: disabled ? 0.3 : 1,
@@ -419,6 +414,9 @@ export const EditorField = ({
 					TransitionComponent={Transition}
 					fullWidth
 					sx={theme => ({
+						...(!isDarkMode && {
+							'& .MuiDialog-container': { backgroundColor: theme => alpha(theme.palette.surface.background, 0.5) }
+						}),
 						'& .MuiDialog-paper': {
 							width: 'initial',
 							border: 'none',
@@ -440,7 +438,12 @@ export const EditorField = ({
 							src={imageSrc}
 							alt="image"
 						/>
-						<IconButton sx={{ position: 'absolute', top: 2.5, right: 2.5 }} icon="close" onClick={handleClose} />
+						<IconButton
+							iconSx={{ color: theme => theme.palette.buttonText.white }}
+							sx={{ position: 'absolute', top: 2.5, right: 2.5 }}
+							icon="close"
+							onClick={handleClose}
+						/>
 					</Box>
 					{imageModalFooter}
 				</MuiDialog>

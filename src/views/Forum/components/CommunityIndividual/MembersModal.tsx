@@ -4,9 +4,9 @@ import { Dialog } from 'src/components/Dialog';
 import { useProfile } from 'src/hooks/useProfile';
 import { MediumAvatar } from 'src/components/Avatar';
 import { ipfsUrl } from 'src/helpers/ipfs.helpers';
-import { useMemo, useState } from 'react';
+import { useContext, useMemo, useState } from 'react';
 import { StandaloneInputField } from 'src/components/InputField';
-import { IForum, UserInfo } from 'src/contexts';
+import { ColorModeContext, IForum, UserInfo } from 'src/contexts';
 import { styled } from '@mui/system';
 import { NotFound } from 'src/components/NotFound';
 import { NavLink } from 'react-router-dom';
@@ -17,6 +17,7 @@ import { useSnackbar } from 'src/hooks';
 
 export const MembersModal = ({ isOpen, onClose, forum }: { isOpen: boolean; onClose: () => void; forum?: IForum }) => {
 	const { getUserInfo } = useProfile();
+	const { isDarkMode } = useContext(ColorModeContext);
 
 	const [search, setSearch] = useState('');
 
@@ -49,6 +50,7 @@ export const MembersModal = ({ isOpen, onClose, forum }: { isOpen: boolean; onCl
 				size="small"
 				value={search}
 				name="search"
+				label="Type username"
 				placeholder="Search members"
 				disabled={isLoading}
 				onChange={e => setSearch(e.target.value)}
@@ -66,7 +68,9 @@ export const MembersModal = ({ isOpen, onClose, forum }: { isOpen: boolean; onCl
 					<ErrorMessage
 						iconProps={{
 							sx: {
-								color: theme => theme.palette.dark[900]
+								...(isDarkMode && {
+									color: theme => theme.palette.dark[900]
+								})
 							}
 						}}
 						description="There was an error while loading"
@@ -81,7 +85,9 @@ export const MembersModal = ({ isOpen, onClose, forum }: { isOpen: boolean; onCl
 					<NotFound
 						iconProps={{
 							sx: {
-								color: theme => theme.palette.dark[900]
+								...(isDarkMode && {
+									color: theme => theme.palette.dark[900]
+								})
 							}
 						}}
 						description="No members"
@@ -99,7 +105,7 @@ const Content = styled(Box)(({ theme }) => ({
 	gap: theme.spacing(1),
 	minHeight: theme.spacing(7),
 	padding: theme.spacing(1.5, 0),
-	'&:not(:last-child)': { borderBottom: `${theme.spacing(0.125)} solid ${theme.palette.dark[500]}` }
+	'&:not(:last-child)': { borderBottom: `${theme.spacing(0.125)} solid ${theme.palette.border.subtle}` }
 }));
 
 const Member = ({ member }: { member: UserInfo }) => {

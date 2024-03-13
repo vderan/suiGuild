@@ -4,7 +4,7 @@ import { useSocketEmit } from 'use-socket-io-react';
 import { Paragraph2, ButtonMediumText } from 'src/components/Typography';
 import { useGilder } from 'src/hooks/useGilder';
 import { Dialog } from 'src/components/Dialog';
-import { AuthContext, UserInfo } from 'src/contexts';
+import { AuthContext, ColorModeContext, UserInfo } from 'src/contexts';
 import { StandaloneInputField } from 'src/components/InputField';
 import { SmallAvatar } from 'src/components/Avatar';
 import { ipfsUrl } from 'src/helpers/ipfs.helpers';
@@ -16,6 +16,7 @@ import { NotFound } from '../NotFound';
 
 export const AddFriendsModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
 	const { profile } = useContext(AuthContext);
+	const { isDarkMode } = useContext(ColorModeContext);
 
 	const { data: _users, isLoading, error: isError } = useActiveUsers();
 	const [search, setSearch] = useState('');
@@ -39,6 +40,7 @@ export const AddFriendsModal = ({ isOpen, onClose }: { isOpen: boolean; onClose:
 			<StandaloneInputField
 				value={search}
 				size="small"
+				label="Type username"
 				name="search"
 				required
 				placeholder="Search users"
@@ -57,7 +59,9 @@ export const AddFriendsModal = ({ isOpen, onClose }: { isOpen: boolean; onClose:
 					<ErrorMessage
 						iconProps={{
 							sx: {
-								color: theme => theme.palette.dark[900]
+								...(isDarkMode && {
+									color: theme => theme.palette.dark[900]
+								})
 							}
 						}}
 						description="There was an error while loading"
@@ -72,7 +76,9 @@ export const AddFriendsModal = ({ isOpen, onClose }: { isOpen: boolean; onClose:
 					<NotFound
 						iconProps={{
 							sx: {
-								color: theme => theme.palette.dark[900]
+								...(isDarkMode && {
+									color: theme => theme.palette.dark[900]
+								})
 							}
 						}}
 						description="No users"

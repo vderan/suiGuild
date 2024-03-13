@@ -45,17 +45,17 @@ export const Main = ({
 					<ListSkeleton numberOfItems={3} gap={2}>
 						<>
 							<Skeleton variant="rounded" width="100%" height={150} />
-							<Divider sx={{ borderColor: theme => theme.palette.border.subtle }} />
+							<Divider />
 						</>
 					</ListSkeleton>
 				) : forum ? (
 					<>
 						<AboutCard forum={forum} isOwner={isOwner} />
-						<Divider sx={{ borderColor: theme => theme.palette.border.subtle }} />
+						<Divider />
 						<RulesCard forum={forum} isOwner={isOwner} />
-						<Divider sx={{ borderColor: theme => theme.palette.border.subtle }} />
+						<Divider />
 						<ResourcesCard forum={forum} isOwner={isOwner} />
-						<Divider sx={{ borderColor: theme => theme.palette.border.subtle }} />
+						<Divider />
 					</>
 				) : (
 					<></>

@@ -3,7 +3,7 @@ import Popover from '@mui/material/Popover';
 import { IconButton } from '../IconButton';
 import { ButtonBase, Stack } from '@mui/material';
 import { Label } from '../Typography';
-import { AuthContext, NotificationContext } from 'src/contexts';
+import { AuthContext, ColorModeContext, NotificationContext } from 'src/contexts';
 import { markAllAsRead } from 'src/api/notification';
 import { NotificationCard } from 'src/views/Notifications/components/NotificationCard';
 import { PrimaryButton } from '../Button';
@@ -13,7 +13,7 @@ import { useErrorHandler, useSnackbar } from 'src/hooks';
 
 export const NotificationPopup = () => {
 	const { notifications, getNotifications } = useContext(NotificationContext);
-
+	const { isDarkMode } = useContext(ColorModeContext);
 	const { profile } = useContext(AuthContext);
 	const navigate = useNavigate();
 	const { warningSnackbar } = useSnackbar();
@@ -59,8 +59,8 @@ export const NotificationPopup = () => {
 					sx: theme => ({
 						width: 340,
 						marginTop: 1,
-						background: theme.palette.dark[500],
-						border: `${theme.spacing(0.125)} solid ${theme.palette.border.default}`,
+						background: theme.palette.surface.container,
+						border: `${theme.spacing(0.125)} solid ${theme.palette.border.subtle}`,
 						borderRadius: 1,
 						padding: 0.5,
 						gap: 0.5,
@@ -94,13 +94,13 @@ export const NotificationPopup = () => {
 									sx={{
 										fontSize: 12,
 										fontFamily: 'Exo',
-										color: theme => theme.palette.text.secondary,
+										color: theme => theme.palette.text.primary,
 										transition: theme =>
 											theme.transitions.create('color', {
 												duration: theme.transitions.duration.standard
 											}),
 										'&:hover': {
-											color: theme => theme.palette.text.primary
+											color: theme => theme.palette.text.secondary
 										}
 									}}
 								>
@@ -110,6 +110,7 @@ export const NotificationPopup = () => {
 							<IconButton
 								size="large"
 								icon="settings"
+								iconSx={{ color: theme => theme.palette.text.secondary }}
 								onClick={() => {
 									close();
 									setTimeout(() => {
@@ -140,7 +141,17 @@ export const NotificationPopup = () => {
 							</PrimaryButton>
 						</>
 					) : (
-						<NotFound sx={{ pb: 1.5 }} description="No notifications" />
+						<NotFound
+							iconProps={{
+								sx: {
+									...(isDarkMode && {
+										color: theme => theme.palette.dark[900]
+									})
+								}
+							}}
+							sx={{ pb: 1.5 }}
+							description="No notifications"
+						/>
 					)}
 				</Suspense>
 			</Popover>

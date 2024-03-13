@@ -119,14 +119,7 @@ const PrimaryButtonContainer = styled(Button, {
 		'&:active': {
 			outline: 'none',
 			background: 'none',
-			...(theme.palette.mode === 'light' && {
-				background: theme.palette.gradient.main,
-				WebkitBackgroundClip: 'text',
-				backgroundClip: 'text',
-				WebkitTextFillColor: 'transparent',
-				WebkitBoxDecorationBreak: 'clone'
-			}),
-
+			color: theme.palette.text.secondary,
 			'&::after': {
 				content: '""',
 				position: 'absolute',

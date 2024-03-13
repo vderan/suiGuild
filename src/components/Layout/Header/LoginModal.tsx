@@ -80,6 +80,7 @@ export const LoginModal = ({ open, onClose }: ILoginButtonProps) => {
 						justifyContent: 'space-between',
 						gap: { xs: 0, md: 1.25 },
 						[theme.breakpoints.down('md')]: {
+							background: theme.palette.gradient.main,
 							width: '100%',
 							borderTopRightRadius: theme.spacing(1.5),
 							borderBottomLeftRadius: 0

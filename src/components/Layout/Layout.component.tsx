@@ -24,7 +24,6 @@ import { useSWRConfig } from 'swr';
 import { QUERY_KEYS } from 'src/constants/querykeys.constants';
 import { lastestRoomMessagesState } from 'src/recoil/lastestRoomMessage';
 import { UsernameDialog } from '../UsernameDialog';
-import { GradientIcon } from '../Icons/GradientIcon';
 import { SidebarMenu } from './Sidebar/SidebarMenu';
 
 export const Layout = ({ isSidebarAlwaysClosed = false }: { isSidebarAlwaysClosed?: boolean }) => {
@@ -280,8 +279,6 @@ export const Layout = ({ isSidebarAlwaysClosed = false }: { isSidebarAlwaysClose
 					<Outlet />
 				</Container>
 			</Main>
-
-			<GradientIcon />
 		</Stack>
 	);
 };

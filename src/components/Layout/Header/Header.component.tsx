@@ -70,11 +70,7 @@ export const Header = ({ isSidebarAlwaysClosed = false }: { isSidebarAlwaysClose
 			>
 				<HeaderAvatar image={ipfsUrl(profile?.avatar ?? avatarUrl)} />
 				<Label> {formatAddress(account?.address || '')}</Label>
-				<IconButton
-					icon="chevronDown"
-					size="large"
-					sx={{ color: theme => theme.palette.text.primary, opacity: 0.5, '&:hover': { opacity: 1 } }}
-				/>
+				<IconButton icon="chevronDown" size="large" iconColor="text" />
 			</Box>
 		),
 		id: 'appMenu',
@@ -164,7 +160,7 @@ export const Header = ({ isSidebarAlwaysClosed = false }: { isSidebarAlwaysClose
 										<IconButton
 											size="large"
 											icon="menu"
-											sx={{ color: theme => theme.palette.text.primary, opacity: 0.5, '&:hover': { opacity: 1 } }}
+											iconColor="text"
 											onClick={() => setIsSideMenuOpenedState(prev => !prev)}
 										/>
 									))}

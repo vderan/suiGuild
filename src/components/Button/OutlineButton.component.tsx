@@ -29,7 +29,7 @@ export const OutlineButton = ({
 			startIcon={
 				!loading ? (
 					startIcon ? (
-						<StartIcon fontSize={iconSize} sx={{ color: theme => theme.palette.text.secondary }} />
+						<StartIcon fontSize={iconSize} sx={{ color: theme => theme.palette.text.primary }} />
 					) : startImage ? (
 						<img src={startImage} alt="startImg" width={BUTTON_ICON_SIZE} height={BUTTON_ICON_SIZE} />
 					) : undefined
@@ -38,7 +38,7 @@ export const OutlineButton = ({
 			endIcon={
 				!loading ? (
 					endIcon ? (
-						<EndIcon fontSize={iconSize} sx={{ color: theme => theme.palette.text.secondary }} />
+						<EndIcon fontSize={iconSize} sx={{ color: theme => theme.palette.text.primary }} />
 					) : endImage ? (
 						<img src={endImage} alt="endImg" width={BUTTON_ICON_SIZE} height={BUTTON_ICON_SIZE} />
 					) : endElement ? (
@@ -69,7 +69,7 @@ const OutlineButtonContainer = styled(Button)(({ theme }) => ({
 	textTransform: 'none',
 	minWidth: 'initial',
 	whiteSpace: 'nowrap',
-	color: theme.palette.text.secondary,
+	color: theme.palette.text.primary,
 	'& .MuiButton-startIcon': {
 		margin: 0
 	},

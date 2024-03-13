@@ -10,7 +10,7 @@ export const Send = () => {
 	return (
 		<Stack sx={{ pt: { xs: 3, lg: 5 }, gap: 4, maxWidth: '560px', mx: 'auto' }}>
 			<ButtonBase sx={{ gap: 0.5, width: 'max-content' }} onClick={() => navigate(-1)}>
-				<Icon icon="chevronLeft" sx={{ color: theme => theme.palette.text.secondary }} />
+				<Icon icon="chevronLeft" />
 				<ButtonSmallText color="text.secondary">Go back</ButtonSmallText>
 			</ButtonBase>
 

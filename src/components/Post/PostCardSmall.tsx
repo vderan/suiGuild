@@ -59,14 +59,22 @@ export const PostCardSmall = ({ post }: { post: IPost }) => {
 				<PrimaryEditor readOnly readContent={post.message} numberLinesToDisplay={2} post={post} />
 				<Box sx={{ gap: 1.5, display: 'flex', alignItems: 'center' }}>
 					<Box sx={{ gap: 1, display: 'flex', alignItems: 'center' }}>
-						<Icon icon="arrowUp" fontSize="extraSmall" sx={{ color: theme => theme.palette.text.secondary }} />
+						<Icon
+							icon="arrowUp"
+							fontSize="extraSmall"
+							sx={{ color: theme => theme.palette.text.primary, opacity: 0.5 }}
+						/>
 						<Paragraph3 color="text.secondary">
 							{post.vote} {pluralize('vote', Number(post.vote))}
 						</Paragraph3>
 					</Box>
-					<Paragraph2>·</Paragraph2>
+					<Paragraph2 color="text.secondary">·</Paragraph2>
 					<Box sx={{ gap: 1, display: 'flex', alignItems: 'center' }}>
-						<Icon icon="message" fontSize="extraSmall" sx={{ color: theme => theme.palette.text.secondary }} />
+						<Icon
+							icon="message"
+							fontSize="extraSmall"
+							sx={{ color: theme => theme.palette.text.primary, opacity: 0.5 }}
+						/>
 						<Paragraph3 color="text.secondary">
 							{post.comments?.length} {pluralize('comment', post.comments?.length)}
 						</Paragraph3>

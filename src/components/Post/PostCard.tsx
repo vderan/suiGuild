@@ -99,7 +99,7 @@ export const PostCard = ({
 				display: 'flex',
 				flexDirection: 'column',
 				padding: theme.spacing(4),
-				background: theme.palette.dark[700],
+				background: theme.palette.surface.container,
 				borderRadius: 1.5
 			})}
 		>
@@ -183,6 +183,7 @@ export const PostCard = ({
 				<IconButton
 					icon="message"
 					size="extraSmall"
+					iconColor="text"
 					onClick={handleComments}
 					label={`${post.comments?.length} ${pluralize('comment', post.comments?.length)}`}
 				/>
@@ -224,6 +225,7 @@ export const PostCard = ({
 										<IconButton
 											sx={{ mt: 0.625 }}
 											icon="send"
+											iconColor="text"
 											loading={isCommentSubmitting}
 											onClick={() =>
 												commentRef.current?.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }))

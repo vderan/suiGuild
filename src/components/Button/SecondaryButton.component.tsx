@@ -180,6 +180,7 @@ const SecondaryButtonContainer = styled(Button, {
 			}
 		},
 		'&:active': {
+			background: 'transparent',
 			...(theme.palette.mode === 'dark' && {
 				background: theme.palette.border.subtle
 			}),

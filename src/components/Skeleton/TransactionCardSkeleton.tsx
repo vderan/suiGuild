@@ -20,7 +20,7 @@ export const TransactionCardSkeleton = () => {
 const TransactionCardSkeletonContainer = styled(Box)(({ theme }) => ({
 	width: '100%',
 	display: 'flex',
-	backgroundColor: theme.palette.dark[700],
+	backgroundColor: theme.palette.surface.container,
 	borderRadius: theme.spacing(1),
 	padding: theme.spacing(1.5),
 	justifyContent: 'space-between',

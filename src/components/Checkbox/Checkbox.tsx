@@ -21,7 +21,7 @@ export const Checkbox = ({
 			<FormControlLabel
 				sx={{
 					lineHeight: 1,
-					opacity: disabled ? 0.7 : 1,
+					opacity: disabled ? 0.6 : 1,
 					gap: 1,
 					margin: 0
 				}}
@@ -42,7 +42,7 @@ export const Checkbox = ({
 											border: `${theme.spacing(0.125)} solid ${theme.palette.border.default}`,
 											borderRadius: 'inherit',
 											'.MuiCheckbox-root:hover &': {
-												borderColor: theme.palette.blue[700]
+												borderColor: theme.palette.primary.main
 											}
 										})}
 									/>
@@ -54,7 +54,7 @@ export const Checkbox = ({
 											height: theme.spacing(2.5),
 											border: `${theme.spacing(0.125)} solid ${theme.palette.border.default}`,
 											borderRadius: 'inherit',
-											backgroundColor: theme.palette.blue[700]
+											backgroundColor: theme.palette.primary.main
 										})}
 									/>
 								}

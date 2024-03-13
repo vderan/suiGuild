@@ -36,7 +36,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
 			display: 'flex',
 			justifyContent: 'space-between',
 			alignItems: 'center',
-			border: `${theme.spacing(0.125)} solid ${theme.palette.dark[500]}`,
+			border: `${theme.spacing(0.125)} solid ${theme.palette.border.subtle}`,
 			borderRadius: theme.spacing(1.5)
 		},
 		'& .available-div': {
@@ -331,7 +331,7 @@ export const SendToken = () => {
 							height: theme => theme.spacing(12),
 							padding: 2,
 							borderRadius: 1,
-							backgroundColor: theme => theme.palette.dark[500],
+							backgroundColor: theme => theme.palette.surface.containerSilver,
 							border: theme => `${theme.spacing(0.125)} solid ${theme.palette.border.subtle}`
 						}}
 					>

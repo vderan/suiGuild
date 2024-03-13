@@ -27,7 +27,9 @@ export const CreatePost = () => {
 				</Grid>
 				<Grid item lg={3.914} xs={12}>
 					<Stack gap={2}>
-						<Stack sx={{ padding: 2, backgroundColor: theme => theme.palette.dark[500], borderRadius: 1.5, gap: 2 }}>
+						<Stack
+							sx={{ padding: 2, backgroundColor: theme => theme.palette.surface.container, borderRadius: 1.5, gap: 2 }}
+						>
 							<H3Title>
 								Drafts{' '}
 								<Box color="text.secondary" component="span">

@@ -4,7 +4,7 @@ import { guidelines } from 'src/constants/guidelines.constants';
 
 export const GuideLine = () => {
 	return (
-		<Box sx={{ padding: 2, backgroundColor: theme => theme.palette.dark[500], borderRadius: 1.5 }}>
+		<Box sx={{ padding: 2, backgroundColor: theme => theme.palette.surface.container, borderRadius: 1.5 }}>
 			<H3Title>Guidelines</H3Title>
 			{guidelines.map(guideline => (
 				<Box
@@ -29,7 +29,7 @@ export const GuideLine = () => {
 								borderRadius: 0.5
 							})}
 						>
-							<Label> {guideline.id} </Label>
+							<Label color={theme => theme.palette.buttonText.white}> {guideline.id} </Label>
 						</Box>
 						<H4Title> {guideline.title} </H4Title>
 					</Box>

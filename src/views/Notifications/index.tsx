@@ -50,16 +50,20 @@ export const Notifications = () => {
 							sx={{
 								fontSize: 12,
 								fontFamily: 'Exo',
-								color: theme => theme.palette.text.secondary,
+								color: theme => theme.palette.text.primary,
 								'&:hover': {
-									color: theme => theme.palette.text.primary
+									color: theme => theme.palette.text.secondary
 								}
 							}}
 						>
 							Mark all as read
 						</ButtonBase>
 					)}
-					<IconButton icon="settings" onClick={() => navigate(`/setting/${account?.address}/notification`)} />
+					<IconButton
+						icon="settings"
+						iconSx={{ color: theme => theme.palette.text.secondary }}
+						onClick={() => navigate(`/setting/${account?.address}/notification`)}
+					/>
 				</Stack>
 			</Stack>
 			<Stack sx={{ gap: 1.5 }}>

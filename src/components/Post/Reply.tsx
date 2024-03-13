@@ -140,6 +140,7 @@ export const Reply = ({ depth, comment, communityIdx, reply }: IReplyProps) => {
 											<IconButton
 												sx={{ mt: 0.625 }}
 												icon="send"
+												iconColor="text"
 												loading={isReplySubmitting}
 												onClick={() =>
 													replyToReplyRef.current?.dispatchEvent(

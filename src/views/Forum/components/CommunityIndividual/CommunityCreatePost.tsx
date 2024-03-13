@@ -3,7 +3,6 @@ import { useContext, useState } from 'react';
 import { CustomAvatar } from 'src/components/Avatar';
 import { Dialog } from 'src/components/Dialog';
 import { Icon } from 'src/components/Icon';
-import { IconButton } from 'src/components/IconButton';
 import { PrimaryEditor } from 'src/components/TextEditor';
 import { Paragraph2 } from 'src/components/Typography';
 import { avatarUrl } from 'src/constants/images.constants';
@@ -11,12 +10,9 @@ import { AuthContext, IForum } from 'src/contexts';
 import { ipfsUrl } from 'src/helpers/ipfs.helpers';
 import { useSnackbar } from 'src/hooks';
 
-import { useDevice } from 'src/hooks/useDevice';
-
 const Wrapper = styled(Stack)(({ theme }) => ({
 	flexDirection: 'row',
-	background: theme.palette.dark[700],
-	border: `${theme.spacing(0.125)} solid ${theme.palette.dark[500]}`,
+	background: theme.palette.surface.containerSilver,
 	borderRadius: theme.spacing(1),
 	padding: theme.spacing(2),
 	alignItems: 'center',
@@ -26,7 +22,6 @@ const Wrapper = styled(Stack)(({ theme }) => ({
 
 export const CommunityCreatePost = ({ forum, isLoading = false }: { forum?: IForum; isLoading?: boolean }) => {
 	const { profile, isLoggedIn } = useContext(AuthContext);
-	const { iMid } = useDevice();
 	const [isCreatePostModalShown, setIsCreatePostModalShown] = useState(false);
 	const { warningSnackbar } = useSnackbar();
 
@@ -65,21 +60,10 @@ export const CommunityCreatePost = ({ forum, isLoading = false }: { forum?: IFor
 							textTransform: 'none'
 						})}
 						onClick={openCreatePostModal}
-						endIcon={<Icon icon="mood" />}
+						endIcon={<Icon icon="mood" sx={{ color: theme => theme.palette.text.primary, opacity: 0.5 }} />}
 					>
 						<Paragraph2 sx={{ opacity: 0.5 }}>Type a message...</Paragraph2>
 					</Button>
-				</Box>
-				<Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-					{iMid ? (
-						<IconButton icon="add" onClick={openCreatePostModal} />
-					) : (
-						<>
-							<IconButton icon="image" onClick={openCreatePostModal} />
-							<IconButton icon="gif" onClick={openCreatePostModal} />
-							<IconButton icon="attachFile" onClick={openCreatePostModal} />
-						</>
-					)}
 				</Box>
 
 				<Dialog
