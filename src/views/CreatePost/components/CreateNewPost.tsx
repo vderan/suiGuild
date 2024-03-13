@@ -85,7 +85,7 @@ export const CreateNewPost = () => {
 					<CustomToggleButtonGroup
 						sx={{
 							'& .MuiToggleButtonGroup-grouped': {
-								backgroundColor: theme => theme.palette.dark[500],
+								backgroundColor: theme => theme.palette.surface.container,
 								fontSize: theme => theme.spacing(1.5),
 								padding: 0.875,
 								'&:not(:first-of-type)': {
@@ -106,6 +106,7 @@ export const CreateNewPost = () => {
 						defaultValue={selectValue}
 						options={quickForums}
 						isDisabled={isSubmitting}
+						isEmitEmptyValue
 						onChange={value => setSelectValue(value)}
 					/>
 				) : (

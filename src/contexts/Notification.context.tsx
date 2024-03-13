@@ -62,7 +62,8 @@ export const NotificationProvider = ({ children }: PropsWithChildren) => {
 			}
 		};
 		init();
-	}, [errorProcessWithoutFeedback, getNotifications]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [getNotifications]);
 
 	return (
 		<>

@@ -97,6 +97,11 @@ export const StandaloneInputField = React.forwardRef<HTMLInputElement, Standalon
 									WebkitAppearance: 'none',
 									margin: 0
 								},
+								'& input:-webkit-autofill': {
+									boxShadow: 'none',
+									WebkitTextFillColor: 'initial',
+									transition: 'background-color 0s 600000s, color 0s 600000s !important'
+								},
 								alignItems: 'flex-start',
 								width: width
 							},

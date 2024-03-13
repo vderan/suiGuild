@@ -30,7 +30,7 @@ export const CustomTabs = ({ tabs, isTertiary = false, tabsChildren }: ICustomTa
 				width: '100%',
 				'& .MuiTab-root': {
 					textTransform: 'none',
-					color: theme.palette.text.primary,
+					color: theme.palette.border.highlight,
 					padding: 0,
 					'&.Mui-selected': {
 						color: theme.palette.text.primary
@@ -82,10 +82,7 @@ export const CustomTabs = ({ tabs, isTertiary = false, tabsChildren }: ICustomTa
 								/>
 							}
 							sx={{
-								borderBottom: theme =>
-									isTertiary
-										? `${theme.spacing(0.125)} solid ${theme.palette.border.subtle}`
-										: `${theme.spacing(0.125)} solid ${theme.palette.border.default}`,
+								borderBottom: theme => `${theme.spacing(0.125)} solid ${theme.palette.border.subtle}`,
 								minHeight: '40px'
 							}}
 						/>
@@ -117,7 +114,7 @@ const TabContent = ({ isTertiary, ...props }: ITabs & { isTertiary: boolean }) =
 				<Icon
 					icon={props.startIcon}
 					fontSize="small"
-					sx={{ color: theme => (props.isActive ? theme.palette.system.icon : theme.palette.border.highlight) }}
+					sx={{ color: theme => (props.isActive ? theme.palette.text.primary : theme.palette.border.highlight) }}
 				/>
 			) : props.startImage ? (
 				<img src={props.startImage} alt="startImg" width={BUTTON_ICON_SIZE} height={BUTTON_ICON_SIZE} />
@@ -134,14 +131,14 @@ const TabContent = ({ isTertiary, ...props }: ITabs & { isTertiary: boolean }) =
 					{props.label}
 				</H3Title>
 			) : (
-				<ButtonMediumText>{props.label}</ButtonMediumText>
+				<ButtonMediumText color="inherit">{props.label}</ButtonMediumText>
 			)}
 
 			{props.endIcon ? (
 				<Icon
 					icon={props.endIcon}
 					fontSize="small"
-					sx={{ color: theme => (props.isActive ? theme.palette.system.icon : theme.palette.border.highlight) }}
+					sx={{ color: theme => (props.isActive ? theme.palette.text.primary : theme.palette.border.highlight) }}
 				/>
 			) : props.endImage ? (
 				<img src={props.endImage} alt="endImg" width={BUTTON_ICON_SIZE} height={BUTTON_ICON_SIZE} />

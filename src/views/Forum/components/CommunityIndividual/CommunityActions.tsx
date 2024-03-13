@@ -38,7 +38,9 @@ export const CommunityActions = ({ forum }: { forum: IForum }) => {
 				<QuaternaryButton
 					sx={{
 						boxShadow: theme => `0 0 1px ${theme.palette.dark[900]}`,
-						textShadow: theme => `0 0 1px ${theme.palette.dark[900]}`
+						textShadow: theme => `0 0 1px ${theme.palette.dark[900]}`,
+						background: theme => theme.palette.border.highlight,
+						color: theme => theme.palette.buttonText.white
 					}}
 					loading={isSubmitting}
 					onClick={handleFollow}
@@ -50,6 +52,7 @@ export const CommunityActions = ({ forum }: { forum: IForum }) => {
 				icon="notification"
 				fontSize="small"
 				sx={{
+					color: theme => theme.palette.system.default,
 					filter: theme => `drop-shadow(0 0 1px ${theme.palette.dark[900]})`
 				}}
 			/>
@@ -65,6 +68,7 @@ export const CommunityActions = ({ forum }: { forum: IForum }) => {
 				element={
 					<IconButton
 						size="small"
+						iconSx={{ color: theme => theme.palette.system.default }}
 						sx={{ filter: theme => `drop-shadow(0 0 1px ${theme.palette.dark[900]})`, padding: 0 }}
 						icon="share"
 					/>

@@ -105,7 +105,7 @@ export const AboutCard = ({ forum, isOwner }: { forum: IForum; isOwner: boolean 
 							<H3Title noWrap title={forum?.numPost}>
 								{forum?.numPost}
 							</H3Title>
-							<Paragraph2 color="text.secondary">{pluralize('post', Number(forum?.numPost))}</Paragraph2>
+							<Paragraph2>{pluralize('post', Number(forum?.numPost))}</Paragraph2>
 						</DetailBlock>
 						<ButtonBase
 							sx={{ alignItems: 'flex-start', flexDirection: 'column', gap: 0.5, overflow: 'hidden', flex: 1 }}
@@ -114,13 +114,13 @@ export const AboutCard = ({ forum, isOwner }: { forum: IForum; isOwner: boolean 
 							<H3Title noWrap title={String(forum?.followers.length)} width="100%" textAlign="left">
 								{forum?.followers.length || 0}
 							</H3Title>
-							<Paragraph2 color="text.secondary">{pluralize('member', forum?.followers.length)}</Paragraph2>
+							<Paragraph2>{pluralize('member', forum?.followers.length)}</Paragraph2>
 						</ButtonBase>
 						<DetailBlock>
 							<H3Title noWrap title={forum?.numComment}>
 								{forum?.numComment}
 							</H3Title>
-							<Paragraph2 color="text.secondary">{pluralize('comment', Number(forum?.numComment))}</Paragraph2>
+							<Paragraph2>{pluralize('comment', Number(forum?.numComment))}</Paragraph2>
 						</DetailBlock>
 					</Stack>
 					{connectedSocials.length ? (
@@ -141,6 +141,7 @@ export const AboutCard = ({ forum, isOwner }: { forum: IForum; isOwner: boolean 
 										icon={social.icon}
 										fontSize="large"
 										sx={{
+											color: theme => theme.palette.text.secondary,
 											'.social-link:hover &': {
 												'path[fill]': {
 													fill: 'url(#svgGradient1)'

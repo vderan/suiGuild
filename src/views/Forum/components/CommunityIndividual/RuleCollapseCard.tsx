@@ -12,7 +12,7 @@ export const RuleCollapseCard = ({ title, content }: { title: string; content: s
 	return (
 		<Box
 			sx={theme => ({
-				background: theme.palette.dark[700],
+				background: theme.palette.surface.container,
 				borderRadius: 1,
 				padding: 1.5
 			})}
@@ -31,7 +31,11 @@ export const RuleCollapseCard = ({ title, content }: { title: string; content: s
 				<Label title={title} noWrap>
 					{title}
 				</Label>
-				<Icon icon={isShowExpandableSection ? 'chevronUp' : 'chevronDown'} fontSize="small" />
+				<Icon
+					sx={{ color: theme => theme.palette.text.secondary }}
+					icon={isShowExpandableSection ? 'chevronUp' : 'chevronDown'}
+					fontSize="small"
+				/>
 			</Stack>
 			<Collapse in={isShowExpandableSection}>
 				<Box sx={{ marginTop: theme => theme.spacing(1) }}>

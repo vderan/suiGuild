@@ -49,7 +49,7 @@ export const Snackbar = forwardRef<HTMLDivElement, SnackbarProps>(({ id, type, m
 				alignItems="flex-start"
 				justifyContent="flex-start"
 				sx={{
-					backgroundColor: theme => theme.palette.dark[500],
+					backgroundColor: theme => theme.palette.surface.buttonBg,
 					borderRadius: 2,
 					position: 'relative',
 					padding: 1.5,
@@ -69,11 +69,13 @@ export const Snackbar = forwardRef<HTMLDivElement, SnackbarProps>(({ id, type, m
 						background: color
 					}}
 				>
-					<Icon icon={icon} sx={{ color: theme => theme.palette.dark[900] }} fontSize="large" />
+					<Icon icon={icon} sx={{ color: theme => theme.palette.surface.background }} fontSize="large" />
 				</Stack>
 				<Stack alignItems="flex-start">
 					{headerMsg && <H4Title>{headerMsg}</H4Title>}
-					<Paragraph2 sx={{ wordBreak: 'break-word', textAlign: 'left' }}>{message}</Paragraph2>
+					<Paragraph2 color="text.secondary" sx={{ wordBreak: 'break-word', textAlign: 'left' }}>
+						{message}
+					</Paragraph2>
 				</Stack>
 			</Stack>
 		</SnackbarContent>

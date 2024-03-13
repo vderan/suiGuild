@@ -6,6 +6,7 @@ export interface IToggleButtonGroupProps {
 	onChange?: (value: string) => void;
 	defaultValue?: string;
 	isDisabled?: boolean;
+	isEmitEmptyValue?: boolean;
 	sx?: SxProps<Theme>;
 }
 

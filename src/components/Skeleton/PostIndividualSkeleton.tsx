@@ -37,7 +37,7 @@ const PostIndividualSkeletonContainer = styled(Box)(({ theme }) => ({
 	gap: theme.spacing(2),
 	'& .card-box': {
 		padding: theme.spacing(2),
-		background: theme.palette.dark[700],
+		background: theme.palette.surface.container,
 		borderRadius: theme.spacing(1.5)
 	}
 }));

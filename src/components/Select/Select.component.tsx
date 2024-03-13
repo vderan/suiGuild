@@ -44,7 +44,7 @@ export const StandaloneSelect = ({
 				error={Boolean(errorMessage)}
 				sx={{
 					'& > .MuiSvgIcon-root': {
-						color: theme => theme.palette.text.primary
+						color: theme => theme.palette.border.highlight
 					}
 				}}
 				MenuProps={{
@@ -72,20 +72,25 @@ export const StandaloneSelect = ({
 							</Box>
 						);
 					}
-
-					return options.find(option => option.id === value)?.label;
+					const selectedOption = options.find(option => option.id === value);
+					return (
+						<Stack direction="row" overflow="hidden" gap={1} alignItems="center">
+							{selectedOption?.avatar && <SmallAvatar image={selectedOption.avatar} />}
+							<Paragraph2 noWrap>{selectedOption?.label}</Paragraph2>
+						</Stack>
+					);
 				}}
 				startAdornment={
 					startIcon ? (
 						<InputAdornment position="start">
-							<Icon icon={startIcon} color="action" />
+							<Icon icon={startIcon} sx={{ color: theme => theme.palette.border.highlight }} />
 						</InputAdornment>
 					) : null
 				}
 				endAdornment={
 					endIcon ? (
 						<InputAdornment position="end">
-							<Icon icon={endIcon} color="action" />
+							<Icon icon={endIcon} sx={{ color: theme => theme.palette.border.highlight }} />
 						</InputAdornment>
 					) : null
 				}
@@ -104,13 +109,13 @@ export const StandaloneSelect = ({
 								borderBottom: theme => `1px solid ${theme.palette.border.subtle}`
 							},
 							'&:hover': {
-								background: theme => theme.palette.dark[500]
+								background: 'transparent'
 							},
 							'&.Mui-selected:hover': {
-								background: theme => theme.palette.dark[500]
+								background: 'transparent'
 							},
 							'&.Mui-selected': {
-								background: theme => theme.palette.dark[500]
+								background: 'transparent'
 							},
 							...sxMenuItem
 						}}
@@ -128,11 +133,14 @@ export const StandaloneSelect = ({
 								noWrap
 								sx={{
 									color: theme => alpha(theme.palette.text.primary, 0.5),
+									'.Mui-selected &': {
+										color: theme => theme.palette.primary.main
+									},
+									'.Mui-selected.MuiMenuItem-root:hover &': {
+										color: theme => theme.palette.primary.main
+									},
 									'.MuiMenuItem-root:hover &': {
 										color: theme => theme.palette.text.primary
-									},
-									'.Mui-selected &': {
-										color: theme => theme.palette.blue[700]
 									}
 								}}
 							>

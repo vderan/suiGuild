@@ -5,6 +5,7 @@ import { SxProps, Theme } from '@mui/system';
 export interface ICustomIconButtonProps extends Omit<IconButtonProps, 'color'> {
 	icon: Icons;
 	loading?: boolean;
+	iconColor?: 'default' | 'text';
 	label?: string;
 	iconSx?: SxProps<Theme>;
 }

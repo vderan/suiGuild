@@ -82,7 +82,7 @@ export const ResourcesCard = ({ forum, isOwner }: { forum: IForum; isOwner: bool
 										justifyContent: 'flex-start',
 										padding: 1.5,
 										gap: 1,
-										background: theme.palette.dark[700],
+										background: theme.palette.surface.container,
 										borderRadius: 1,
 										position: 'relative',
 										'&:hover': {
@@ -100,7 +100,7 @@ export const ResourcesCard = ({ forum, isOwner }: { forum: IForum; isOwner: bool
 										}
 									})}
 								>
-									<Icon icon="link2" />
+									<Icon sx={{ color: theme => theme.palette.text.secondary }} icon="link2" />
 									<PreTitle noWrap title={resource.title}>
 										{resource.title}
 									</PreTitle>

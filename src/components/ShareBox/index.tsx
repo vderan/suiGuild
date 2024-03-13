@@ -30,7 +30,7 @@ export const ShareBox = ({ size = 'small', label, ...props }: IShareBoxProps) =>
 					{label}
 				</SecondaryButton>
 			) : (
-				<IconButton icon="share" onClick={handleClick} size={size} label={label} />
+				<IconButton icon="share" iconColor="text" onClick={handleClick} size={size} label={label} />
 			)}
 			{props.isModal ? (
 				<Modal
@@ -56,7 +56,7 @@ export const ShareBox = ({ size = 'small', label, ...props }: IShareBoxProps) =>
 							padding: 4,
 							maxHeight: 'calc(100% - 32px)',
 							boxSizing: 'border-box',
-							background: theme.palette.dark[700],
+							background: theme.palette.surface.container,
 							border: `${theme.spacing(0.125)} solid ${theme.palette.border.subtle}`,
 							borderRadius: 1.5,
 							[theme.breakpoints.down('md')]: {
@@ -150,8 +150,8 @@ export const ShareBox = ({ size = 'small', label, ...props }: IShareBoxProps) =>
 							alignItems: 'flex-start',
 							flexShrink: 0,
 							borderRadius: 1,
-							border: theme => `${theme.spacing(0.125)} solid ${theme.palette.border.default}`,
-							background: theme => theme.palette.dark[500]
+							border: theme => `${theme.spacing(0.125)} solid ${theme.palette.border.subtle}`,
+							background: theme => theme.palette.surface.container
 						}}
 					>
 						{props.links?.map((i, index) => {
@@ -168,11 +168,11 @@ export const ShareBox = ({ size = 'small', label, ...props }: IShareBoxProps) =>
 										gap: 1,
 										width: '100%',
 										cursor: 'pointer',
-										color: theme => theme.palette.text.primary,
+										color: theme => theme.palette.text.secondary,
 										backgroundColor: 'transparent',
 										border: 'none',
 										'&:hover': {
-											color: theme => theme.palette.blue[700]
+											color: theme => theme.palette.primary.main
 										}
 									}}
 									onClick={() => copy(i.href)}

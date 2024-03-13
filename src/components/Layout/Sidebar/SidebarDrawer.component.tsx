@@ -23,7 +23,7 @@ export const SidebarDrawer = () => {
 
 	return (
 		<>
-			<IconButton size="large" icon="menu" onClick={() => setIsDrawerOpen(true)} />
+			<IconButton size="large" icon="menu" iconColor="text" onClick={() => setIsDrawerOpen(true)} />
 
 			<Drawer
 				anchor="left"

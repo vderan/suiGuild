@@ -20,7 +20,7 @@ export const Receive = () => {
 	return (
 		<Stack sx={{ pt: { xs: 3, lg: 5 }, gap: 4, maxWidth: '560px', mx: 'auto' }}>
 			<ButtonBase sx={{ gap: 0.5, width: 'max-content' }} onClick={() => navigate(-1)}>
-				<Icon icon="chevronLeft" sx={{ color: theme => theme.palette.text.secondary }} />
+				<Icon icon="chevronLeft" />
 				<ButtonSmallText color="text.secondary">Go back</ButtonSmallText>
 			</ButtonBase>
 			<Stack gap={3}>
@@ -32,7 +32,7 @@ export const Receive = () => {
 						level="L"
 						includeMargin
 						style={{ borderRadius: theme.spacing(1) }}
-						bgColor={theme.palette.dark[500]}
+						bgColor={theme.palette.surface.container}
 						fgColor={theme.palette.text.primary}
 					/>
 					<Divider sx={{ width: '100%', borderColor: theme => theme.palette.border.subtle }} />

@@ -16,7 +16,7 @@ export const AddFriends = () => {
 		<>
 			<Box
 				sx={theme => ({
-					background: theme.palette.surface.background,
+					background: theme.palette.surface.buttonBg,
 					borderRadius: 1,
 					position: 'relative',
 					boxShadow: `0 30px 60px -20px ${theme.palette.shadow.secondary}`,

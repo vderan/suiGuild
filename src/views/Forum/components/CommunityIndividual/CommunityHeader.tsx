@@ -46,12 +46,20 @@ export const CommunityHeader = ({ forum, isLoading = false }: { forum?: IForum; 
 						<H2Title
 							noWrap
 							sx={{
+								color: theme => theme.palette.buttonText.white,
 								textShadow: theme => `0 0 1px ${theme.palette.dark[900]}`
 							}}
 						>
 							{forum?.title}
 						</H2Title>
-						{isOwner && <IconButton size="small" icon="edit" onClick={() => setIsEditCommunityModalShown(true)} />}
+						{isOwner && (
+							<IconButton
+								size="small"
+								iconSx={{ color: theme => theme.palette.system.default }}
+								icon="edit"
+								onClick={() => setIsEditCommunityModalShown(true)}
+							/>
+						)}
 					</Box>
 					{!iMid && <CommunityActions forum={forum} />}
 				</Box>
@@ -60,7 +68,7 @@ export const CommunityHeader = ({ forum, isLoading = false }: { forum?: IForum; 
 					sx={{ display: 'flex', gap: 1, alignItems: 'center', justifyContent: 'flex-start' }}
 					onClick={() => setIsMembersModalShown(true)}
 				>
-					<Icon icon="people" />
+					<Icon sx={{ color: theme => theme.palette.text.secondary }} icon="people" />
 					<H4Title>
 						{forum.followers.length} {!iSm && pluralize('member', forum.followers.length)}
 					</H4Title>

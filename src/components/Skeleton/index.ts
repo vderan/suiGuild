@@ -3,8 +3,6 @@ export * from './GroupChatHeaderSkeleton';
 export * from './RoomMembersSkeleton';
 export * from './PostCardSkeleton';
 export * from './DraftCardSkeleton';
-export * from './FollowingCardSkeleton';
-export * from './TrendingForumSkeleton';
 export * from './FriendCardSkeleton';
 export * from './PostIndividualSkeleton';
 export * from './PostCardSmallSkeleton';

@@ -21,7 +21,7 @@ export const SwitchField = ({ ...props }: SwitchProps) => {
 						right: theme.spacing(-0.375)
 					})}
 				>
-					<CheckIcon fontSize="extraSmall" sx={{ color: theme => theme.palette.text.primary }} />
+					<CheckIcon fontSize="extraSmall" sx={{ color: theme => theme.palette.buttonText.white }} />
 				</Box>
 			}
 		/>

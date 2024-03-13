@@ -6,6 +6,7 @@ import { Paragraph3 } from '../Typography';
 
 export const IconButton = ({
 	icon,
+	iconColor = 'default',
 	loading = false,
 	size = 'medium',
 	iconSx,
@@ -51,8 +52,10 @@ export const IconButton = ({
 							},
 							'rect[stroke]': {
 								stroke: 'url(#svgGradientStroke)'
-							}
+							},
+							opacity: 1
 						},
+						...(iconColor === 'text' && { color: theme => theme.palette.text.primary, opacity: 0.5 }),
 						...iconSx
 					}}
 				/>
@@ -62,6 +65,7 @@ export const IconButton = ({
 					color="text.secondary"
 					sx={{
 						'.MuiIconButton-root:hover &': {
+							fontWeight: 600,
 							background: theme => theme.palette.gradient.main,
 							WebkitBackgroundClip: 'text',
 							backgroundClip: 'text',

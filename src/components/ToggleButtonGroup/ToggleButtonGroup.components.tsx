@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { ToggleButtonGroup, ToggleButton, Box } from '@mui/material';
 import { Icon } from 'src/components/Icon';
 import { CountBadge } from 'src/components/Badge';
-import { styled } from '@mui/system';
+import { styled } from '@mui/material';
 import { IToggleButtonGroupProps } from './ToggleButtonGroup.types';
 import { BUTTON_ICON_SIZE } from 'src/constants/theme.constants';
 
@@ -11,18 +11,20 @@ export const CustomToggleButtonGroup = ({
 	onChange,
 	defaultValue = '',
 	isDisabled = false,
+	isEmitEmptyValue = false,
 	sx
 }: IToggleButtonGroupProps) => {
-	const [selectedValues, setSelectedValues] = useState<string>(defaultValue);
+	const [selectedValue, setSelectedValue] = useState<string>(defaultValue);
 
 	useEffect(() => {
-		setSelectedValues(defaultValue);
+		setSelectedValue(defaultValue);
 	}, [defaultValue]);
 
-	const handleSelectionChange = (event: React.MouseEvent<HTMLElement>, newValues: string) => {
-		setSelectedValues(newValues);
-		if (onChange) {
-			onChange(newValues || '');
+	const handleSelectionChange = (event: React.MouseEvent<HTMLElement>, newValue: string | null) => {
+		if (newValue !== null || isEmitEmptyValue) {
+			const val = newValue || '';
+			setSelectedValue(val);
+			onChange?.(val);
 		}
 	};
 
@@ -30,7 +32,7 @@ export const CustomToggleButtonGroup = ({
 		<StyledToggleButtonGroup
 			sx={{ overflow: 'hidden', ...sx }}
 			exclusive
-			value={selectedValues}
+			value={selectedValue}
 			onChange={handleSelectionChange}
 		>
 			{options?.map(option => (
@@ -92,6 +94,7 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
 		padding: theme.spacing(0.875, 1.5),
 		gap: theme.spacing(1),
 		border: `${theme.spacing(0.125)} solid ${theme.palette.border.default}`,
+		background: theme.palette.surface.buttonBg,
 		fontFamily: 'Clash Display',
 		fontStyle: 'normal',
 		fontWeight: 600,
@@ -120,12 +123,14 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
 		'&.Mui-selected': {
 			background: theme.palette.gradient.secondary,
 			border: 'none',
+			color: theme.palette.buttonText.white,
 			'& .MuiSvgIcon-root': {
-				color: theme.palette.text.primary
+				color: theme.palette.surface.iconBtn
 			}
 		},
 		'&:hover': {
-			backgroundColor: theme.palette.dark[500]
+			borderColor: theme.palette.border.highlight,
+			backgroundColor: theme.palette.surface.buttonBg
 		},
 		'& .toogle-button-group__label': {
 			textOverflow: 'ellipsis',

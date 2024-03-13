@@ -9,6 +9,7 @@ import { Navigation, Autoplay } from 'swiper/modules';
 import SwiperCore from 'swiper';
 import { Box } from '@mui/system';
 import { CircularProgress } from './components/Progress';
+import { GradientIcon } from './components/Icons/GradientIcon';
 
 const Layout = lazy(() => import('src/components/Layout').then(module => ({ default: module.Layout })));
 const Home = lazy(() => import('src/views/Home').then(module => ({ default: module.Home })));
@@ -82,6 +83,7 @@ function App() {
 			<ThemeProvider>
 				<BrowserRouter>
 					<ScrollToTop />
+					<GradientIcon />
 					<Suspense
 						fallback={
 							<>

@@ -24,6 +24,6 @@ export const DraftCardSkeleton = () => {
 const DraftCardSkeletonContainer = styled(Stack)(({ theme }) => ({
 	gap: theme.spacing(3),
 	padding: theme.spacing(3),
-	background: theme.palette.dark[700],
+	background: theme.palette.surface.container,
 	borderRadius: theme.spacing(1)
 }));

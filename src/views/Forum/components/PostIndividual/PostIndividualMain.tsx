@@ -141,7 +141,7 @@ export const PostIndividualMain = () => {
 						sx={theme => ({
 							mt: 3,
 							padding: { xs: 2, lg: 4 },
-							background: theme.palette.dark[700],
+							background: theme.palette.surface.container,
 							borderRadius: 1.5
 						})}
 					>
@@ -151,13 +151,14 @@ export const PostIndividualMain = () => {
 						sx={theme => ({
 							mt: 2,
 							padding: { xs: 2, lg: 4 },
-							background: theme.palette.dark[700],
+							background: theme.palette.surface.container,
 							borderRadius: 1.5
 						})}
 					>
 						<IconButton
 							icon="message"
 							size="extraSmall"
+							iconColor="text"
 							onClick={handleComments}
 							label={`${post.comments?.length} ${pluralize('comment', post.comments?.length)}`}
 						/>
@@ -187,6 +188,7 @@ export const PostIndividualMain = () => {
 														sx={{ mt: 0.625 }}
 														loading={isCommentSubmitting}
 														icon="send"
+														iconColor="text"
 														onClick={() =>
 															commentRef.current?.dispatchEvent(
 																new Event('submit', { cancelable: true, bubbles: true })
