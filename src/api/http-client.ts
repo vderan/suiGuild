@@ -1,11 +1,7 @@
-import { LOCAL_STORAGE } from 'src/constants/api.constants';
-import { BASE_URL } from 'src/constants/env.constants';
+import { XMPP_DOMAIN } from 'src/constants/xmpp.constants';
 import { ApiError } from 'src/types/Api.types';
 
 export const httpClient = async <T>({
-	url,
-	method,
-	data,
 	headers
 }: {
 	url: string;
@@ -13,16 +9,20 @@ export const httpClient = async <T>({
 	data?: Record<string, unknown>;
 	headers?: Record<string, string>;
 }): Promise<T> => {
-	const path = `${BASE_URL}${url}`;
-	const accessToken = localStorage.getItem(LOCAL_STORAGE.JWT);
+	const path = `https://gilder-test.m.in-app.io:5281/api/create_account`;
+	// const accessToken = localStorage.getItem(LOCAL_STORAGE.JWT);
 
 	const response = await fetch(path, {
-		method,
+		method: 'POST',
 		headers: {
 			...headers,
-			Authorization: `Bearer ${accessToken}`
+			Authorization: `Bearer 1b776f9636c2760d930edaba5b9402a28ac8929da05fe29f449154d39be9c268`
 		},
-		...(data ? { body: JSON.stringify(data) } : {})
+		body: JSON.stringify({
+			user: 'testuser',
+			password: 'myserver.com',
+			server: XMPP_DOMAIN
+		})
 	});
 
 	if (!response.ok) {

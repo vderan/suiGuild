@@ -1,4 +1,4 @@
-export const XMPP_DOMAIN = 'suiguild.net';
+export const XMPP_DOMAIN = 'gilder-test.m.in-app.io';
 
 export const IPFS = 'https://images.suiguild.net';
 
