@@ -24,7 +24,7 @@ export const SidebarMenu = ({ isSidebarAlwaysClosed = false }: { isSidebarAlways
 				overflowY: 'auto',
 				maxHeight: theme => `calc(100vh - ${theme.spacing(9)})`,
 				borderRight: `${theme.spacing(0.125)} solid`,
-				borderColor: isMenuOpened && isDarkMode ? 'transparent' : theme.palette.border.subtle,
+				borderColor: theme.palette.border.subtle,
 				background: theme => (isDarkMode ? 'transparent' : theme.palette.surface.container),
 				gap: 4
 			})}

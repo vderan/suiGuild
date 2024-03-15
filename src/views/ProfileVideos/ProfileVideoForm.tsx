@@ -3,12 +3,10 @@ import { useContext, useRef, useState } from 'react';
 import { Dialog } from 'src/components/Dialog';
 import { Form } from 'src/components/Form';
 import { Icon } from 'src/components/Icon';
-import { IconButton } from 'src/components/IconButton';
 import { InputField } from 'src/components/InputField';
 import { Paragraph2 } from 'src/components/Typography';
 import { AuthContext, IVideo } from 'src/contexts';
 import { useErrorHandler } from 'src/hooks';
-import { useClipboard } from 'src/hooks/useClipboard';
 import { useGilder } from 'src/hooks/useGilder';
 import { videoFormSchema } from 'src/schemas/video.schema';
 
@@ -31,7 +29,6 @@ export const ProfileVideoForm = ({
 	const formRef = useRef<null | HTMLFormElement>(null);
 	const { addVideo, editVideo } = useGilder();
 	const { loadUserInfo } = useContext(AuthContext);
-	const { copy } = useClipboard();
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const { errorProcess } = useErrorHandler();
 
@@ -75,7 +72,7 @@ export const ProfileVideoForm = ({
 				}}
 				myRef={formRef}
 				schema={videoFormSchema}
-				render={({ watch }) => (
+				render={() => (
 					<>
 						<InputField
 							name="name"
@@ -91,11 +88,6 @@ export const ProfileVideoForm = ({
 							type="link"
 							required
 							placeholder="Enter URL"
-							endElement={
-								<>
-									<IconButton icon="copy" onClick={() => copy(watch('link'))} />
-								</>
-							}
 							disabled={isSubmitting}
 						/>
 						<Box

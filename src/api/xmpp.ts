@@ -134,7 +134,7 @@ export abstract class Xmpp {
 	}
 
 	public static connect(username: string, password: string) {
-		const xmpp = client({ service: `wss://${XMPP_DOMAIN}:443/xmpp`, username: `${username}@${XMPP_DOMAIN}`, password });
+		const xmpp = client({ service: `wss://${XMPP_DOMAIN}:5280/ws`, username: `${username}@${XMPP_DOMAIN}`, password });
 		this.client = xmpp;
 	}
 

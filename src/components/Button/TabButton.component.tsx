@@ -33,7 +33,7 @@ export const TabButton = ({
 				!loading ? (
 					startIcon ? (
 						<StartIcon
-							sx={{ color: theme => (isFocused ? theme.palette.text.primary : theme.palette.border.highlight) }}
+							sx={{ color: theme => (isFocused ? theme.palette.surface.iconBtn : theme.palette.border.highlight) }}
 							fontSize="small"
 						/>
 					) : startImage ? (
@@ -45,7 +45,7 @@ export const TabButton = ({
 				!loading ? (
 					endIcon ? (
 						<EndIcon
-							sx={{ color: theme => (isFocused ? theme.palette.text.primary : theme.palette.border.highlight) }}
+							sx={{ color: theme => (isFocused ? theme.palette.surface.iconBtn : theme.palette.border.highlight) }}
 							fontSize="small"
 						/>
 					) : endImage ? (
@@ -78,15 +78,16 @@ const TabButtonContainer = styled(Button, {
 	borderRadius: theme.spacing(1),
 	boxSizing: 'border-box',
 	opacity: disabled ? 0.3 : 1,
-	background: isFocused ? theme.palette.gradient.secondary : 'none',
+	background: isFocused ? theme.palette.gradient.secondary : theme.palette.surface.buttonBg,
 	fontFamily: 'Clash Display',
 	fontStyle: 'normal',
 	fontWeight: 600,
 	fontSize: theme.spacing(1.75),
 	textTransform: 'none',
 	whiteSpace: 'nowrap',
-	color: theme.palette.text.primary,
+	color: isFocused ? theme.palette.buttonText.white : theme.palette.text.primary,
 	'&:hover': {
-		backgroundColor: theme.palette.dark[500]
+		borderColor: theme.palette.border.highlight,
+		backgroundColor: theme.palette.surface.buttonBg
 	}
 }));

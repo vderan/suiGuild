@@ -8,6 +8,7 @@ import TextField from '@mui/material/TextField';
 import { Label } from '../Typography';
 import { FormHelperText, Paper, PaperProps } from '@mui/material';
 import { alpha } from '@mui/material';
+import { icons } from '../icons';
 
 const CustomPaper = (props: PaperProps) => {
 	return (
@@ -15,7 +16,7 @@ const CustomPaper = (props: PaperProps) => {
 			{...props}
 			elevation={0}
 			sx={{
-				backgroundColor: theme => theme.palette.dark[500],
+				backgroundColor: theme => theme.palette.surface.containerSilver,
 				mt: 0.375,
 				border: theme => `${theme.spacing(0.125)} solid ${theme.palette.border.highlight}`,
 				'& .MuiAutocomplete-listbox': {
@@ -40,7 +41,7 @@ const CustomPaper = (props: PaperProps) => {
 					},
 					'&[aria-selected="true"]': {
 						backgroundColor: 'transparent!important',
-						color: theme => theme.palette.blue[700]
+						color: theme => theme.palette.primary.main
 					},
 					'&:not(:last-child)': {
 						borderBottom: theme => `${theme.spacing(0.125)} solid ${theme.palette.border.subtle}`
@@ -123,6 +124,7 @@ export const SelectAutocomplete = ({
 						loading={isLoading}
 						PaperComponent={PaperComponent || CustomPaper}
 						renderOption={renderOption}
+						popupIcon={<icons.chevronDown />}
 						renderInput={params => (
 							<TextField
 								placeholder={placeholder}
@@ -130,24 +132,12 @@ export const SelectAutocomplete = ({
 									color: theme.palette.text.primary,
 									borderRadius: `${theme.spacing(1)} !important`,
 									width: '100%',
-									'& fieldset': {
-										border: `${theme.spacing(0.125)} solid ${theme.palette.border.subtle} !important`,
-										borderRadius: `${theme.spacing(1)} !important`
-									},
-									'&:hover fieldset': {
-										borderColor: `${theme.palette.blue[300]} !important`
-									},
 									'&.Mui-focused fieldset': {
 										// - Set the Input border when parent is focused
-										borderColor: `${theme.palette.border.default} !important`
-									},
-									'& .MuiOutlinedInput-root': {
-										'&.Mui-focused fieldset': {
-											borderColor: `${theme.palette.border.default} !important`
-										}
+										borderColor: `${theme.palette.border.highlight} !important`
 									},
 									'& svg': {
-										color: theme.palette.text.primary
+										color: theme.palette.border.highlight
 									},
 									'& .MuiSelect-select': {
 										color: theme.palette.text.primary,
@@ -160,7 +150,6 @@ export const SelectAutocomplete = ({
 									}
 								})}
 								{...params}
-								label=""
 								size="small"
 								fullWidth
 								error={Boolean(fieldState.error)}

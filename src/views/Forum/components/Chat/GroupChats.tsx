@@ -113,7 +113,7 @@ export const GroupChats = () => {
 
 						<Menu
 							detail={{
-								label: <IconButton icon="setting" />,
+								label: <SecondaryButton startIcon="setting" />,
 								id: 'searchMenu',
 								menus: [
 									{
@@ -201,9 +201,9 @@ const StyledBox = styled(Box)(({ theme }) => ({
 		flexDirection: 'column',
 		gap: theme.spacing(1),
 		paddingBottom: theme.spacing(3),
-		borderBottom: `${theme.spacing(0.125)} solid ${theme.palette.dark[500]}`,
+		borderBottom: `${theme.spacing(0.125)} solid ${theme.palette.border.subtle}`,
 		[theme.breakpoints.up('lg')]: {
-			marginRight: theme.spacing(3)
+			marginRight: theme.spacing(1.5)
 		}
 	},
 	'& .search-wrap': {
@@ -459,21 +459,27 @@ export const GroupChat = ({
 						/>
 					</Box>
 					<Box className="date">
-						<Paragraph3 noWrap>{formatLatestRoomMessageDate(latestMessage?.date ?? bookmark.date)}</Paragraph3>
+						<Paragraph3 color="text.secondary" noWrap>
+							{formatLatestRoomMessageDate(latestMessage?.date ?? bookmark.date)}
+						</Paragraph3>
 					</Box>
 				</Box>
 				<Box sx={{ display: 'flex' }}>
 					{!isLatestMessageChecking ? (
 						latestMessage ? (
 							isOnlyAttachmentsInMessage || isGif ? (
-								<Icon icon={getLatestMessageIcon()} fontSize="small" />
+								<Icon
+									sx={{ color: theme => theme.palette.text.secondary }}
+									icon={getLatestMessageIcon()}
+									fontSize="small"
+								/>
 							) : (
-								<Paragraph2 noWrap sx={{ width: 220 }}>
+								<Paragraph2 color="text.secondary" noWrap sx={{ width: 220 }}>
 									{latestMessage.message}
 								</Paragraph2>
 							)
 						) : (
-							<Paragraph2 noWrap>
+							<Paragraph2 color="text.secondary" noWrap>
 								<i>No messages yet</i>
 							</Paragraph2>
 						)

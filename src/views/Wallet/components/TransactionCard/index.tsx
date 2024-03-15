@@ -38,7 +38,7 @@ export const TransactionCard = ({ address, type, price }: ITransactionProps) => 
 						<Icon
 							icon={isReceive ? 'arrowDownCircle' : 'arrowUpCircle'}
 							fontSize="large"
-							sx={{ color: theme => theme.palette.text.primary }}
+							sx={{ color: theme => theme.palette.buttonText.white }}
 						/>
 					}
 				</Stack>

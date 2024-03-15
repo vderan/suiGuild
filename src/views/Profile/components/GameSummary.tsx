@@ -107,7 +107,7 @@ const Game = ({ backgroundImage, name }: { backgroundImage: string; name: string
 				backgroundPosition: '50% 50%',
 				backgroundRepeat: 'no-repeat',
 				backgroundSize: 'cover',
-				backgroundColor: theme => theme.palette.dark[700],
+				backgroundColor: theme => theme.palette.surface.container,
 				display: 'flex',
 				justifyContent: 'center',
 				alignItems: 'center',
@@ -116,7 +116,14 @@ const Game = ({ backgroundImage, name }: { backgroundImage: string; name: string
 				px: 2
 			}}
 		>
-			<H3Title noWrap title={name} sx={{ textShadow: theme => `0 0 1px ${theme.palette.dark[900]}` }}>
+			<H3Title
+				noWrap
+				title={name}
+				sx={{
+					color: theme => theme.palette.buttonText.white,
+					textShadow: theme => `0 0 1px ${theme.palette.dark[900]}`
+				}}
+			>
 				{name}
 			</H3Title>
 		</Box>

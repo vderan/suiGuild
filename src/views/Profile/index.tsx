@@ -213,8 +213,31 @@ export const Profile = () => {
 						sx={{ position: 'absolute', bottom: theme => theme.spacing(4.5), right: 0 }}
 					>
 						<FriendsButtons />
-						{isOwner && <SecondaryButton startIcon="edit" onClick={() => navigate(`/setting/${id}/eprofile`)} />}
-						<ShareBox links={userLinks} isModal secondary size="medium" />
+						{isOwner && (
+							<SecondaryButton
+								iconColor="white"
+								sx={{
+									filter: theme => `drop-shadow(0 0 1px ${theme.palette.dark[900]})`
+								}}
+								startIcon="edit"
+								onClick={() => navigate(`/setting/${id}/eprofile`)}
+							/>
+						)}
+						<ShareBox
+							links={userLinks}
+							isModal
+							secondary
+							size="medium"
+							element={
+								<SecondaryButton
+									iconColor="white"
+									sx={{
+										filter: theme => `drop-shadow(0 0 1px ${theme.palette.dark[900]})`
+									}}
+									startIcon="share"
+								/>
+							}
+						/>
 					</Stack>
 				)}
 			</Box>
@@ -334,7 +357,7 @@ export const Profile = () => {
 							) : (
 								(user?.joinedAt || user?.userInfo?.some?.website) && (
 									<Box sx={{ display: 'flex', justifyContent: { xs: 'flex-start', lg: 'flex-end' }, gap: 1.5 }}>
-										<Paragraph2 whiteSpace="nowrap">
+										<Paragraph2 color="text.secondary" whiteSpace="nowrap">
 											Joined{' '}
 											{readableDate(new Date(Number(user?.joinedAt)), {
 												year: 'numeric',
@@ -352,7 +375,7 @@ export const Profile = () => {
 													lineHeight: 'normal',
 													maxWidth: theme => ({ xs: 'none', lg: theme.spacing(25) }),
 													width: 'fit-content',
-													color: theme => theme.palette.blue[900]
+													color: theme => theme.palette.text.primary
 												}}
 											>
 												<Paragraph2 color="inherit">{user?.userInfo?.some?.website}</Paragraph2>
@@ -454,7 +477,6 @@ const FriendsButtons = () => {
 		<>
 			{isFriend && (
 				<PrimaryButton
-					size="small"
 					onClick={deleteFriend}
 					loading={isSubmitting}
 					sx={{ minWidth: 'auto', height: { xs: '100%', lg: 'initial' } }}
@@ -464,7 +486,6 @@ const FriendsButtons = () => {
 			)}
 			{profile?.id !== id && !isFriend && (
 				<PrimaryButton
-					size="small"
 					onClick={handleAcceptOrSendFriendRequest}
 					disabled={isRequestSent}
 					loading={isSubmitting}
@@ -489,7 +510,7 @@ const AboutMe = ({ user, isLoading }: { user?: UserInfo | null; isLoading?: bool
 	) : (
 		user?.userInfo.some?.bio && (
 			<Stack gap={2}>
-				<PreTitle>ABOUT ME</PreTitle>
+				<PreTitle color={theme => theme.palette.border.highlight}>ABOUT ME</PreTitle>
 				<Paragraph1>{user.userInfo.some?.bio}</Paragraph1>
 			</Stack>
 		)

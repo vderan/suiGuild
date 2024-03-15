@@ -13,8 +13,6 @@ import { AlertBadge } from 'src/components/Badge';
 import { PrimaryButton, SecondaryButton } from 'src/components/Button';
 import { useCurrentAccount } from '@mysten/dapp-kit';
 import { formatAddress } from 'src/helpers/format.helpers';
-import logoImg from 'src/assets/icons/logo.svg';
-import logoLightImg from 'src/assets/icons/logo-light.svg';
 import { ipfsUrl } from 'src/helpers/ipfs.helpers';
 import { avatarUrl } from 'src/constants/images.constants';
 import { LoginModal } from './LoginModal';
@@ -28,6 +26,7 @@ import { useSetRecoilState } from 'recoil';
 import { isSideMenuOpenedState } from 'src/recoil/sideMenu';
 import { SidebarDrawer } from '../Sidebar';
 import { useSnackbar } from 'src/hooks';
+import { Logo } from 'src/components/Logo';
 
 export interface ICreateCommunityProps {
 	avatar: string;
@@ -166,12 +165,7 @@ export const Header = ({ isSidebarAlwaysClosed = false }: { isSidebarAlwaysClose
 									))}
 
 								<Link component={NavLink} sx={{ display: 'flex', alignItems: 'center' }} to="/home">
-									<img
-										src={isDarkMode ? logoImg : logoLightImg}
-										alt="logoImg"
-										width={iMid ? 95 : 125}
-										height={iMid ? 23 : 32}
-									/>
+									<Logo width={iMid ? 95 : 125} height={iMid ? 23 : 32} />
 								</Link>
 							</Box>
 							{profile ? (

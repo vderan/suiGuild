@@ -20,13 +20,13 @@ export const NotificationContext = createContext<INotificationContext>({
 export const NotificationProvider = ({ children }: PropsWithChildren) => {
 	const { profile, loadUserInfo } = useContext(AuthContext);
 	const [notifications, setNotifications] = useState<INotification[]>([]);
-	const { errorProcess, errorProcessWithoutFeedback } = useErrorHandler();
+	const { errorProcessWithoutFeedback } = useErrorHandler();
 
 	const notificationHandler = () => {
 		try {
 			Promise.all([loadUserInfo(), getNotifications()]);
 		} catch (e) {
-			errorProcess(e);
+			errorProcessWithoutFeedback(e);
 		}
 	};
 

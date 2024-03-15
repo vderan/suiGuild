@@ -59,7 +59,7 @@ const NotificationBox = ({ name, text }: { name: string; text: string }) => {
 				<Box
 					sx={{
 						padding: theme => theme.spacing(1, 1.5),
-						backgroundColor: theme => theme.palette.dark[500],
+						backgroundColor: theme => theme.palette.surface.containerSilver,
 						border: theme => `1px solid ${theme.palette.border.subtle}`,
 						justifyContent: 'space-between',
 						display: 'flex',

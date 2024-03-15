@@ -283,7 +283,7 @@ const StyledStack = styled(Stack)(({ theme }) => ({
 		display: 'flex',
 		flexDirection: 'column-reverse',
 		[theme.breakpoints.up('sm')]: {
-			background: theme.palette.dark[700]
+			background: theme.palette.surface.container
 		},
 		'& .chat-box': {
 			display: 'flex',

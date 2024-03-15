@@ -80,7 +80,14 @@ export const ProfileVideos = () => {
 												backgroundColor: theme => alpha(theme.palette.dark[900], 0.6)
 											}}
 										>
-											<Icon icon="play" sx={{ width: theme => theme.spacing(6), height: theme => theme.spacing(6) }} />
+											<Icon
+												icon="play"
+												sx={{
+													width: theme => theme.spacing(6),
+													height: theme => theme.spacing(6),
+													color: theme => theme.palette.buttonText.white
+												}}
+											/>
 										</Stack>
 									}
 								/>

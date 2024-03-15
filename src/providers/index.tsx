@@ -17,23 +17,23 @@ export const Providers = ({ children }: PropsWithChildren) => {
 	return (
 		<QueryClientProvider client={queryClient}>
 			<SuiClientProvider networks={networks} defaultNetwork="testnet">
-				{/* TODO: add endpoint and remove autoconnect */}
-				<SocketProvider uri={''} config={{ autoConnect: false }}>
+				{/* TODO: add endpoint */}
+				<SocketProvider uri={''}>
 					<WalletProvider autoConnect>
 						<RecoilRoot>
-							<AuthProvider>
+							<SnackbarProvider>
 								<NotificationProvider>
-									<ChatProvider>
-										<ColorModeProvider>
-											<ThemeProvider>
-												<HelmetProvider>
-													<SnackbarProvider>{children}</SnackbarProvider>
-												</HelmetProvider>
-											</ThemeProvider>
-										</ColorModeProvider>
-									</ChatProvider>
+									<AuthProvider>
+										<ChatProvider>
+											<ColorModeProvider>
+												<ThemeProvider>
+													<HelmetProvider>{children}</HelmetProvider>
+												</ThemeProvider>
+											</ColorModeProvider>
+										</ChatProvider>
+									</AuthProvider>
 								</NotificationProvider>
-							</AuthProvider>
+							</SnackbarProvider>
 						</RecoilRoot>
 					</WalletProvider>
 				</SocketProvider>
