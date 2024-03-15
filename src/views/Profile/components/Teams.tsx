@@ -91,7 +91,7 @@ const Team = ({ startYear, startMonth, endYear, endMonth, name, coverImage }: IT
 			sx={{
 				borderRadius: 1,
 				padding: 3,
-				backgroundColor: theme => theme.palette.dark[700]
+				backgroundColor: theme => theme.palette.surface.container
 			}}
 		>
 			<TeamAvatar image={ipfsUrl(coverImage?.url ?? avatarUrl)} />

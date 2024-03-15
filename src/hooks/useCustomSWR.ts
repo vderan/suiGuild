@@ -8,7 +8,7 @@ export const useCustomSWR = <Data = any>(
 	options: SWRConfiguration = {}
 ) => {
 	const defaultOptions = {
-		// refreshInterval: 2000, // TODO: remove
+		refreshInterval: 2000,
 		...options
 	};
 

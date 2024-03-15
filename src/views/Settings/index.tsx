@@ -81,7 +81,7 @@ export const Settings = () => {
 										width: '100%'
 									}}
 								>
-									<PreTitle>{option.label}</PreTitle>
+									<PreTitle color="inherit">{option.label}</PreTitle>
 								</TabButton>
 							))}
 						</Box>
@@ -122,10 +122,8 @@ const StyledBox = styled(Box)(({ theme }) => ({
 		flexDirection: 'column',
 		gap: theme.spacing(2),
 		'& .setting-box': {
-			border: `${theme.spacing(0.125)} solid ${theme.palette.dark[700]}`,
-			borderRadius: `${theme.shape.borderRadius}px`,
-			background: theme.palette.dark[700],
-			backdropFilter: `blur(${theme.spacing(2.75)})`,
+			borderRadius: theme.shape.borderRadius,
+			background: theme.palette.surface.container,
 			padding: theme.spacing(4),
 			display: 'flex',
 			flexDirection: 'column',

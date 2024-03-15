@@ -1,8 +1,8 @@
 import { Box } from '@mui/material';
 import { styled } from '@mui/system';
 import { H1Title, H4Title, Paragraph2 } from 'src/components/Typography';
-import gilderImg from 'src/assets/icons/gilder.svg';
 import { useNavigate } from 'react-router-dom';
+import { Logo } from 'src/components/Logo';
 
 export const Terms = () => {
 	const navigate = useNavigate();
@@ -419,7 +419,7 @@ export const Terms = () => {
 				</Box>
 				<Box className="ref-wrap">
 					<Box className="ref-box">
-						<img src={gilderImg} alt="gilder" />
+						<Logo />
 						<Paragraph2>{`All Rights Reserved ${new Date().getFullYear()} Gilder`}</Paragraph2>
 					</Box>
 				</Box>
@@ -481,4 +481,4 @@ const StyledBox = styled(Box, { name: 'Privacy' })(({ theme }) => ({
 			}
 		}
 	}
-}))
+}));

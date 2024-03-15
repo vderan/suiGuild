@@ -142,7 +142,8 @@ export const EditCard = ({
 						width: '100%',
 						height: '100%',
 						padding: 1.25,
-						backgroundColor: imageBoxChildren ? 'initial' : theme => alpha(theme.palette.dark[900], 0.6),
+						borderRadius: 'inherit',
+						backgroundColor: imageBoxChildren ? 'initial' : theme => alpha(theme.palette.dark[900], 0.4),
 						transition: 'opacity 0.2s ease-in-out',
 						opacity: { xs: 1, lg: 0 },
 						'.edit-card:hover &': {
@@ -152,6 +153,7 @@ export const EditCard = ({
 				>
 					{onEdit && (
 						<SecondaryButton
+							iconColor="white"
 							startIcon="edit"
 							size="small"
 							onClick={onEdit}
@@ -160,6 +162,8 @@ export const EditCard = ({
 						/>
 					)}
 					<SecondaryButton
+						iconColor="white"
+						loaderSx={{ color: theme => theme.palette.buttonText.white }}
 						startIcon="close"
 						size="small"
 						onClick={onDelete}

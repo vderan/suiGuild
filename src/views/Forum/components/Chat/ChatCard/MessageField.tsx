@@ -82,7 +82,7 @@ export const MessageField = ({
 				position: { xs: 'fixed', sm: 'relative' },
 				bottom: 0,
 				left: 0,
-				background: { xs: theme.palette.dark[500], sm: theme.palette.dark[700] },
+				background: theme.palette.surface.container,
 				backdropFilter: { xs: 'blur(22px)', sm: 'none' },
 				padding: isChat ? { xs: 2, sm: theme.spacing(0, 2, 2, 2) } : 0
 			})}

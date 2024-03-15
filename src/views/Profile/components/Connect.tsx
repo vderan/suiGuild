@@ -77,7 +77,11 @@ export const Connect = ({ userId }: { userId?: string }) => {
 											<ConnectContainer key={social.id} url={social?.baseSocialUrl} isOwner={isOwner}>
 												<Icon
 													icon={social.icon}
-													sx={{ width: theme => theme.spacing(5), height: theme => theme.spacing(5) }}
+													sx={{
+														width: theme => theme.spacing(5),
+														height: theme => theme.spacing(5),
+														color: theme => theme.palette.text.secondary
+													}}
 												/>
 
 												<Box
@@ -106,7 +110,11 @@ export const Connect = ({ userId }: { userId?: string }) => {
 								return social.isShown
 									? !['steam', 'discord'].includes(social.id) && (
 											<SocialsContainer key={social.id} url={social?.url} isOwner={isOwner}>
-												<Icon fontSize="large" icon={social.icon} />
+												<Icon
+													sx={{ color: theme => theme.palette.text.secondary }}
+													fontSize="large"
+													icon={social.icon}
+												/>
 												<Paragraph2 color="text.secondary">{social.tag}</Paragraph2>
 											</SocialsContainer>
 									  )
@@ -142,7 +150,7 @@ const SocialsContainer = ({ children, url, isOwner }: PropsWithChildren<{ url?: 
 				alignItems: 'center',
 				p: 2,
 				gap: 1,
-				backgroundColor: theme => theme.palette.dark[700]
+				backgroundColor: theme => theme.palette.surface.container
 			}}
 			onClick={handleUrl}
 		>
@@ -172,7 +180,7 @@ const ConnectContainer = ({ children, url, isOwner }: PropsWithChildren<{ url?: 
 
 				padding: 3,
 				gap: 7.5,
-				backgroundColor: theme => theme.palette.dark[700]
+				backgroundColor: theme => theme.palette.surface.container
 			}}
 			onClick={handleUrl}
 		>

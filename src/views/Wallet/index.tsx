@@ -40,7 +40,7 @@ export const Wallet = () => {
 					justifyContent="space-between"
 				>
 					<Stack gap={0.5}>
-						<Label>Balance</Label>
+						<Label color="text.secondary">Balance</Label>
 						{isBalanceLoading ? (
 							<Skeleton variant="text" height={40} width={200} />
 						) : (

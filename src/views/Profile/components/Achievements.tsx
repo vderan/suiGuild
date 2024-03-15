@@ -96,7 +96,7 @@ const Achievement = ({ title, year, month, place, coverImage, link }: IAchieveme
 			sx={theme => ({
 				borderRadius: 1,
 				padding: 1.5,
-				backgroundColor: theme.palette.dark[700],
+				backgroundColor: theme.palette.surface.container,
 				position: 'relative',
 				'&:hover': {
 					'&::after': {

@@ -94,11 +94,9 @@ const BackBtn = () => {
 	const onClick = () => (location.state?.isComunityIndividualPage ? navigate('/forum#communities') : navigate(-1));
 	return iMid ? (
 		<SecondaryButton
+			iconColor="white"
 			sx={{
 				'&::after': { background: theme => theme.palette.buttonText.white },
-				'& .MuiSvgIcon-root path[fill]': { fill: theme => theme.palette.buttonText.white },
-				'&:hover .MuiSvgIcon-root path[fill]': { fill: theme => theme.palette.text.primary },
-				color: theme => theme.palette.buttonText.white,
 				filter: theme => `drop-shadow(0 0 1px ${theme.palette.dark[900]})`
 			}}
 			startIcon="chevronLeft"

@@ -1,4 +1,4 @@
-import { Stack, Box, ImageList, ImageListItem, Collapse, Skeleton } from '@mui/material';
+import { Stack, Box, ImageList, ImageListItem, Collapse, Skeleton, alpha } from '@mui/material';
 import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { SecondaryButton } from 'src/components/Button';
@@ -91,9 +91,10 @@ const Card = ({ index, item }: { index: number; item: IGamingSetup }) => {
 					width: '100%',
 					height: '100%',
 					background: theme =>
-						`linear-gradient(180deg, rgba(0, 0, 0, 0) 23.05%, ${theme.palette.dark[900]} 100%), url(${ipfsUrl(
-							item.coverImage.url
-						)})`,
+						`linear-gradient(0deg, ${alpha(theme.palette.dark[900], 0.4)} 0%, 
+						${alpha(theme.palette.dark[900], 0.4)} 100%),
+						url(${ipfsUrl(item.coverImage.url)})`,
+
 					backgroundPosition: '50% 50%',
 					backgroundRepeat: 'no-repeat',
 					backgroundSize: 'cover',
@@ -110,7 +111,9 @@ const Card = ({ index, item }: { index: number; item: IGamingSetup }) => {
 						px: 4
 					}}
 				>
-					<Label noWrap>{item.name}</Label>
+					<Label sx={{ color: theme => theme.palette.buttonText.white }} noWrap>
+						{item.name}
+					</Label>
 				</Stack>
 			</Box>
 		</ImageListItem>

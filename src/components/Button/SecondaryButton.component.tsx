@@ -1,4 +1,4 @@
-import { Box, Button } from '@mui/material';
+import { Box, Button, SxProps, Theme } from '@mui/material';
 import { Icons, icons } from 'src/components/icons';
 import { CircularProgress } from 'src/components/Progress';
 import { Tooltip } from 'src/components/Tooltip';
@@ -9,38 +9,56 @@ import { NavLink } from 'react-router-dom';
 import { ColorModeContext } from 'src/contexts';
 import { useContext } from 'react';
 
-type ButtonProps = ICustomButtonProps & { component?: React.ElementType; loaderSize?: number };
+type ButtonProps = ICustomButtonProps & {
+	component?: React.ElementType;
+	loaderSize?: number;
+	loaderSx?: SxProps<Theme>;
+	iconColor?: 'default' | 'white';
+};
 
-const Icon = ({ iconName, size }: { iconName: Icons; size: 'inherit' | 'large' | 'medium' | 'small' }) => {
+const Icon = ({
+	iconName,
+	size,
+	iconColor
+}: {
+	iconName: Icons;
+	size: 'inherit' | 'large' | 'medium' | 'small';
+	iconColor?: 'default' | 'white';
+}) => {
 	const Icon = icons[iconName];
 	const { theme } = useContext(ColorModeContext);
-
+	const isIconWhite = iconColor === 'white';
 	return (
 		<Icon
 			fontSize={size}
 			sx={{
-				...(theme.palette.mode === 'light' && {
-					'path[fill]': {
-						fill: 'url(#svgGradient1)'
-					},
-					'path[stroke]': {
-						stroke: 'url(#svgGradientStroke)'
-					},
-					'circle[fill]': {
-						fill: 'url(#svgGradient1)'
-					},
-					'circle[stroke]': {
-						stroke: 'url(#svgGradientStroke)'
-					},
-					'rect[fill]': {
-						fill: 'url(#svgGradient1)'
-					},
-					'rect[stroke]': {
-						stroke: 'url(#svgGradientStroke)'
-					}
-				}),
+				...(theme.palette.mode === 'light' &&
+					!isIconWhite && {
+						'path[fill]': {
+							fill: 'url(#svgGradient1)'
+						},
+						'path[stroke]': {
+							stroke: 'url(#svgGradientStroke)'
+						},
+						'circle[fill]': {
+							fill: 'url(#svgGradient1)'
+						},
+						'circle[stroke]': {
+							stroke: 'url(#svgGradientStroke)'
+						},
+						'rect[fill]': {
+							fill: 'url(#svgGradient1)'
+						},
+						'rect[stroke]': {
+							stroke: 'url(#svgGradientStroke)'
+						}
+					}),
 				...(theme.palette.mode === 'dark' && {
 					color: theme => theme.palette.system.default
+				}),
+				...(iconColor === 'white' && {
+					color: theme => theme.palette.buttonText.white,
+					'.MuiButton-root:hover &': { color: theme => theme.palette.text.primary }
 				})
 			}}
 		/>
@@ -58,9 +76,11 @@ export const SecondaryButton = ({
 	endImage,
 	children,
 	sx,
+	loaderSx,
 	iconSize,
 	onClick,
 	loaderSize,
+	iconColor,
 	...props
 }: ButtonProps) => {
 	const isOnlyIcon = Boolean(startIcon || endIcon || startImage || endImage) && !children;
@@ -79,7 +99,7 @@ export const SecondaryButton = ({
 			startIcon={
 				!loading ? (
 					startIcon ? (
-						<Icon iconName={startIcon} size={iconSize || size} />
+						<Icon iconName={startIcon} size={iconSize || size} iconColor={iconColor} />
 					) : startImage ? (
 						<img src={startImage} alt="startImg" width={BUTTON_ICON_SIZE} height={BUTTON_ICON_SIZE} />
 					) : undefined
@@ -88,7 +108,7 @@ export const SecondaryButton = ({
 			endIcon={
 				!loading ? (
 					endIcon ? (
-						<Icon iconName={endIcon} size={iconSize || size} />
+						<Icon iconName={endIcon} size={iconSize || size} iconColor={iconColor} />
 					) : endImage ? (
 						<img src={endImage} alt="endImg" width={BUTTON_ICON_SIZE} height={BUTTON_ICON_SIZE} />
 					) : undefined
@@ -96,7 +116,7 @@ export const SecondaryButton = ({
 			}
 			{...props}
 		>
-			{loading ? <CircularProgress size={loaderSize} /> : null}
+			{loading ? <CircularProgress sx={loaderSx} size={loaderSize} /> : null}
 			{isDarkMode
 				? children
 				: children && (

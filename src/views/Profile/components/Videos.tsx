@@ -1,4 +1,4 @@
-import { Collapse, Link, Skeleton } from '@mui/material';
+import { Collapse, Link, Skeleton, alpha } from '@mui/material';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
@@ -37,7 +37,7 @@ export const Videos = ({ userId }: { userId?: string }) => {
 		<Stack gap={2.5}>
 			<Stack direction="row" alignItems="center" gap={2}>
 				<H2Title>
-					{pluralize('Video', videos.length)}
+					{pluralize('Video', videos.length)}{' '}
 					<Box component="span" sx={{ opacity: 0.3 }}>
 						({videos.length})
 					</Box>
@@ -107,7 +107,10 @@ const Video = ({ name, link }: IVideo) => {
 			<Box
 				sx={{
 					borderRadius: 1,
-					background: `linear-gradient(0deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.4) 100%), url('https://i.ytimg.com/vi/pSmc4C1KXrs/maxresdefault.jpg')`,
+					background: theme =>
+						`linear-gradient(0deg, ${alpha(theme.palette.dark[900], 0.4)} 0%, 
+						${alpha(theme.palette.dark[900], 0.4)} 100%),
+						 url('https://i.ytimg.com/vi/pSmc4C1KXrs/maxresdefault.jpg')`,
 					width: '100%',
 					height: '100%',
 					backgroundPosition: '50% 50%',
@@ -118,7 +121,7 @@ const Video = ({ name, link }: IVideo) => {
 					justifyContent: 'center'
 				}}
 			>
-				<Icon icon="play" sx={{ width: '48px', height: '48px' }} />
+				<Icon icon="play" sx={{ width: '48px', height: '48px', color: theme => theme.palette.buttonText.white }} />
 			</Box>
 			<H3Title noWrap>{name}</H3Title>
 		</Link>

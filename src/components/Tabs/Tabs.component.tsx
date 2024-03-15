@@ -32,6 +32,10 @@ export const CustomTabs = ({ tabs, isTertiary = false, tabsChildren }: ICustomTa
 					textTransform: 'none',
 					color: theme.palette.border.highlight,
 					padding: 0,
+
+					'&:hover': {
+						color: theme.palette.text.primary
+					},
 					'&.Mui-selected': {
 						color: theme.palette.text.primary
 					}
@@ -125,7 +129,10 @@ const TabContent = ({ isTertiary, ...props }: ITabs & { isTertiary: boolean }) =
 			{isTertiary ? (
 				<H3Title
 					sx={{
-						opacity: props.isActive ? 1 : 0.3
+						opacity: props.isActive ? 1 : 0.3,
+						'.MuiTab-root:hover &': {
+							opacity: 1
+						}
 					}}
 				>
 					{props.label}

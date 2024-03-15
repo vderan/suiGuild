@@ -11,8 +11,6 @@ import { awardFormSchema } from 'src/schemas/award.schema';
 import { uploadAttachment } from 'src/helpers/upload.helpers';
 import { useGilder } from 'src/hooks/useGilder';
 import { ipfsUrl } from 'src/helpers/ipfs.helpers';
-import { IconButton } from 'src/components/IconButton';
-import { useClipboard } from 'src/hooks/useClipboard';
 import { useErrorHandler } from 'src/hooks';
 
 export interface AwardForm {
@@ -37,7 +35,6 @@ export const ProfileAwardForm = ({
 	const formRef = useRef<null | HTMLFormElement>(null);
 	const { addAward, editAward } = useGilder();
 	const { loadUserInfo } = useContext(AuthContext);
-	const { copy } = useClipboard();
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const { errorProcess } = useErrorHandler();
 
@@ -90,7 +87,7 @@ export const ProfileAwardForm = ({
 				}}
 				myRef={formRef}
 				schema={awardFormSchema}
-				render={({ watch }) => (
+				render={() => (
 					<>
 						<FileField label="Award image" name="cover" isDisabled={isSubmitting} />
 
@@ -136,19 +133,7 @@ export const ProfileAwardForm = ({
 								disabled={isSubmitting}
 							/>
 						</Column>
-						<InputField
-							name="link"
-							label="Link"
-							type="url"
-							required
-							placeholder="Enter link"
-							endElement={
-								<>
-									<IconButton icon="copy" onClick={() => copy(watch('link'))} />
-								</>
-							}
-							disabled={isSubmitting}
-						/>
+						<InputField name="link" label="Link" type="url" required placeholder="Enter link" disabled={isSubmitting} />
 					</>
 				)}
 			/>

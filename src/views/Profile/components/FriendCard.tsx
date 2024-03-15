@@ -62,12 +62,13 @@ export const FriendCard = ({ friend, isOwner = false, isRequest = false }: Frien
 		try {
 			await removeFriend(friendName, profile.displayName);
 			emit('friend_request_deletion', [{ from: profile.displayName, to: friendName, type: 'friend-deletion' }]);
+			setIsDeleteFriendModalOpened(false);
+
 			await loadUserInfo();
 		} catch (err) {
 			errorProcess(err);
 		}
 		setIsSubmitting(false);
-		setIsDeleteFriendModalOpened(false);
 	};
 
 	const markOneAsRead = async () => {
@@ -171,7 +172,7 @@ export const FriendCard = ({ friend, isOwner = false, isRequest = false }: Frien
 			sx={{
 				borderRadius: 1,
 				padding: 3,
-				backgroundColor: theme => theme.palette.dark[700],
+				backgroundColor: theme => theme.palette.surface.container,
 				gap: 3,
 				height: '100%'
 			}}
