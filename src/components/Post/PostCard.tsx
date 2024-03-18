@@ -49,6 +49,7 @@ export const PostCard = ({
 	const { errorProcess } = useErrorHandler();
 
 	const { iMd } = useDevice();
+	const isPostOwner = `0x${post.creatorInfo}` === profile?.id;
 
 	const forum = forums?.find(forum => forum.idx === post.communityIdx);
 	const { createComment, vote } = useGilder();
@@ -145,7 +146,9 @@ export const PostCard = ({
 									<ForumAvatar image={ipfsUrl(forum?.avatar.some.url || avatarUrl)} />
 									<Label noWrap>{forum?.title}</Label>
 								</Link>
-								{iMd && isEditBtnShown && <IconButton icon="edit" onClick={() => setIsEditPostModalShown(true)} />}
+								{iMd && isEditBtnShown && isPostOwner && (
+									<IconButton icon="edit" onClick={() => setIsEditPostModalShown(true)} />
+								)}
 							</Box>
 						))}
 				</Box>
@@ -168,7 +171,9 @@ export const PostCard = ({
 					>
 						{differenceDate(Number(post.createdAt))}
 					</Paragraph2>
-					{!iMd && isEditBtnShown && <IconButton icon="edit" onClick={() => setIsEditPostModalShown(true)} />}
+					{!iMd && isEditBtnShown && isPostOwner && (
+						<IconButton icon="edit" onClick={() => setIsEditPostModalShown(true)} />
+					)}
 				</Box>
 			</Box>
 			<Link component={NavLink} to={`/forum/postindividual/${post.idx}`}>

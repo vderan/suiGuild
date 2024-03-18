@@ -1,6 +1,7 @@
 import { countries } from 'src/constants/country.constants';
 import { SelectAutocomplete } from '../SelectAutocomplete';
 import Box from '@mui/material/Box';
+import { FLAGS_API } from 'src/constants/env.constants';
 
 export const CountrySelector = () => {
 	return (
@@ -17,8 +18,8 @@ export const CountrySelector = () => {
 					<img
 						loading="lazy"
 						width="20"
-						src={`https://storage.googleapis.com/dycr-web/image/flags/${country.id.toLowerCase()}.png`}
-						srcSet={`https://storage.googleapis.com/dycr-web/image/flags/${country.id.toLowerCase()}.png 2x`}
+						src={`${FLAGS_API}/${country.id.toLowerCase()}.png`}
+						srcSet={`${FLAGS_API}/${country.id.toLowerCase()}.png 2x`}
 						alt={country.label}
 					/>
 					{country.label}

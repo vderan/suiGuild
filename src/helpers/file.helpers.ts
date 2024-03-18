@@ -1,23 +1,5 @@
 import { MessageAttachmentType } from 'src/types/Xmpp.types';
 
-export function getFileBase64(file: File): Promise<string> {
-	return new Promise<string>((resolve, reject) => {
-		const reader = new FileReader();
-
-		reader.onloadend = () => {
-			const base64String = reader.result as string;
-			const base64Data = base64String.split(',')[1]; // Extract base64 data from the result
-			resolve(base64Data);
-		};
-
-		reader.onerror = error => {
-			reject(error);
-		};
-
-		reader.readAsDataURL(file);
-	});
-}
-
 export const getAttachmentType = (file: File): MessageAttachmentType => {
 	return getAttachmentTypeByMimeType(file.type);
 };
@@ -41,14 +23,6 @@ export const getAttachmentTypeByMimeType = (mimeType: string): MessageAttachment
 		default:
 			return 'file';
 	}
-};
-
-export const stringToFile = async (dataUrl: string, filename: string): Promise<File> => {
-	const response = await fetch(dataUrl);
-	const responseArrayBuffer = await response.arrayBuffer();
-	const file = new File([responseArrayBuffer], filename);
-
-	return file;
 };
 
 // fileSize = 5 megabytes

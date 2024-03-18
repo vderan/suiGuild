@@ -140,7 +140,7 @@ export const NewConversation = ({
 				background: theme.palette.dark[500],
 				backdropFilter: 'blur(22px)',
 				border: `1px solid ${theme.palette.dark[500]}`,
-				borderRadius: theme.shape.borderRadius,
+				borderRadius: 1,
 				display: 'flex',
 				flexDirection: 'column',
 				maxHeight: 'calc(100vh - 160px)'

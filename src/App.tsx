@@ -52,23 +52,7 @@ const Receive = lazy(() => import('src/views/Wallet/Transfer/Receive').then(modu
 SwiperCore.use([Autoplay, Navigation]);
 
 function App() {
-	// Register Error Overlay
-	const showErrorOverlay = (err: unknown) => {
-		// must be within function call because that's when the element is defined for sure.
-		const ErrorOverlay = customElements.get('vite-error-overlay');
-
-		// don't open outside vite environment
-		if (!ErrorOverlay) {
-			return;
-		}
-
-		const overlay = new ErrorOverlay(err);
-		document.body.appendChild(overlay);
-	};
-
-	window.addEventListener('error', showErrorOverlay);
-	window.addEventListener('unhandledrejection', ({ reason }) => showErrorOverlay(reason));
-
+	// TODO: fix scroll
 	const ScrollToTop = () => {
 		const { pathname } = useLocation();
 

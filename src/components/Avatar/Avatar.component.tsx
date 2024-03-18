@@ -34,22 +34,6 @@ export const HeaderAvatar = ({ image, ...props }: IAvatarProps) => {
 	);
 };
 
-export const AccAvatar = ({ image, ...props }: IAvatarProps) => {
-	const { theme } = useContext(ColorModeContext);
-	return (
-		<Avatar
-			src={image}
-			alt="avatarImage"
-			sx={{
-				...props.sx,
-				width: theme => theme.spacing(8),
-				height: theme => theme.spacing(8),
-				border: `${theme.spacing(0.25)} solid ${theme.palette.blue[900]}`
-			}}
-		/>
-	);
-};
-
 export const TeamAvatar = ({ image, ...props }: IAvatarProps) => {
 	return (
 		<Avatar

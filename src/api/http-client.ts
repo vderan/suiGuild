@@ -1,4 +1,4 @@
-import { LOCAL_STORAGE } from 'src/constants/api.constants';
+import { LOCAL_STORAGE_KEYS } from 'src/constants/constants';
 import { BASE_URL } from 'src/constants/env.constants';
 import { ApiError } from 'src/types/Api.types';
 
@@ -14,7 +14,7 @@ export const httpClient = async <T>({
 	headers?: Record<string, string>;
 }): Promise<T> => {
 	const path = `${BASE_URL}${url}`;
-	const accessToken = localStorage.getItem(LOCAL_STORAGE.JWT);
+	const accessToken = localStorage.getItem(LOCAL_STORAGE_KEYS.JWT);
 
 	const response = await fetch(path, {
 		method,

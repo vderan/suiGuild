@@ -37,6 +37,7 @@ export const MessageField = ({
 	const [gifAnchorEl, setGifAnchorEl] = useState<HTMLButtonElement | null>(null);
 	const isChat = pathname.includes('chat');
 
+	// TODO: check it and maybe remove
 	const setMessageAttachmentsCount = useSetRecoilState(messageAttachmentsCountState);
 
 	useEffect(() => {
