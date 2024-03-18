@@ -38,7 +38,7 @@ export const Activity = () => {
 	const { getTransactions } = useGilder();
 	const { data: transactions, isLoading, error: isError } = useSWR(profile ? 'getTransactions' : null, getTransactions);
 	const [search, setSearch] = useState('');
-
+	// TODO: check transactions
 	const filteredTransactions = useMemo(() => {
 		if (!transactions?.length) return [];
 

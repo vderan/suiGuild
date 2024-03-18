@@ -218,6 +218,7 @@ export const Header = ({ isSidebarAlwaysClosed = false }: { isSidebarAlwaysClose
 					onClose={() => setIsCreateCommunityModalOpen(false)}
 				/>
 			</Box>
+			{/* TODO: create component for widget */}
 			{profile?.displayName && !isChatPage && !iMid && (
 				<Box
 					sx={{

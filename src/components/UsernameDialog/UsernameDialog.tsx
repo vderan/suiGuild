@@ -7,7 +7,6 @@ import { useGilder } from 'src/hooks/useGilder';
 import { H4Title } from '../Typography';
 import { avatarUrl, coverUrl } from 'src/constants/images.constants';
 import { useProfile } from 'src/hooks/useProfile';
-import { IEditUserProps } from 'src/hooks/types';
 import { createUsernameSchema } from 'src/schemas/create-username.schema';
 import { useErrorHandler, useSnackbar } from 'src/hooks';
 
@@ -21,33 +20,32 @@ export const UsernameDialog = () => {
 	const { errorProcess } = useErrorHandler();
 
 	const handleSubmit = async (data: { username: string }) => {
-		const isUser = await checkUsername(data.username);
+		const isUserExists = await checkUsername(data.username);
 
-		if (isUser) {
+		if (isUserExists) {
 			warningSnackbar('Username already exists');
 			return;
 		}
 
 		setIsLoading(true);
 
-		const editUserInfo: IEditUserProps = {
-			avatar: profile?.avatar || avatarUrl,
-			coverImage: profile?.coverImage || coverUrl,
-			name: profile?.name || '',
-			displayName: data.username,
-			email: profile?.email || '',
-			bio: profile?.bio || '',
-			nation: profile?.nation || '',
-			language: profile?.language || '',
-			website: profile?.website || '',
-			socialLinks: profile?.socialLinks || ''
-		};
-
 		try {
-			await editPersonalInfo(editUserInfo);
+			await editPersonalInfo({
+				avatar: profile?.avatar || avatarUrl,
+				coverImage: profile?.coverImage || coverUrl,
+				name: profile?.name || '',
+				displayName: data.username,
+				email: profile?.email || '',
+				bio: profile?.bio || '',
+				nation: profile?.nation || '',
+				language: profile?.language || '',
+				website: profile?.website || '',
+				socialLinks: profile?.socialLinks || ''
+			});
+			successSnackbar('Updated username successfully!');
+
 			const userInfo = await loadUserInfo();
 			await initChat(userInfo?.displayName);
-			successSnackbar('Updated username successfully!');
 		} catch (error) {
 			errorProcess(error);
 		}

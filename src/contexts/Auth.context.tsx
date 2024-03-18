@@ -5,13 +5,13 @@ import { useProfile } from 'src/hooks/useProfile';
 import { useNavigate } from 'react-router-dom';
 import { avatarUrl, coverUrl } from 'src/constants/images.constants';
 import { Xmpp } from 'src/api/xmpp';
-import { LOCAL_STORAGE } from 'src/constants/api.constants';
 import { api } from 'src/api';
 import { joinedRoomsState } from 'src/recoil/joinedRooms';
 import { useSetRecoilState } from 'recoil';
 import { CircularProgress } from 'src/components/Progress';
 import { Box } from '@mui/material';
 import { useErrorHandler, useSnackbar } from 'src/hooks';
+import { LOCAL_STORAGE_KEYS } from 'src/constants/constants';
 
 interface IAuthClient {
 	signOut: () => Promise<void>;
@@ -79,7 +79,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 			username,
 			password
 		});
-		localStorage.setItem(LOCAL_STORAGE.JWT, token);
+		localStorage.setItem(LOCAL_STORAGE_KEYS.JWT, token);
 
 		await new Promise<void>(resolve => {
 			Xmpp.connect(username, password);

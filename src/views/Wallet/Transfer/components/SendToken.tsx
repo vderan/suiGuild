@@ -69,8 +69,6 @@ const StyledBox = styled(Box)(({ theme }) => ({
 	}
 }));
 
-// TODO: refactor
-
 export const SendToken = () => {
 	const { sendSuiToken, esimateSendSuiTokenGas } = useGilder();
 	const [isResultModalOpen, setIsResultModalOpen] = useState(false);

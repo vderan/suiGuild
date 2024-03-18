@@ -19,12 +19,12 @@ export const NotFound = ({ title = '', description = '', iconProps, isSmall = fa
 				sx={{
 					width: theme => (isSmall ? theme.spacing(19.75) : theme.spacing(27.5)),
 					height: theme => (isSmall ? theme.spacing(11.625) : theme.spacing(16.25)),
-					color: isDarkMode ? theme => theme.palette.surface.container : '#D4D4D4', // TODO: change color
+					color: theme => (isDarkMode ? theme.palette.surface.container : theme.palette.light[300]),
 					'.title': {
 						fill: isDarkMode ? 'url(#title)' : 'url(#titleWhite)'
 					},
 					'.title-border': {
-						fill: isDarkMode ? '#FFFFFF' : '#474747'
+						fill: theme => (isDarkMode ? theme.palette.buttonText.white : theme.palette.dark[400])
 					},
 					...iconProps?.sx
 				}}

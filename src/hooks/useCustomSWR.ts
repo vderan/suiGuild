@@ -2,13 +2,14 @@
 import useSWR from 'swr';
 import { BareFetcher, SWRConfiguration, Key } from 'swr';
 
+// TODO: remove refresh interval
 export const useCustomSWR = <Data = any>(
 	key: Key,
 	fetcher: BareFetcher<Data> | null,
 	options: SWRConfiguration = {}
 ) => {
 	const defaultOptions = {
-		refreshInterval: 2000,
+		// refreshInterval: 2000,
 		...options
 	};
 

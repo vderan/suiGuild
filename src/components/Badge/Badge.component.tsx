@@ -30,29 +30,6 @@ export const AlertBadge = ({ badgeContent, children, ...props }: IBadgeProps) =>
 	);
 };
 
-export const OnlineBadge = ({ isOnline = true, children, ...props }: IBadgeProps) => {
-	return (
-		<Badge
-			color={isOnline ? 'success' : 'secondary'}
-			badgeContent=""
-			anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-			sx={{
-				...props.sx,
-				'& .MuiBadge-badge': {
-					height: 14,
-					minWidth: 14,
-					width: 14,
-					right: 4,
-					bottom: 4
-				}
-			}}
-			{...props}
-		>
-			{children}
-		</Badge>
-	);
-};
-
 export const CountBadge = ({ count }: { count: string }) => {
 	return (
 		<Box

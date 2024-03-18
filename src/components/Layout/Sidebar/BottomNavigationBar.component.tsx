@@ -73,6 +73,7 @@ export const BottomNavigationBar = () => {
 		]
 	};
 
+	// TODO: concat with bottom nav
 	const links = [
 		{
 			title: 'Home',
