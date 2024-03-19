@@ -1,7 +1,8 @@
 import { JID } from '@xmpp/jid';
 import { format, isToday } from 'date-fns';
 import emojiRegex from 'emoji-regex';
-import { NEW_MEMBER_JOINED, REVOKED_MEMBERSHIP, XMPP_DOMAIN } from 'src/constants/xmpp.constants';
+import { XMPP_DOMAIN } from 'src/constants';
+import { NEW_MEMBER_JOINED, REVOKED_MEMBERSHIP } from 'src/constants/xmpp.constants';
 import { Message } from 'src/types/Xmpp.types';
 
 export const getUsernameFromJid = (jid: string | JID) => {

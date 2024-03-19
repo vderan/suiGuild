@@ -7,16 +7,10 @@ import { Icon } from 'src/components/Icon';
 import { IMenuProps, Menu } from 'src/components/Menu';
 import { SwitchField } from 'src/components/Switch';
 import { ButtonMediumText } from 'src/components/Typography';
-import { Icons } from 'src/components/icons';
+import { NAVIGATION_LINKS } from 'src/constants';
 import { avatarUrl } from 'src/constants/images.constants';
 import { AuthContext, ColorModeContext } from 'src/contexts';
 import { ipfsUrl } from 'src/helpers/ipfs.helpers';
-
-type Link = {
-	title: string;
-	href: string;
-	icon: Icons;
-};
 
 export const BottomNavigationBar = () => {
 	const { profile, signOut, isLoggedIn } = useContext(AuthContext);
@@ -25,6 +19,9 @@ export const BottomNavigationBar = () => {
 	const { isDarkMode, toggleColorMode } = useContext(ColorModeContext);
 	const [isProfileSelected, setIsProfileSelected] = useState(false);
 	const Avatar = isProfileSelected ? SmallAvatar : MediumAvatar;
+
+	const currentPath = location.pathname.split('/')[1];
+
 	const menuData: IMenuProps = {
 		label: (
 			<ButtonBase
@@ -73,24 +70,6 @@ export const BottomNavigationBar = () => {
 		]
 	};
 
-	// TODO: concat with bottom nav
-	const links = [
-		{
-			title: 'Home',
-			icon: 'home',
-			href: '/home'
-		},
-		{
-			title: 'Communities',
-			icon: 'feed',
-			href: '/forum'
-		},
-		{
-			title: 'Wallet',
-			icon: 'wallet',
-			href: '/wallet'
-		}
-	] as Link[];
 	return (
 		<Paper
 			elevation={0}
@@ -107,8 +86,8 @@ export const BottomNavigationBar = () => {
 			})}
 		>
 			<Box component="nav" sx={{ padding: 2, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-				{links.map((item, index) => {
-					const isActive = item.href === location.pathname && !isProfileSelected;
+				{NAVIGATION_LINKS.map((item, index) => {
+					const isActive = item.href.split('#')[0] === currentPath && !isProfileSelected;
 					return (
 						<Link
 							key={index}

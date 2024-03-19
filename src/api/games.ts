@@ -1,25 +1,38 @@
+import axios from 'axios';
 import { GAMES_API, GAMES_API_KEY } from 'src/constants/env.constants';
 
-interface Games {
-	results: {
-		id: number;
-		name: string;
-		background_image: string;
-	}[];
-}
+type Game = {
+	id: number;
+	name: string;
+	background_image: string;
+};
+type Games = {
+	results: Game[];
+};
 
-export const searchGames = async (query: string) => {
-	const response = await fetch(
-		`${GAMES_API}?key=${GAMES_API_KEY}&page_size=2000&search=${query}&search_precise=true&search_exact=true`
-	);
-	const data = await response.json();
-
-	return data as Games;
+export const getGames = async (search: string) => {
+	const { data } = await axios<Games>({
+		method: 'get',
+		url: GAMES_API,
+		params: {
+			key: GAMES_API_KEY,
+			page_size: 100,
+			search_precise: true,
+			search_exact: true,
+			search
+		}
+	});
+	return data.results;
 };
 
 export const getGameDetails = async (id: string) => {
-	const response = await fetch(`${GAMES_API}/${id}?key=${GAMES_API_KEY}`);
-	const data = await response.json();
+	const { data } = await axios<Game>({
+		method: 'get',
+		url: `${GAMES_API}/${id}`,
+		params: {
+			key: GAMES_API_KEY
+		}
+	});
 
 	return data;
 };

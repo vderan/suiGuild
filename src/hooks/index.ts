@@ -4,3 +4,4 @@ export { default as useDrafts } from './useDrafts';
 export * from './useUsers';
 export * from './useSnackbar';
 export * from './useErrorHandler';
+export * from './useScroll';

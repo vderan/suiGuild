@@ -2,11 +2,14 @@ import { styled } from '@mui/system';
 import { Pagination, PaginationItem } from '@mui/material';
 import { IPaginationProps } from './Pagination.types';
 import { icons } from 'src/components/icons';
+import { useScroll } from 'src/hooks';
 
 export const CustomPagination = ({ count, page, onChange }: IPaginationProps) => {
+	const { scrollToTop } = useScroll();
+
 	const handlePagenationChange = (event: React.ChangeEvent<unknown>, value: number) => {
 		onChange(value);
-		window.scrollTo(0, 0);
+		scrollToTop();
 	};
 
 	return (

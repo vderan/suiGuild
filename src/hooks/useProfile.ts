@@ -1,15 +1,16 @@
 import { TransactionBlock } from '@mysten/sui.js/transactions';
 import { useCallback } from 'react';
-import { OBJECT_RECORD, ZERO_ADDRESS } from 'src/constants/sui.constants/objectIds';
-import { DEFAULT_CHAIN, provider } from 'src/constants/sui.constants/rpc';
+import { PACKAGE_CONTRACT_ADDR, PROFILE_STORE_CONTRACT_ADDR } from 'src/constants';
+import { ZERO_ADDRESS } from 'src/constants/sui.constants/objectIds';
+import { provider } from 'src/constants/sui.constants/rpc';
 import { UserInfo } from 'src/contexts';
 import { getBCS } from 'src/helpers/bcs.helpers';
 
 const bcs = getBCS();
 
 export const useProfile = () => {
-	const packageObjectId = OBJECT_RECORD[DEFAULT_CHAIN].PACKAGE_ID;
-	const profileObjectId = OBJECT_RECORD[DEFAULT_CHAIN].PROFILE_STORE;
+	const packageObjectId = PACKAGE_CONTRACT_ADDR;
+	const profileObjectId = PROFILE_STORE_CONTRACT_ADDR;
 
 	const checkUsername = async (displayName: string) => {
 		const txb = new TransactionBlock();

@@ -35,7 +35,7 @@ export const ProfileGamesForm = ({ isOpen, onClose }: { isOpen: boolean; onClose
 		data: games,
 		isLoading,
 		error: isError
-	} = useSWR('games' + debouncedSearchValue, () => api.games.searchGames(debouncedSearchValue));
+	} = useSWR('games' + debouncedSearchValue, () => api.getGames(debouncedSearchValue));
 	const { loadUserInfo } = useContext(AuthContext);
 
 	useEffect(() => {
@@ -111,9 +111,9 @@ export const ProfileGamesForm = ({ isOpen, onClose }: { isOpen: boolean; onClose
 									<ListSkeleton numberOfItems={iMid ? 2 : 4} sx={{ gap: 2, flexDirection: 'row' }}>
 										<Skeleton variant="rounded" height={210} width="100%" />
 									</ListSkeleton>
-								) : games?.results.length ? (
+								) : games?.length ? (
 									<Grid container spacing={2}>
-										{games.results.map(game => (
+										{games.map(game => (
 											<Grid key={game.id} item xs={6} lg={3}>
 												<Stack
 													component={ButtonBase}

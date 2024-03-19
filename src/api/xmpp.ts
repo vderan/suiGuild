@@ -14,7 +14,7 @@ import {
 	RoomRole
 } from 'src/types/Xmpp.types';
 import { getAttachmentType, getAttachmentTypeByMimeType } from 'src/helpers/file.helpers';
-import { IGNORE_BODY, MAX_MESSAGES, PUB_SUB_NODES, XMPP_DOMAIN } from 'src/constants/xmpp.constants';
+import { IGNORE_BODY, MAX_MESSAGES, PUB_SUB_NODES } from 'src/constants/xmpp.constants';
 import {
 	getNickname,
 	getUrlFromMessage,
@@ -24,6 +24,7 @@ import {
 } from 'src/helpers/xmpp.helpers';
 import { v4 as uuidv4 } from 'uuid';
 import { uploadAttachment } from 'src/helpers/upload.helpers';
+import { XMPP_DOMAIN } from 'src/constants';
 
 interface XmppError {
 	condition: string;

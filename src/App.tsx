@@ -1,8 +1,8 @@
-import { BrowserRouter, Route, Routes, Navigate, useLocation } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import { Providers } from './providers';
 import { RequireXmppAuth } from './components/RequireXmppAuth';
 import { RequireOwner, RequireUsername, RequireIsLoggedIn } from './components/RequireOwner';
-import { Suspense, lazy, useEffect } from 'react';
+import { Suspense, lazy } from 'react';
 import { ColorModeProvider } from './contexts';
 import { ThemeProvider } from './providers/Theme.provider';
 import { Navigation, Autoplay } from 'swiper/modules';
@@ -52,21 +52,10 @@ const Receive = lazy(() => import('src/views/Wallet/Transfer/Receive').then(modu
 SwiperCore.use([Autoplay, Navigation]);
 
 function App() {
-	// TODO: fix scroll
-	const ScrollToTop = () => {
-		const { pathname } = useLocation();
-
-		useEffect(() => {
-			document.documentElement.scrollTo(0, 0);
-		}, [pathname]);
-		return null;
-	};
-
 	return (
 		<ColorModeProvider>
 			<ThemeProvider>
 				<BrowserRouter>
-					<ScrollToTop />
 					<GradientIcon />
 					<Suspense
 						fallback={
