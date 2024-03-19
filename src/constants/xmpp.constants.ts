@@ -1,7 +1,3 @@
-export const XMPP_DOMAIN = 'suiguild.net';
-
-export const IPFS = 'https://images.suiguild.net';
-
 export const IGNORE_BODY = 'IGNORE_BODY';
 
 export const NEW_MEMBER_JOINED = 'NEW_MEMBER_JOINED';

@@ -1,4 +1,4 @@
-import { IPFS } from 'src/constants/xmpp.constants';
+import { IPFS_API } from 'src/constants';
 
 export const uploadAttachment = async (blob: File | string, name: string): Promise<string> => {
 	const formData = new FormData();
@@ -13,7 +13,7 @@ export const uploadAttachment = async (blob: File | string, name: string): Promi
 		formData.append('file', blob);
 	}
 
-	const response = await fetch(`${IPFS}/api/v0/add`, {
+	const response = await fetch(`${IPFS_API}/api/v0/add`, {
 		method: 'POST',
 		body: formData,
 		mode: 'cors'

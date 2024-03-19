@@ -1,24 +1,7 @@
 import { Link, Stack } from '@mui/material';
 import { NavLink, useLocation } from 'react-router-dom';
 import { MenuButton } from 'src/components/Button';
-import { Icons } from 'src/components/icons';
-
-const menuList = [
-	{
-		title: 'Home',
-		link: 'home'
-	},
-	{
-		title: 'Communities',
-		link: 'forum#communities'
-	},
-	{
-		title: 'Wallet',
-		link: 'wallet'
-	}
-];
-
-const iconNames: Icons[] = ['home', 'community', 'wallet'];
+import { NAVIGATION_LINKS } from 'src/constants';
 
 export const MenuList = ({ isSideMenuOpen = true }: { isSideMenuOpen?: boolean }) => {
 	const location = useLocation();
@@ -30,9 +13,9 @@ export const MenuList = ({ isSideMenuOpen = true }: { isSideMenuOpen?: boolean }
 				width: '100%'
 			}}
 		>
-			{menuList?.map((item, index) => (
-				<Link key={index} component={NavLink} to={item.link} sx={{ textDecoration: 'none' }}>
-					<MenuButton startIcon={iconNames[index]} isFocused={currentPath === item.link.split('#')[0]}>
+			{NAVIGATION_LINKS.map((item, index) => (
+				<Link key={index} component={NavLink} to={item.href} sx={{ textDecoration: 'none' }}>
+					<MenuButton startIcon={item.icon} isFocused={currentPath === item.href.split('#')[0]}>
 						{isSideMenuOpen && item.title}
 					</MenuButton>
 				</Link>

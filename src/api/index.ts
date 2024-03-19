@@ -1,15 +1,11 @@
 import * as games from './games';
-import * as xmppSignUp from './signup';
-import * as xmppAuth from './auth';
-import * as room from './room';
 import * as tokens from './tokens';
 import * as notification from './notification';
+import * as xmppApi from './xmpp-api';
 
 const api = {
-	games,
-	...xmppAuth,
-	...xmppSignUp,
-	...room,
+	...games,
+	...xmppApi,
 	...tokens,
 	...notification
 };

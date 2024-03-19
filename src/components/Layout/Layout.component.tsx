@@ -25,10 +25,12 @@ import { QUERY_KEYS } from 'src/constants/querykeys.constants';
 import { lastestRoomMessagesState } from 'src/recoil/lastestRoomMessage';
 import { UsernameDialog } from '../UsernameDialog';
 import { SidebarMenu } from './Sidebar/SidebarMenu';
+import { useScroll } from 'src/hooks';
 
 export const Layout = ({ isSidebarAlwaysClosed = false }: { isSidebarAlwaysClosed?: boolean }) => {
 	const { pathname } = useLocation();
 	const { iMid } = useDevice();
+	const { scrollToTop } = useScroll();
 	const navigate = useNavigate();
 
 	const setLastestRoomMessage = useSetRecoilState(lastestRoomMessagesState);
@@ -43,6 +45,10 @@ export const Layout = ({ isSidebarAlwaysClosed = false }: { isSidebarAlwaysClose
 	const { data: blockedList } = useBlockList();
 	const { data: bookmarks, mutate: mutateBookmarks } = useBookmarks();
 	const { data: roomMembers, mutate: mutateRoomMembers } = useRoomMembers(activeJid);
+
+	useEffect(() => {
+		scrollToTop();
+	}, [pathname, scrollToTop]);
 
 	useEffect(() => {
 		const init = async () => {
@@ -263,6 +269,7 @@ export const Layout = ({ isSidebarAlwaysClosed = false }: { isSidebarAlwaysClose
 			<Main>
 				{!iMid && <SidebarMenu isSidebarAlwaysClosed={isSidebarAlwaysClosed} />}
 				<Container
+					id="main-container"
 					sx={theme => ({
 						overflowY: 'auto',
 						maxHeight: theme => `calc(100vh - ${theme.spacing(9)})`,

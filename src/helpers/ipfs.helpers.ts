@@ -1,5 +1,5 @@
-import { IPFS } from 'src/constants/xmpp.constants';
+import { IPFS_API } from 'src/constants';
 
 export const ipfsUrl = (url: string) => {
-	return `${IPFS}/ipfs/${url}`;
+	return `${IPFS_API}/ipfs/${url}`;
 };

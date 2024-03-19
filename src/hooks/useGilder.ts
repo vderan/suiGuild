@@ -7,8 +7,8 @@ import {
 	useSuiClient
 } from '@mysten/dapp-kit';
 import { SUI_CLOCK_OBJECT_ID } from '@mysten/sui.js/utils';
-import { OBJECT_RECORD, ZERO_ADDRESS } from 'src/constants/sui.constants/objectIds';
-import { DEFAULT_CHAIN, provider } from 'src/constants/sui.constants/rpc';
+import { ZERO_ADDRESS } from 'src/constants/sui.constants/objectIds';
+import { provider } from 'src/constants/sui.constants/rpc';
 import { TransactionBlock } from '@mysten/sui.js/transactions';
 import axios from 'axios';
 import { REQUEST_SPONSORED_RESPONSE_URL, SEND_SPONSORED_TRANSACTION_URL } from 'src/constants/api.constants';
@@ -24,6 +24,7 @@ import { AwardForm } from 'src/views/ProfileAwards';
 import { ICreateCommunityProps } from 'src/components/Layout/Header';
 import { IPostData } from 'src/components/TextEditor';
 import { useSnackbar } from './useSnackbar';
+import { GILDER_CONTRACT_ADDR, PACKAGE_CONTRACT_ADDR, PROFILE_STORE_CONTRACT_ADDR } from 'src/constants';
 
 const bcs = getBCS();
 
@@ -32,11 +33,11 @@ export const useGilder = () => {
 	const account = useCurrentAccount();
 	const { mutateAsync: signTransactionBlock } = useSignTransactionBlock();
 	const { mutateAsync: signAndExecuteTransactionBlock } = useSignAndExecuteTransactionBlock();
-	const packageObjectId = OBJECT_RECORD[DEFAULT_CHAIN].PACKAGE_ID;
-	const gilderObjectId = OBJECT_RECORD[DEFAULT_CHAIN].GILDER_GILDER;
-	const profileObjectId = OBJECT_RECORD[DEFAULT_CHAIN].PROFILE_STORE;
+	const packageObjectId = PACKAGE_CONTRACT_ADDR;
+	const gilderObjectId = GILDER_CONTRACT_ADDR;
+	const profileObjectId = PROFILE_STORE_CONTRACT_ADDR;
 	const client = useSuiClient();
-	const { warningSnackbar,successSnackbar } = useSnackbar();
+	const { warningSnackbar, successSnackbar } = useSnackbar();
 
 	const getSuiBallance = async () => {
 		if (!account) return 0;
@@ -70,8 +71,7 @@ export const useGilder = () => {
 			arguments: [coin, txb.pure(recipient)]
 		});
 		await signAndExecuteTransactionBlock({
-			transactionBlock: txb,
-			chain: DEFAULT_CHAIN
+			transactionBlock: txb
 		});
 	};
 	const esimateSendSuiTokenGas = useCallback(
@@ -121,8 +121,7 @@ export const useGilder = () => {
 		const sponsoredResponse = sponsoredResponseResult.data;
 
 		const userSignature = await signTransactionBlock({
-			transactionBlock: TransactionBlock.from(sponsoredResponse.txBytes),
-			chain: DEFAULT_CHAIN
+			transactionBlock: TransactionBlock.from(sponsoredResponse.txBytes)
 		});
 
 		const sponsoredTransactionExecutionParam = {
@@ -151,8 +150,7 @@ export const useGilder = () => {
 		const sponsoredResponse = sponsoredResponseResult.data;
 
 		const userSignature = await signTransactionBlock({
-			transactionBlock: TransactionBlock.from(sponsoredResponse.txBytes),
-			chain: DEFAULT_CHAIN
+			transactionBlock: TransactionBlock.from(sponsoredResponse.txBytes)
 		});
 
 		const sponsoredTransactionExecutionParam = {
@@ -183,8 +181,7 @@ export const useGilder = () => {
 		const sponsoredResponse = sponsoredResponseResult.data;
 
 		const userSignature = await signTransactionBlock({
-			transactionBlock: TransactionBlock.from(sponsoredResponse.txBytes),
-			chain: DEFAULT_CHAIN
+			transactionBlock: TransactionBlock.from(sponsoredResponse.txBytes)
 		});
 
 		const sponsoredTransactionExecutionParam = {
@@ -225,8 +222,7 @@ export const useGilder = () => {
 		const sponsoredResponse = sponsoredResponseResult.data;
 
 		const userSignature = await signTransactionBlock({
-			transactionBlock: TransactionBlock.from(sponsoredResponse.txBytes),
-			chain: DEFAULT_CHAIN
+			transactionBlock: TransactionBlock.from(sponsoredResponse.txBytes)
 		});
 
 		const sponsoredTransactionExecutionParam = {

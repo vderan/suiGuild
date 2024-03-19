@@ -2,8 +2,8 @@ import { Link, Stack } from '@mui/material';
 import { Paragraph2 } from 'src/components/Typography';
 import { ITransactionProps } from './TransactionCard.types';
 import { formatAddress } from 'src/helpers/format.helpers';
-import { DEFAULT_CHAIN } from 'src/constants/sui.constants';
 import { Icon } from 'src/components/Icon';
+import { SUI_CHAIN, SUI_EXPLORER_API } from 'src/constants/env.constants';
 
 export const TransactionCard = ({ address, type, price }: ITransactionProps) => {
 	const isReceive = type === 'receive';
@@ -11,7 +11,7 @@ export const TransactionCard = ({ address, type, price }: ITransactionProps) => 
 	return (
 		<Stack
 			component={Link}
-			href={`https://suiexplorer.com/address/${address}?network=${DEFAULT_CHAIN.split(':')[1]}`}
+			href={`${SUI_EXPLORER_API}/address/${address}?network=${SUI_CHAIN}`}
 			target="_blank"
 			direction="row"
 			alignItems="center"
