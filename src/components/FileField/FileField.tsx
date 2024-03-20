@@ -115,6 +115,7 @@ export const FileField = ({
 												}
 
 												const preview = URL.createObjectURL(file);
+												// TODO: refactor set file instead of string
 												field.onChange(preview);
 												e.target.value = '';
 											}}
